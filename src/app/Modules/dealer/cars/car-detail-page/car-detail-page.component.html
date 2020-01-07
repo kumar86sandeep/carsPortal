@@ -1,0 +1,669 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+
+
+<!--=================================
+car-details -->
+
+<section class="car-details page-section-ptb">
+  <div class="container">
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="back_BTN row" style="display:flex;">
+            <div class="col-md-5">
+            <a (click)="goBack()" class="mr-3 gap-padding">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </a> 
+      
+                    <a class="print_btn gap-padding" href="javascript:window.print()"><i class="fa fa-print"></i>Print this page</a>
+           
+                    <span class="actions">
+               
+  
+                        <button *ngIf="carDetail.car_expired == 0 && (carDetail?.dealerWishList.length == 0) && (carDetail?.type == 'active') && (carDetail?.hideCar.length == 0) && (carDetail?.hideCar.length == 0) &&  (carDetail?.my_bid?.length == 0) " title="Move To Wish List" type="button"
+                        (click)="saveToWishList(carDetail._id)" >
+                          <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        </button>
+  
+  
+                         <button *ngIf="carDetail.car_expired == 0 && (carDetail?.dealerWishList.length) && (carDetail?.type == 'active') && (carDetail?.hideCar.length == 0) && (carDetail?.hideCar.length == 0) && (carDetail?.my_bid?.length == 0)" title="Remove Car From Wish List" type="button"
+                          (click)="moveFromWishList(carDetail._id)">
+                          <i class="fa fa-heart" aria-hidden="true"></i>
+                        </button>
+                        <button *ngIf="carDetail.car_expired == 0 && (carDetail?.type == 'active') && (carDetail?.hideCar.length == 0)  && (carDetail?.my_bid?.length == 0)"  title="Hide Car From Listing"
+                          type="button" (click)="hideCar(carDetail._id)">
+                          <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                        </button>
+  
+  
+  
+                        <button *ngIf="carDetail.car_expired == 0 && (carDetail?.type == 'active') && (carDetail?.hideCar.length) && (carDetail?.my_bid?.length == 0)" title="Unhide Car From Listing" type="button"
+                          (click)="unhideCar(carDetail._id)">
+                          <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                        </button>
+  
+                        <!-- <button
+                        *ngIf="(carDetail.car_expired == 0 &&  (carDetail?.hideCar.length == 0 && carDetail?.my_bid?.length == 0)) || (carDetail?.higest_bid == carDetail?.my_bid?.bid_price && carDetail?.car_bids[0]?.bid_date < carDetail?.my_bid?.bid_date && carDetail?.hideCar.length == 0 && carDetail.car_expired == 0 && carDetail.car_expired == 0) || (carDetail?.higest_bid> carDetail?.my_bid?.bid_price && carDetail?.my_bid_status == 'active' && carDetail.car_expired == 0)"
+                          title="Place Bid" type="button" (click)="placeBid()">
+                          <i class="fa fa-gavel" aria-hidden="true"></i>
+                        </button>  -->
+               
+  
+                         <button *ngIf=" carDetail.car_expired == 0 && alreadySpammedByDealer(carDetail?.report_spam) && (carDetail?.my_bid?.length == 0) && carDetail?.hideCar.length == 0 && carDetail?.dealerWishList.length == 0" title="Report Spam"
+                          type="button" (click)="reportSpam(carDetail)">
+                          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                        </button> 
+
+                        <button *ngIf=" carDetail.car_expired == 0 && isSpammedByDealer(carDetail?.report_spam) && (carDetail?.my_bid?.length == 0) && carDetail?.hideCar.length == 0 && carDetail?.dealerWishList.length == 0" title="Reported as Spam">
+                          <i style="color:red;font-size: 16px;" class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                        </button>
+  
+                       
+                      </span>
+
+                    </div>
+                 
+                    
+                        <div class="col-md-5" *ngIf="(carDetail.car_expired == 0 &&  (carDetail?.hideCar.length == 0 && carDetail?.my_bid?.length == 0)) || (carDetail?.higest_bid == carDetail?.my_bid?.bid_price && carDetail?.car_bids[0]?.bid_date < carDetail?.my_bid?.bid_date && carDetail?.hideCar.length == 0 && carDetail.car_expired == 0 && carDetail.car_expired == 0) || (carDetail?.higest_bid> carDetail?.my_bid?.bid_price && carDetail?.my_bid_status == 'active' && carDetail.car_expired == 0)">
+                          <div class="list-footer mt-md-0 table-view-btn row">
+
+                             <div class="col-md-4 pr-md-0">
+                              <input type="text" class="bem-input-inline-view" [(ngModel)]="carDetail.placebid_price"  maxLength=17 currencyMask placeholder="">
+                              </div>
+                              <div class="col-md-3">
+                                  <button type="button" (click)="increaseBidPrice(carDetail)" class="btn btn-danger p-2">Place bid</button>
+                              </div>
+
+ 
+                           <div class="col-md-3">
+                              <button type="button" (click)="placeProxyBid(carDetail)" class="p-2 btn btn-secondary w-100">Proxy Bid</button>
+                           </div>
+                           
+                         
+                          
+                         </div>
+                        </div>
+                      
+                    <!-- <a class="print_btn_row" href="javascript:window.print()"><i class="fa fa-print"></i>Print this page</a> -->
+        
+        
+        
+        
+               
+           
+              
+           
+  
+  
+  
+            
+          
+          </div>
+        </div>   
+      </div>
+    <div class="row">
+      <div class="col-md-9">
+        <h3>{{carDetail?.year}} {{carDetail?.make}} {{carDetail?.model}} </h3>
+        <p> {{carDetail?.comments}}</p>
+      </div>
+      <div class="col-md-3">
+        <div class="car-price text-md-right">
+          <strong *ngIf="carDetail?.offer_in_hand > 0">{{carDetail?.offer_in_hand | currency:'USD':true:'1.2-2'}}</strong>
+          <span *ngIf="carDetail?.offer_in_hand > 0">Plus Taxes & Licensing</span>
+          <div class="timmer" *ngIf="carDetail.car_expired == 0">
+              <!-- <countdown-timer [end]="car.expiry_date"></countdown-timer> -->
+           <app-timmer [inputDate]="carDetail.expiry_date"></app-timmer>
+          </div>
+          <div class="timmer" *ngIf="carDetail.car_expired == 1">
+              <div>
+                Auction Ended
+                </div>
+        </div>
+          <p class="status_sold" *ngIf="carDetail?.type == 'sold'">Sold</p>
+          <p class="status_accepted" *ngIf="carDetail?.type == 'accepted'">In Transaction</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="slider-slick relative">
+
+
+          <!-- If images are attached then show image filter options-->
+          <div *ngIf="sliderImages.length || !isCategoryHaveThumbnail" class="image_filter">
+            <div class="filter_dropdown">
+              <a (click)="imageFilterToggle()" href="javascript:void(0)" id="filter_menu_link"><img
+                  src="assets/images/filter_icon.png"></a>
+
+              <div *ngIf="isImageFilterEnable" class="filter_dropdown-menu remember-checkbox">
+                <ul>
+                  <li><input type="checkbox" value="exterior" (change)="onImageFilter($event)" id="exterior"> <label
+                      for="exterior">Exterior</label></li>
+                  <li><input type="checkbox" value="interior" id="interior" (change)="onImageFilter($event)"> <label
+                      for="interior">Interior</label></li>
+
+                </ul>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- If vehcile have no image-->
+          <div *ngIf="! sliderImages.length" class="slider slider-for detail-big-car-gallery">
+            <span>
+              <img src="/assets/images/no_vehicle.png" alt="" class="img-fluid">
+            </span>
+          </div>
+
+          <!-- If images are attached with vehicle-->
+          <div *ngIf="sliderImages.length">
+            <ngx-gallery [options]="sliderOptions" [images]="sliderImages"></ngx-gallery>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="car-details-sidebar car-details-page">
+          <div class="details-block details-weight">
+            <h5 class="text_cap">Description</h5>
+            <ul>
+                <li> <span>{{carDetail?.vin ? 'VIN' : 'License Plate Number'}}</span>
+                  <strong class="text-right">{{carDetail?.vin ? carDetail?.vin :carDetail?.license_plate}}</strong>
+                </li>
+               
+              <!-- <li> <span>Make</span>
+                <strong class="text-right">{{carDetail?.make | titlecase}}</strong>
+              </li>
+              <li> <span>Model</span>
+                <strong class="text-right">{{carDetail?.model | titlecase}}</strong>
+              </li>
+              <li> <span>Registration Year </span>
+                <strong class="text-right">{{carDetail?.year}}</strong>
+              </li> -->
+              <!-- <li *ngIf="carDetail?.vehicle_min_selling_price"> 
+                  <span>Minimum Selling Price</span>
+                  <strong class="text-right">${{carDetail?.vehicle_min_selling_price}}</strong>
+                </li> -->
+              <li> <span>Mileage</span>
+                <strong class="text-right">{{carDetail?.miles | number}} Mi</strong>
+              </li>
+              <li> <span>Exterior Color</span>
+                <strong class="text-right">{{carDetail?.exterior_color | titlecase}}</strong>
+              </li>
+              <li> <span>Interior Color</span>
+                <strong class="text-right">{{carDetail?.interior_color | titlecase}}</strong>
+              </li>
+              <!-- <li *ngIf="carDetail?.vehicle_to_be_picked_up"> <span>Pickup</span>
+                <strong class="text-right">{{carDetail?.willing_to_drive_how_many_miles }} Mi</strong>
+              </li> -->
+              <li *ngIf="carDetail?.vehicle_transmission_style"> <span>Transmission</span>
+                <strong class="text-right">{{carDetail?.vehicle_transmission_style}}</strong>
+              </li>
+              <li *ngIf="carDetail?.vehicle_engine_cylinders"> <span>Engine</span>
+                <strong class="text-right">{{carDetail?.vehicle_engine_cylinders}} {{carDetail?.vehicle_engine_model}}</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-9 col-md-9  col-sm-9">
+        <div id="tabs">
+          <ul class="tabs">
+            <li data-tabs="tab1" class="active text_cap"> <span aria-hidden="true" class="icon-diamond"></span> Details & Specs
+            </li>
+            <li data-tabs="tab2" class="text_cap"><span aria-hidden="true" class="icon-list "></span>More Information</li>
+            <li data-tabs="tab3" class="text_cap"> <span aria-hidden="true" class="icon-equalizer "></span> Seller Comments</li>
+            <li data-tabs="tab4" class="text_cap"> <span aria-hidden="true" class="icon-equalizer "></span> Market Value</li>
+            <li data-tabs="tab5" class="text_cap"> <span aria-hidden="true" class="icon-equalizer "></span> Location</li>
+          </ul>
+          <div id="tab1" class="tabcontent">
+            
+           
+              <ul class="car_details_tab">
+                
+                <li>
+                    <span class="head">Trim</span>
+                    <span class="value">{{carDetail?.trim | titlecase}}</span>
+                </li>
+       
+                <li>
+                    <span class="head">Interior Material</span>
+                    <span class="value">{{carDetail?.interior_material | titlecase}}</span>
+                </li>
+          
+                
+                
+  
+              </ul> 
+              <div class="car_details_tab">  
+              <div class="option_outer">
+                  <h2>Standard Options</h2>
+
+
+                  <div class="option_box">
+                    <ol class="three_column">
+                      <li *ngFor="let se  of carDetail?.standard_equipments;let i = index;">
+
+                        <input type="checkbox" disabled [checked]="se.selected" id="o" />
+                        <label for="o">{{se?.name}}</label>
+
+                      </li>
+                    </ol>
+                  </div>
+
+                  <h2>Additional Options</h2>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="option_box">
+                        <h5>Entertainment & Instrumentation</h5>
+                        <ol>
+
+
+                          <li
+                            *ngFor="let aeo of carDetail?.additional_options.entertainments;let i = index;">
+                            <input id="aeo_{{i}}" [checked]="aeo.selected" disabled
+                              type="checkbox" />
+                            <label for="aeo_{{i}}">{{aeo?.name}}</label>
+                          </li>
+
+                        </ol>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="option_box">
+                        <h5>Wheels & Tires</h5>
+                        <ol>
+                          <li
+                            *ngFor="let wheel of carDetail?.additional_options.wheels;let i = index;">
+                            <input id="wheel_{{i}}" [checked]="wheel.selected" disabled
+                              type="checkbox" />
+                            <label for="wheel_{{i}}">{{wheel?.name}}</label>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="option_box">
+                        <h5>Accessory Packages</h5>
+                        <ol>
+
+
+                          <li
+                            *ngFor="let accessory of carDetail?.additional_options.accessory_packages;let i = index;">
+                            <input id="accessory_{{i}}" [checked]="accessory.selected"
+                              type="checkbox" disabled />
+                            <label for="accessory_{{i}}">{{accessory.name}}</label>
+                          </li>
+
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <div id="tab2" class="tabcontent">
+                <ul class="car_details_tab">
+                    <li>
+                        <span class="head">Vehicle has second key</span>
+                        <span class="value">{{carDetail?.vehicle_has_second_key}}</span>
+                      </li>
+  
+                    <li>
+                      <span class="head">Has Aftermarket Options</span>
+                      <span class="value">{{carDetail?.is_vehicle_aftermarket | titlecase}}</span>
+                    </li>
+                    
+                    <li *ngIf="carDetail?.is_vehicle_aftermarket=='Yes'">
+                        <span class="head"></span>
+                        <span class="value">{{carDetail?.vehicle_aftermarket?.vehicle_aftermarket_description}}</span>
+                    </li>
+                    <li *ngIf="carDetail?.is_vehicle_aftermarket=='Yes'">
+                        <span class="head"></span>
+                        <span class="value" >
+                          <span *ngFor="let marketImage of carDetail?.vehicle_aftermarket?.vehicle_aftermarket_images">
+                            <img class="img-thumbnail" src="{{marketImage.file_path}}">
+                          </span>
+                        </span>
+                    </li>
+  
+                    <li>
+                        <span class="head">Clean Title</span>
+                        <span class="value">{{carDetail?.clean_title}}</span>
+                    </li>
+                    
+                    <li *ngIf="carDetail?.vehicle_ownership.vehicle_clean_title== false">
+                      <span class="head">Clean Title Option</span>
+                      <span  class="value"><div *ngFor="let ct of carDetail.vehicle_ownership?.vehicle_ownership_value;"><ng-container *ngIf="ct.selected">{{  ct?.name | titlecase}}</ng-container></div></span>
+                    </li>
+                    
+                    <li *ngIf="carDetail?.vehicle_ownership.vehicle_clean_title== false">
+                        <span class="head">Description</span>
+                        <span class="value">{{carDetail?.vehicle_ownership?.vehicle_ownership_description}}</span>
+                    </li>
+  
+                    <li>
+                        <span class="head">Car Condition</span>
+                        <span class="value">{{carDetail?.vehicle_condition?.vehicle_condition_value}}</span>
+                    </li>
+                    <li *ngIf="carDetail?.vehicle_condition?.vehicle_condition_value!='Ready For Resale Without Any Reconditioning'">
+                        <span class="head">Description</span>
+                        <span class="value">{{carDetail?.vehicle_condition?.vehicle_condition_description | titlecase}}</span>
+                    </li>
+                    <li *ngIf="carDetail?.vehicle_condition?.vehicle_condition_value!='Ready For Resale Without Any Reconditioning'">
+                        <span class="head">Images</span>
+                        <span class="value" >
+                          <span *ngFor="let condition of carDetail?.vehicle_condition?.vehicle_condition_images">
+                            <img class="img-thumbnail" src="{{condition.file_path}}">
+                          </span>
+                        </span>
+                    </li>
+                   
+                    
+                    
+                    
+      
+                  </ul>
+              
+            </div>
+            <div id="tab3" class="tabcontent">
+              {{carDetail?.comments}}
+            </div>
+            <div id="tab4" class="tabcontent">
+                <ul class="car_details_tab">
+                    <!-- <li>
+                        <span class="head">Estimated Price</span>
+                        <span class="value">{{carDetail?.vehicle_finance_details?.vehicle_min_selling_price | currency:'USD':true:'1.2-2'}}</span>
+                      </li> -->
+                      <li *ngIf="carDetail?.vehicle_min_selling_price">
+                        <span class="head" >Minimum Selling Price</span>
+                        <span
+                          class="value">{{carDetail?.vehicle_min_selling_price | currency:'USD':true:'1.2-2'}}</span>
+                      </li>
+                    <li>
+                      <span class="head">Payoff Balance</span>
+                      <span class="value">{{carDetail?.vehicle_finance_details?.vehicle_pay_off | currency:'USD':true:'1.2-2'}}</span>
+                    </li>
+  
+                    <li>
+                        <span class="head">Finance Bank</span>
+                        <span class="value">{{carDetail?.vehicle_finance_details?.vehicle_finance_bank?carDetail?.vehicle_finance_details?.vehicle_finance_bank:'N/A'}}</span>
+                      </li>
+  
+                    <li>
+                      <span class="head">Offer In Hand</span>
+                      <span class="value">{{carDetail?.vehicle_finance_details?.vehicle_offer_in_hands_price | currency:'USD':true:'1.2-2'}}</span>
+                    </li>
+                    <li>
+                        <span class="head">Proofs</span>
+                        <span class="value" >
+                          <span *ngFor="let proof of carDetail?.vehicle_finance_details?.vehicle_proof_image">
+                            <img class="img-thumbnail" src="{{proof.file_path}}">
+                          </span>
+                        </span>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div id="tab5" class="tabcontent">
+              <ul class="car_details_tab">
+                  <li>
+                      <span class="head">Zip Code</span>
+                      <span class="value">{{carDetail?.zipcode }}</span>
+                  </li>
+                  <li>
+                      <span class="head">City</span>
+                      <span class="value">{{carDetail?.location?.city }}</span>
+                  </li>
+                  <li>
+                      <span class="head">State</span>
+                      <span class="value" *ngIf="carDetail?.location?.state.length>0">{{carDetail?.location?.state }}</span>
+                  </li>
+                  <!-- <li>
+                      <span class="head">Willing to drive</span>
+                      <span class="value">{{carDetail?.willing_to_drive}}</span>
+                  </li> -->
+                  <li>
+                    <span class="head">Drive how many miles:</span>
+                    <span class="value">{{carDetail?.willing_to_drive_how_many_miles}}</span>
+                  </li>
+                  <!--<li>
+                    <span class="head">Vehicle to be picked up:</span>
+                    <span class="value">{{carDetail?.vehicle_to_be_picked_up}}</span>
+                  </li>-->
+                  
+                  
+                  
+      
+                </ul>
+            
+          </div> 
+        </div>
+
+      </div>
+
+      <div class="col-md-3">
+        <div class="details-social details-weight">
+          <h5 class="text_cap">Share now</h5>
+          <ul>
+            <li><a href="#"> <i class="fa fa-facebook"></i> Facebook</a></li>
+            <li><a href="#"> <i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="#"> <i class="fa fa-pinterest-p"></i> Pinterest</a></li>
+            <li><a href="#"> <i class="fa fa-dribbble"></i> Dribbble</a></li>
+            <li><a href="#"><i class="fa fa-google-plus"></i> Google plus </a></li>
+            <li><a href="#"> <i class="fa fa-behance"></i> Behance</a></li>
+          </ul>
+        </div>
+      </div>      
+    </div>
+
+
+    <div class="feature-car">
+      <h6 class="text_cap">Recently Vehicle</h6>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="owl-carousel" data-nav-arrow="true" data-nav-dots="true" data-items="4" data-md-items="4"
+            data-sm-items="2" data-xs-items="2" data-space="15">
+            <div class="item">
+              <div class="car-item gray-bg text-center">
+                <div class="car-image">
+                  <img class="img-fluid" src="/assets/images/bg/cars/small/01.jpg" alt="">
+                  <div class="car-overlay-banner">
+                    <ul>
+                      <li><a href="javascript:void(0)"><i class="fa fa-link"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="car-list">
+                  <ul class="list-inline">
+                    <li><i class="fa fa-registered"></i> 2016</li>
+                    <li><i class="fa fa-cog"></i> Manual </li>
+                    <li><i class="fa fa-dashboard"></i> 6,000 mi</li>
+                  </ul>
+                </div>
+                <div class="car-content">
+                  <div class="star">
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star-o orange-color"></i>
+                  </div>
+                  <a href="javascript:void(0)"> Acura Rsx</a>
+                  <div class="separator"></div>
+                  <div class="price">
+                    <span class="old-price">$35,568</span>
+                    <span class="new-price">$32,698 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="car-item gray-bg text-center">
+                <div class="car-image">
+                  <img class="img-fluid" src="/assets/images/bg/cars/small/02.jpg" alt="">
+                  <div class="car-overlay-banner">
+                    <ul>
+                      <li><a href="javascript:void(0)"><i class="fa fa-link"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="car-list">
+                  <ul class="list-inline">
+                    <li><i class="fa fa-registered"></i> 2016</li>
+                    <li><i class="fa fa-cog"></i> Manual </li>
+                    <li><i class="fa fa-dashboard"></i> 6,000 mi</li>
+                  </ul>
+                </div>
+                <div class="car-content">
+                  <div class="star">
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star-o orange-color"></i>
+                  </div>
+                  <a href="javascript:void(0)">Lexus GS 450h</a>
+                  <div class="separator"></div>
+                  <div class="price">
+                    <span class="old-price">$35,568</span>
+                    <span class="new-price">$32,698 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="car-item gray-bg text-center">
+                <div class="car-image">
+                  <img class="img-fluid" src="/assets/images/bg/cars/small/03.jpg" alt="">
+                  <div class="car-overlay-banner">
+                    <ul>
+                      <li><a href="javascript:void(0)"><i class="fa fa-link"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="car-list">
+                  <ul class="list-inline">
+                    <li><i class="fa fa-registered"></i> 2016</li>
+                    <li><i class="fa fa-cog"></i> Manual </li>
+                    <li><i class="fa fa-dashboard"></i> 6,000 mi</li>
+                  </ul>
+                </div>
+                <div class="car-content">
+                  <div class="star">
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star-o orange-color"></i>
+                  </div>
+                  <a href="javascript:void(0)">GTA 5 Lowriders DLC</a>
+                  <div class="separator"></div>
+                  <div class="price">
+                    <span class="old-price">$35,568</span>
+                    <span class="new-price">$32,698 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="car-item gray-bg text-center">
+                <div class="car-image">
+                  <img class="img-fluid" src="/assets/images/bg/cars/small/01.jpg" alt="">
+                  <div class="car-overlay-banner">
+                    <ul>
+                      <li><a href="javascript:void(0)"><i class="fa fa-link"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="car-list">
+                  <ul class="list-inline">
+                    <li><i class="fa fa-registered"></i> 2016</li>
+                    <li><i class="fa fa-cog"></i> Manual </li>
+                    <li><i class="fa fa-dashboard"></i> 6,000 mi</li>
+                  </ul>
+                </div>
+                <div class="car-content">
+                  <div class="star">
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star-o orange-color"></i>
+                  </div>
+                  <a href="javascript:void(0)">Toyota avalon hybrid </a>
+                  <div class="separator"></div>
+                  <div class="price">
+                    <span class="old-price">$35,568</span>
+                    <span class="new-price">$32,698 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="car-item gray-bg text-center">
+                <div class="car-image">
+                  <img class="img-fluid" src="/assets/images/bg/cars/small/02.jpg" alt="">
+                  <div class="car-overlay-banner">
+                    <ul>
+                      <li><a href="javascript:void(0)"><i class="fa fa-link"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="car-list">
+                  <ul class="list-inline">
+                    <li><i class="fa fa-registered"></i> 2016</li>
+                    <li><i class="fa fa-cog"></i> Manual </li>
+                    <li><i class="fa fa-dashboard"></i> 6,000 mi</li>
+                  </ul>
+                </div>
+                <div class="car-content">
+                  <div class="star">
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star orange-color"></i>
+                    <i class="fa fa-star-o orange-color"></i>
+                  </div>
+                  <a href="javascript:void(0)">Hyundai santa fe sport </a>
+                  <div class="separator"></div>
+                  <div class="price">
+                    <span class="old-price">$35,568</span>
+                    <span class="new-price">$32,698 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--=================================
+  car-details  -->
+  <app-membership (onCloseModal)="cancelMembershipModal($event)"
+  [isModalOpen]="isMemberShipModelOpen">
+</app-membership>
+<app-place-bid [isOpen]="isBidModalOpen"[car]="carDetail" (onClose)="closeBidModal($event)" (onSuccess)="onBidSuccess($event)"></app-place-bid>
+<app-contact-request [isOpen]="isOpen" (onClose)="hide($event)"></app-contact-request>
+<app-increase-bid [isOpen]="isPlaceBidModalOpen" [modalType]=[modalType] [car]="carDetail" (onCancel)="cancelUpdateBid($event)" (onClose)="closeBidModal($event)"
+  (onSuccess)="onBidSuccess($event)" ></app-increase-bid>

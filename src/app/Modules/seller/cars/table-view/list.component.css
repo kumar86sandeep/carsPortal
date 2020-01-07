@@ -1,0 +1,572 @@
+app-list .row_detail span{
+    width: auto;
+}
+
+app-list .row_detail span.value {
+    margin-left: 10px;
+}
+
+app-list .row_detail .table td,app-list .row_detail .table th {
+    padding: 7px 10px;
+}
+app-list .row_detail table {
+    margin: 0;
+}
+app-list .row_detail_inner > .row {
+    padding: 13px 2px;
+}
+/* .datatable-row-center  .datatable-body-cell:nth-child(7) {
+    width: 100px!important;
+} */
+
+app-list .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell{
+    white-space: pre-wrap!important;
+}
+
+
+app-list .actions a .fa-globe:hover {color:#db2d2e;cursor: pointer;}
+/* chat css */
+/* chat window css */
+
+#sellerChatListing {
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    -webkit-transition: .9s;
+    -moz-transition: .9s;
+    -ms-transition: .9s;
+    -o-transition: .9s;
+    transition: .9s;
+    bottom:0px;
+}
+#sellerChatListing.opend{
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+    bottom:10px;
+}
+.chat_box {
+    width: 340px;
+    right: 48.5%;
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.2);
+    margin-right: 0;
+    position: fixed;
+    bottom: 0px;
+    /* right: 10px; */
+    right: 48.5%;
+
+
+
+    z-index: 98988;
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    -webkit-transition: .9s;
+    -moz-transition: .9s;
+    -ms-transition: .9s;
+    -o-transition: .9s;
+    transition: .9s;
+
+}
+
+.chat_box.opend{
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.chat_head {
+    background: #db2d2e;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.close_BUTN {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.img_thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.img_thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chat_head .info {
+    margin-left: 15px;
+}
+
+.chat_head .name {
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.chat_head .status {
+    opacity: .5;
+    line-height: 1;
+    font-size: 13px;
+    margin-top: 0px;
+    color: #fff;
+}
+
+.chat_body {
+    padding: 15px 20px;
+    max-height: 345px;
+    overflow: auto;
+    min-height: 200px;
+}
+
+.chat_body ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.chat_body ul li {
+    margin-bottom: 12px;
+    list-style: none;
+}
+
+.chat_body .message {
+    color: #696969;
+    font-size: 12px;
+    line-height: 17px;
+    width: 70%;
+    padding: 10px 12px;
+    display: inline-block;
+}
+
+.chat_body .message p {
+    margin: 0;
+}
+
+.chat_body .sender {
+    text-align: right;
+}
+
+.chat_body .sender .message {
+    background: rgba(219, 45, 46, 0.26);
+    text-align: left;
+}
+
+.chat_body .sender .sent_time img {
+    margin-left: 3px;
+}
+
+.chat_body .replier .message {
+    background: rgba(130, 130, 130, 0.26);
+}
+
+.chat_body .replier .sent_time img {
+    margin-right: 3px;
+}
+
+.sent_time {
+    display: block;
+    font-size: 11px;
+    color: #9a9a9a;
+}
+
+.chat_footer {
+    border-top: 1px solid rgba(130, 130, 130, 0.20);
+    padding: 0 20px;
+    position: relative;
+}
+
+.chat_footer input[type="text"] {
+    width: 100%;
+    border: 0;
+    font-size: 13px;
+    padding: 20px 47px 20px 0;
+    color: #000;
+}
+
+.chat_footer input[type="text"]:focus {
+    outline: 0;
+}
+
+.attachment input {
+    display: none;
+}
+
+.attachment,
+.send_btn {
+    display: inline-block;
+}
+
+.attachment label {
+    width: 20px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.send_btn .send_BTN {
+    padding: 0;
+    background: none;
+    border: 0;
+    width: 20px;
+    margin-left: 12px;
+}
+
+.action {
+    position: absolute;
+    top: 18px;
+    right: 30px;
+}
+.cursor_hand{
+    cursor: pointer;
+}
+
+.actions .button {
+    padding: 0px 2px;
+    margin-left: 5px;
+    background: #313131;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.underline_heading {
+    display: inline-block;
+    padding: 0;
+    letter-spacing: 0.8px;
+    margin: 0px;
+    position: relative;
+    z-index: 1;
+    font-size: 15px;
+    color: #363636;
+    text-align: center;
+}
+
+#contentSection .modal-body {
+    padding: 0 1rem;
+    margin: 0 -15px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+/* .datatable-body-cell:last-child, .datatable-header-cell:last-child {
+    width: 180px!important;
+} */
+.paid {
+    color: #ffffff;
+    margin: 0 0 0 5px;
+    cursor: not-allowed!important;
+    background: #25b346!important;
+}
+
+.carfax_img {display: inline-block;
+    margin-left: 10px;
+    position: absolute;
+    bottom: 16px;
+    right: 104px;
+}
+
+datatable-body-row, datatable-body-cell {
+    height: auto!important;
+}
+
+
+app-list .ngx-datatable.bootstrap .datatable-header-cell {font-weight:normal !important;}
+app-list .datatable-header-cell-label {font-weight:bold !important;} 
+.table-thumb {height:70px; width:70px; border:1px solid #ccc; margin:0px; padding:0px; display: inline-block;}
+.table-thumb img {height:100%; width:100%;object-fit:cover;  margin:0px; padding:0px;}
+
+ 
+ 
+/* app-list .datatable-header-cell:nth-child(4),  app-list .datatable-row-center.datatable-row-group .datatable-body-cell:nth-child(4) {width:120px !important;}
+app-list .datatable-header-cell:nth-child(5),   app-list .datatable-row-center.datatable-row-group .datatable-body-cell:nth-child(5) {width:80px !important;}
+app-list .datatable-header-cell:nth-child(6),  app-list .datatable-row-center.datatable-row-group .datatable-body-cell:nth-child(6) {width: 130px !important;}
+app-list .datatable-header-cell:nth-child(7),  app-list .datatable-row-center.datatable-row-group .datatable-body-cell:nth-child(7) {width: 100px !important;} */
+
+app-list .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {overflow: visible !important; padding:0.75rem !important;}
+/* app-list .datatable-body-cell-label {text-align: center;}
+app-list .datatable-row-center.datatable-row-group {width:100% !important;}
+app-list .datatable-body-row {box-sizing: border-box !important; padding:0px !important;}
+app-list .datatable-header-cell:first-child {padding:0.75rem !important;}
+app-list .datatable-header-cell:nth-child(2), .datatable-body-cell.sort-active:nth-child(2) {text-align: center !important;width:165px !important;}
+app-list .print_vin {font-size: 12px;}
+app-list .datatable-header-cell:nth-child(3), .datatable-header-cell:last-child {text-align: center;}
+app-list .datatable-header-cell-template-wrap {text-align: center;}
+app-list .datatable-body-cell.sort-active {font-size: 13px !important;} */
+app-list .ngx-datatable.bootstrap .datatable-header-cell {font-size: 14px !important;}
+.datatable-header-inner datatable-header-cell {border-bottom:0px;}
+
+/* custom css start */
+
+app-list .ngx-datatable.bootstrap.table-view {
+    overflow: visible !important;
+} 
+
+app-list .bid-section.sidebar-widget .unordered-lists {
+    overflow: visible;
+}
+
+app-list .table-view span.Excellentt::after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-color: transparent #056705 transparent;
+    border-width: 0px 8px 4px 0px;
+    top: 31px;
+    left: 2;
+}
+
+app-list .table-view span.Excellent {
+    position: absolute;
+    left: -10px;
+    background: #2c9d2c;
+    top: 12px;
+    padding: 6px 11px;
+    font-size: 12px;
+    color: #fff;
+}
+
+
+app-list .table-thumb {
+    height: 103px;
+    width: 163px;
+    border: 1px solid #ccc;
+    margin: 0px;
+    padding: 5px;
+    display: inline-block;
+}
+
+app-list .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {
+    text-align: left;
+}
+
+app-list .datatable-body-cell-label {
+    text-align: left;
+    font-size: 14px;
+    color: #6b6b6b;
+}
+
+
+
+app-list .actions {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+app-list .dots i {
+    display: block;
+    font-size: 7px;
+    text-align: right;
+    margin-top: 3px;
+    color: #dd4648;
+
+}
+
+app-list .dot_actions {
+    left: -202px !important;
+    width: 193px !important;
+    background: #323232;
+    color: #fff;
+    padding: 9px 11px;
+    position: absolute;
+    top: 5px;
+    width: 157px;
+    opacity: 0;
+    visibility: hidden;
+    text-align: left;
+    transition: 0.30s all;
+    z-index: 1;
+}
+
+app-list .dot_actions a {
+    color: #fff !important;
+    font-size: 13px !important;
+}
+
+app-list .actions:hover .dot_actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0px);
+}
+
+app-list .dot_actions li {
+    list-style: none;
+}
+
+app-list .dot_actions li a i{
+    color: #fff;
+    font-size: 15px;
+    margin-right: 9px;
+}
+
+app-list .dot_actions::after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    border-width: 7px 0 7px 9px;
+    border-color: transparent transparent transparent #000;
+    top: 5px;
+    right: -9px;
+}
+
+app-list .datatable-header-cell {
+    height: 52px !important;
+    background:#dd4748 !important;
+}
+
+app-list .ngx-datatable .datatable-body .datatable-body-row > div:hover{
+    background: #5d646a;
+    color: #fff;
+    transition: 1.5s ease;
+    cursor: pointer;
+}
+
+app-list .ngx-datatable .datatable-body .datatable-body-row > div:hover 
+.datatable-body-cell-label {
+    color: #fff;
+}
+
+
+app-list .datatable-header-cell:nth-child(1), app-list
+.datatable-body-cell.sort-active:nth-child(1) {
+    width: 187px !important;
+}
+
+
+app-list .datatable-header-cell:nth-child(2), app-list.datatable-body-cell.sort-active:nth-child(2) {
+    text-align: center !important;
+    width: 51px !important;
+}
+
+app-list .ngx-datatable.bootstrap .datatable-header {
+    background: #dd4748;
+    height: 52px !important;
+}
+
+app-list .datatable-body-cell:last-child .datatable-body-cell-label {
+    text-align: center;
+}
+
+app-list .datatable-body-cell:last-child {
+    margin-left: auto;
+}
+
+app-list .list-footer.table-view-btn button {
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 13px;
+    border-radius: 0;
+    padding: 5px 11px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+app-list .table-view i.fa.fa-arrow-down {
+    position: absolute;
+    right: 50%;
+    top: 70%;
+    color:#fff;
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    text-align: center;
+    padding: 7px 0;
+    background: transparent;
+}
+
+app-list .ngx-datatable .datatable-body .datatable-body-row > div:hover
+ i.fa.fa-arrow-down {
+   background: #db2d2e;
+   transform: translateY(5px);
+   transition: .5s ease;
+}
+
+app-list .ngx-datatable .datatable-body .datatable-body-row > div:hover .btn_spacing_section {
+    color: #fff;
+}
+
+
+app-list .table-view i.fa.fa-arrow-up {
+    position: absolute;
+    right: 50%;
+    top: 70%;
+    color:#fff;
+}
+
+app-list .ngx-datatable .datatable-body .datatable-body-row > div:hover
+ i.fa.fa-arrow-up {
+   background: #db2d2e;
+    text-align: center;
+    height: 26px;
+    width: 26px;
+    padding: 7px 0;
+    border-radius: 50%;
+}
+
+
+app-list .ngx-datatable .datatable-body .datatable-body-row > div:hover .dots i {
+    color: #fff;
+}
+
+app-list .ngx-datatable.bootstrap .datatable-body .datatable-body-row {
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+app-list .datatable-body-cell:last-child, app-list .datatable-header-cell:last-child {
+    width: 142px!important;
+    margin-left: auto;
+}
+
+app-list .datatable-body-cell:last-child .datatable-body-cell-label {
+    text-align: center;
+}
+app-list .ngx-datatable .datatable-header .datatable-header-cell:last-child .datatable-header-cell-template-wrap {
+    text-align: center;
+}
+
+app-list .unordered-lists.table-responsive.text-center {
+    overflow: visible;
+}
+app-list ngx-datatable.bootstrap.table-view.ngx-datatable.fixed-header.fixed-row.virtualized::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    z-index: 9;
+    bottom: 80px;
+    left: -5px;
+    border: 1px solid #e3e3e3;
+}
+app-list datatable-body.datatable-body {
+    border: 0 !important;
+}
+app-list .sorting-options-main {
+    margin: 20px -5px;
+}
+
+/* .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell{
+    width: 231px !important
+} */

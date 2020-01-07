@@ -1,0 +1,11 @@
+button.verify_BTN {
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+    color: #444;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+}

@@ -1,0 +1,35 @@
+<ng-container *ngIf="errors && errors['required']">{{errorPrefix}} is required.<br /></ng-container>
+<ng-container *ngIf="errors && errors['notUnique']">{{errorPrefix}} is not unique.<br /></ng-container>
+<ng-container *ngIf="errors && errors['email']">Please enter a valid email.<br /></ng-container>
+<ng-container *ngIf="errors && errors['minlength']">Minimum length is {{minLength}}.<br /></ng-container>
+<ng-container *ngIf="errors && errors['maxlength']">Maximum length is {{maxLength}}.<br /></ng-container>
+<ng-container *ngIf="errors && errors['hasNumber']">Must contain at least 1 number.<br /></ng-container>
+<ng-container *ngIf="errors && errors['pattern']">{{patternError}}<br /></ng-container>
+<ng-container *ngIf="errors && errors['isPasswordCorrect']">{{errorPrefix}} is incorrect<br /></ng-container>
+
+<ng-container *ngIf="errors && errors['hasCapitalCase']">{{errorPrefix}} must contain at least 1 Letter in Capital
+    Case.<br /></ng-container>
+<ng-container *ngIf="errors && errors['hasSmallCase']">{{errorPrefix}} must contain at least 1 Letter in Small Case<br /></ng-container>
+<ng-container *ngIf="errors && errors['hasSpecialCharacters']">{{errorPrefix}} must contain at least 1 special character.<br /></ng-container>
+<ng-container *ngIf="errors && errors['NoPassswordMatch']">Password and confirm password do not match.<br /></ng-container>
+<ng-container *ngIf="errors && errors['emailTaken']">Email already registered in our system.<br /></ng-container>
+<ng-container *ngIf="errors && errors['phoneNumberTaken']">Phone number already registered in our system.<br /></ng-container>
+<ng-container *ngIf="errors && errors['validPhone']">Phone number is not valid.<br /></ng-container>
+<ng-container *ngIf="errors && errors['defaultPhoneMaxSelected']">Default phone number must be max 1 selected.<br /></ng-container>
+<ng-container *ngIf="errors && errors['defaultPhoneNotSelected']">Please select default mobile number.<br /></ng-container>
+<ng-container *ngIf="errors && errors['defaultEmailMaxSelected']">Default email must be max 1 selected.<br /></ng-container>
+<ng-container *ngIf="errors && errors['defaultEmailNotSelected']">Please select default email. <br /></ng-container>
+<ng-container *ngIf="errors && errors['emailNotExist']">Email do not exist in our system.<br /></ng-container>
+<ng-container *ngIf="errors && errors['validFax']">Fax number is not valid.<br /></ng-container>
+<ng-container *ngIf="errors && errors['defaultFaxMaxSelected']">Default Fax must be max 1 selected.<br /></ng-container>
+<ng-container *ngIf="errors && errors['defaultFaxNotSelected']">Please select default Fax. <br /></ng-container>
+
+<!------ Added By Bhavnish --------->
+<ng-container *ngIf="errors && isupdateBid && errors['min']">{{errorPrefix}}should be greater than the current higest bid.<br /></ng-container>
+<ng-container *ngIf="errors && isplaceBid && errors['min']">{{errorPrefix}}should be greater than or equal to your actual bid price.<br /></ng-container>
+<ng-container *ngIf="errors && isPrice && errors['min']">{{errorPrefix}}should be minimum {{minAmount | currency:'USD':true:'1.2-2'}}<br /></ng-container>
+<ng-container *ngIf="errors && !isPrice && !isplaceBid && !isupdateBid&& (errors['min'] || errors['max'])">{{errorPrefix}}must be between {{minValue}} to {{maxValue}}.<br /></ng-container>
+<!------ Credit Card Validation --------->
+<ng-container *ngIf="errors && (errors['ccNumber'])">Must enter valid credit card number. <br /></ng-container>
+
+<ng-container *ngIf="errors && errors['creditCardExpired']">Must enter valid expiry date. <br /></ng-container>

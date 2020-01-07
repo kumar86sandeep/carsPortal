@@ -1,0 +1,87 @@
+<div class="modal fade bd-example-modal-lg feedback-modal_rating" #bidModal id="bidModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog border-none  mx-auto" role="document">
+        <div class="modal-content p-0">
+            <div class="modal-header feedback-header_bg">
+                <h5 class="modal-title text_cap" id="bidModal">Place Bid</h5>
+                <button type="button" (click)="closeModal()" class="close opac-1" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="bidForm">
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <div class="selected-box auto-hight form-group w-100">
+                                <p class="price_alert">Are you sure you want to place a bid for <span class="">{{minBidPrice | currency:'USD':true:'1.2-2'}}?</span></p>
+                            </div>
+                            <div class="form-group w-100">
+                                <div class="submission_Btns text-center">
+                                   
+                                    <button class="button left_margin red black_BTN black_BTN_Bid" type="button "
+                                        (click)="closeModal()">Cancel</button>
+                                        <button class="button red btn_red" type="button" (click)="onSubmit()">Place Bid</button>
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg feedback-modal_rating" #proxyBidModal id="proxyBidModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog  border-none  mx-auto" role="document">
+        <div class="modal-content p-0">
+            <div class="modal-header feedback-header_bg">
+                <h5 class="modal-title text_cap" id="proxyBidModal">Proxy Bid</h5>
+                <button type="button" (click)="close()" class="close opac-1" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="bidForm">
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <div class="selected-box auto-hight form-group w-100">
+                                    <form [formGroup]="bidForm">
+                              <div class="row">
+                                    <div class="col-md-6">
+                                            <p class="price_alert_2">Current Bid <span class="">{{minBidPrice | currency:'USD':true:'1.2-2'}}</span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <div class="selected-box auto-hight form-group w-100">
+                                                        <label for="">Proxy Price*</label>
+                                                        <input type="text" maxLength=17 currencyMask [options]="{ allowNegative: false, align: 'left'}"
+                                                        
+                                                          class="form-control w-100 d-block my_select" formControlName="proxy_price" [ngClass]="{ 'is-invalid': (bidForm.controls.proxy_price.touched || submitted) && bidForm.get('proxy_price').errors }">
+
+                                                        <p *ngIf="bidForm.controls.proxy_price.touched || submitted">
+                                                          <app-form-validation-errors errorPrefix="Proxy price  " [isPrice]=true minAmount='{{minPrice}}'
+                                                            [errors]="bidForm.get('proxy_price').errors">
+                                                          </app-form-validation-errors>
+                                                        </p>
+                                                      </div>
+                                                      <button class="button red btn_red" type="button" (click)="onSubmitProxyBid()">Proxy Bid</button>
+                                                      <button class="button left_margin red black_BTN black_BTN_Bid" type="button "
+                                                      (click)="close()">Cancel</button>
+                                                      
+                                            </div>
+                              </div>
+                                </form>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

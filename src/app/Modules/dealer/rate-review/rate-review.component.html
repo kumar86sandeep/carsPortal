@@ -1,0 +1,296 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<!--=================================
+     breadcrumbs and inner-intro -->
+<section class="blog page-section-ptb pad-b-30">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="listing_outer blog-sidebar">
+          <div class="sorting-options-main">
+            <div class="row blog-sidebar listing_outer">
+              <div class="col-md-12 d-flex">
+                <div class="product-listing">
+                  <div class="price-search">
+                    <div class="search">
+                      <i class="fa fa-search"></i>
+                      <input type="search" class="form-control placeholder" (input)="onSearch($event.target.value)"
+                        placeholder="Type Make, Model, Trim etc..">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="right_sec ml-auto">
+                  <!-- <div class="input-group date_filters_start d-inline-block">
+                      <button class="button red" (click)="downloadCsv(1)"> Download </button>
+                    </div> -->
+
+                  <div class="input-group date_filters_start d-inline-block">
+                    <input [(ngModel)]="bidStartDate" class="form-control" (dateSelect)="onBidDateSelected($event)"
+                      type="text" (click)="startDate.toggle()" placeholder="Listed Date" ngbDatepicker
+                      #startDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()"
+                        type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                    </div>
+                  </div>
+
+                  <div class="input-group date_filters_start d-inline-block">
+                    <input [(ngModel)]="bidEndDate" class="form-control" type="text"
+                      (dateSelect)="onAcceptedDateSelected($event)" (click)="endDate.toggle()" placeholder="End Date"
+                      ngbDatepicker #endDate="ngbDatepicker">
+
+
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()"
+                        type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                    </div>
+                  </div>
+
+
+                  <div data-toggle="tooltip" title="Reset Date Filter" (click)="clearDateFilters()"
+                    class="clear_inputs d-inline-block">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="sidebar-widget">
+
+
+            <div class="unordered-lists table-responsive text-center">
+              <ngx-datatable #listingTable class="bootstrap" [rows]="bids"
+                [columns]="[{name:'Year'},{name:'Make'},{name:'Model'},{name:'Listed Date'},{name:'Purchase Date'},{name:'Purchase From'},{name:'Rating Given'},{name:'Rating Received'}]"
+                [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                [externalPaging]="true" [externalSorting]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                [limit]="page.size" (page)='setPage($event)' (sort)="sortCallback($event)">
+                <ngx-datatable-column name="Title" prop="vehicle_year" [sortable]="true" [resizeable]="false"
+                  [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    <span class="cursor_hand" routerLink="/dealer/car-detail/{{row._id}}">
+                      {{ row?.vehicle_year }} {{ row?.vehicle_make | titlecase }} {{row?.vehicle_model | titlecase }} {{row?.vehicle_trim}}
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+                <!-- <ngx-datatable-column name="Model" prop="vehicle_model" [sortable]="true" [resizeable]="false"
+                  [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    {{ row?.vehicle_model}}
+                  </ng-template>
+                </ngx-datatable-column> -->
+
+                <ngx-datatable-column name="Listed Date" prop="created_on" [sortable]="true" [resizeable]="false"
+                  [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    {{ row?.created_on |  date:'MM-dd-yyyy'}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Purchased Date" prop="purchase_date" [sortable]="true" [resizeable]="false"
+                  [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    {{ row?.purchase_date |  date:'MM-dd-yyyy'}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Seller Name" prop="purchase_from" [sortable]="true" [resizeable]="false"
+                  [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    {{ row?.purchase_from}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+
+                <ngx-datatable-column name="Car Rating" prop="rating_given" [sortable]="false" [resizeable]="false"
+                [draggable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <ng-container *ngIf="row?.car_rating?.rating > 0">
+                    <ngb-rating [readonly]="true" aria-labelledby="Rating & Review" [max]="5"
+                      [rate]="row?.car_rating?.rating">
+                    </ngb-rating>
+                    <span class="rating-number">({{row?.car_rating?.rating}}/5)</span>
+                  </ng-container>
+                  <ng-container *ngIf="!row?.car_rating?.rating > 0">
+                    <span (click)="giveCarRating(row)"><a class="underLine">Give Rating</a></span>
+
+                     </ng-container>
+                    </ng-template>
+                 </ngx-datatable-column>
+
+             
+                <ngx-datatable-column name="Seller Rating" prop="rating_given" [sortable]="false" [resizeable]="false"
+                  [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <ng-container *ngIf="row.rating_given > 0">
+                      <ngb-rating [readonly]="true" title="({{row?.rating_given}}/5)" aria-labelledby="Rating & Review" [max]="5"
+                        [rate]="row?.rating_given">
+                      </ngb-rating>
+                      <!-- <span class="rating-number">({{row?.rating_given}}/5)</span> -->
+                    </ng-container>
+                    <ng-container *ngIf="!row.rating_given > 0">
+                      <span (click)="giveRating(row)"><a class="underLine">Give Rating</a></span>
+  
+                    </ng-container>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Rating Received" prop="rating_received" [sortable]="false"
+                [resizeable]="false" [draggable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <ng-container *ngIf="row?.rating_received > 0">
+                    <ngb-rating [readonly]="true" aria-labelledby="Rating & Review" [max]="5"
+                      [rate]="row?.rating_received">
+                    </ngb-rating>
+                    <span class="rating-number">({{row?.rating_received}}/5)</span>
+                  </ng-container>
+                  <ng-container *ngIf="!row.rating_received > 0">
+                  <span>Pending</span> 
+                  </ng-container>
+
+                </ng-template>
+              </ngx-datatable-column>
+
+                <ngx-datatable-footer>
+                  <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+                    let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset"
+                    let-isVisible="isVisible">
+                    <div class="pagination_outer d-flex">
+                      <div class="showing_records">
+                        Showing <div class="selected-box number_records">
+                          <select class="selectpicker my_select" id="per-page"
+                            (change)="onLimitChange($event.target.value)">
+                            <option *ngFor="let option of pageLimitOptions" [value]="option.value"
+                              [selected]="option.value == currentPageLimit">
+                              {{ option.value }}
+                            </option>
+                          </select>
+                        </div> records on page
+                      </div>
+                      <div class="ml-auto">
+                        <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'"
+                          [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+                          [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount"
+                          [hidden]="!((rowCount / pageSize) > 1)" (change)="listingTable.onFooterPage($event)">
+                        </datatable-pager>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-footer>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+ 
+
+</section>
+<div class="modal fade bd-example-modal-lg feedback-modal_rating" #carRatingModal id="carRatingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   
+  <div class="modal-dialog mw-55 border-none  mx-auto" role="document">
+   
+    <div class="modal-content p-0">
+     
+      <div class="modal-header feedback-header_bg">
+        <h5 class="modal-title" id="exampleModalLabel">Please Rate Car</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body px-4 pt-0">
+        <div class="row pt-3">
+            <div class="col-md-4 text-center">
+               <div class="rate_car_stars_modal">
+                    <img class="img-fluid" [src]="car?.cover_image">
+               </div>
+               <!-- <div class="buyer-name-rating w-100">
+               <p>{{car?.purchase_from}}</p>
+               </div> -->
+            </div>
+            <div class="col-md-8">
+                <div class="feedback-buyer-description">
+                    <!-- <h5>${{car?.price}}</h5> -->
+                    <h5 class="vehicle_model_modal_text_transform">{{car?.vehicle_year}} {{car?.vehicle_make}} {{car?.vehicle_model}}</h5>
+                    <div class="rating-starts-section">
+                      <ngb-rating [readonly]="false" class="rating_width" aria-labelledby="Rating & Review" [max]="5"
+                      [rate]="carRating?.rating" [(ngModel)]="carRating.rating">
+                    </ngb-rating>
+                    </div>
+                    <div class="form-group">
+                    <label for="buyer-rating">Enter Your Feedback</label>
+                    <textarea class="form-control" id="buyer-rating" rows="3" [(ngModel)]="carRating.review"></textarea>
+                    <a class="button red text-white" (click)="saveCarRating()"> Submit </a>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        </div>
+    </div>
+    
+    
+
+  </div>
+</div>
+
+<!-- //car rating model ends here-->
+
+<div class="modal fade bd-example-modal-lg feedback-modal_rating" #ratingModal id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   
+  <div class="modal-dialog mw-55 border-none  mx-auto" role="document">
+
+    <div class="modal-content p-0">
+     
+      <div class="modal-header feedback-header_bg">
+        <h5 class="modal-title" id="exampleModalLabel">Please Rate Seller</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+          <span aria-hidden="true">&times;</span>
+        </button>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+      </div>
+      
+      <div class="modal-body px-4 pt-0">
+        <div class="row pt-3">
+            <div class="col-md-4 text-center">
+               <div class="uplo                                                                                                                                                                                                                         ad-profile-photo">
+                    <img class="img-fluid" [src]="car?.profile_pic ? car?.profile_pic:default_img">
+               </div>
+               <div class="buyer-name-rating w-100">
+               <p>{{car?.purchase_from}}</p>
+               </div>
+            </div>
+            <div class="col-md-8">
+                <div class="feedback-buyer-description">
+                    <!-- <h5>${{car?.price}}</h5> -->
+                    <h5 class="vehicle_model_modal_text_transform">{{car?.vehicle_year}} {{car?.vehicle_make}} {{car?.vehicle_model}}</h5>
+                    <div class="rating-starts-section">
+                      <ngb-rating [readonly]="false" class="rating_width" aria-labelledby="Rating & Review" [max]="5"
+                      [rate]="sellerRating?.rating" [(ngModel)]="sellerRating.rating">
+                    </ngb-rating>
+                    </div>
+                    <div class="form-group">
+                    <label for="buyer-rating">Enter Your Feedback</label>
+                    <textarea class="form-control" id="buyer-rating" rows="3" [(ngModel)]="sellerRating.review"></textarea>
+                    <a class="button red text-white" (click)="saveSellerRating()"> Submit </a>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        </div>
+    </div>
+    
+    
+
+  </div>
+</div>

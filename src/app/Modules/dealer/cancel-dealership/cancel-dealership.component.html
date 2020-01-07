@@ -1,0 +1,33 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<section class="p-50-top">
+    <div class="container">
+      <div class="row border_outer">
+        <div class="col-md-4 no-padding">
+        <div class="left_section_spacing text-center">    
+          
+           <!--img src="../../../../assets/images/thumbs_up_1.png"/-->
+          <h2>{{subscriptionName}}</h2>
+    
+          <h4>Your next bill date is: {{subscriptionAutoRenewDate | date:'MM-dd-yyyy'}}</h4>
+          <h4>Amount: {{subscriptionAmount}}</h4>
+          <div class="right_btn_sec">
+              <button (click)="cancelYourSubscription()" class="button red">Cancel Dealership</button>
+            </div>
+        </div>	
+        </div>
+        <div class="col-md-1">
+          <div class="right_seperator"></div>
+        </div>
+        <div class="col-md-7">
+        <div class="right_section_spacing">
+          <span class="">You are a subscriber to the "{{subscriptionName}}" plan. To cancel the recurring or auto debited payment of the plan, please click on the cancel dealership button. By clicking on the cancel dealership button, you will be no longer subscribed to the current "{{subscriptionName}}" plan & next payment shall not be deducted. However, you will still be able to use all your features in the current plan till it expires.</span>          
+        </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>

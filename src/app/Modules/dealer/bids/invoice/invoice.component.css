@@ -1,0 +1,137 @@
+#invoiceSection .modal-dialog {
+    max-width: 650px;
+    margin: 1.75rem auto;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+}
+
+
+#invoiceSection .modal-content {
+    border: 0;
+    border-radius: 0;
+}
+
+#invoiceSection .modal-content:after {
+    content: "";
+    background-image: url(/assets/images/bottom_arroww.png);
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 12px;
+    z-index: 999999;
+    left: 0;
+}
+
+#invoiceSection .modal-header {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 40px;
+    border: 0;
+}
+
+#invoiceSection .modal-header h2 {
+    font-size: 23px;
+    color: #2f2f2f;
+    margin: 12px 0 0 0;
+    text-transform: capitalize;
+    padding: 0;
+    font-weight: bold;
+}
+
+#invoiceSection .order_details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+#invoiceSection .address {
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 0;
+    color: #000;
+}
+
+#invoiceSection .address b {
+    color: #000000;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    display: block;
+}
+
+#invoiceSection .payment_detail {
+    color: #303030;
+    font-size: 14px;
+    line-height: 1;
+}
+
+#invoiceSection .payment_date {
+    margin-bottom: 10px;
+}
+
+#invoiceSection .modal-body {
+    padding: 20px 40px;
+    border: 0;
+    padding-top: 0;
+}
+
+#invoiceSection .modal-footer {
+    border: 0;
+    justify-content: flex-start;
+    padding: 20px 40px;
+    margin-bottom: 40px;
+
+}
+
+#invoiceSection .order_summery {
+    border: 1px solid #dcdcdc;
+}
+
+#invoiceSection .image {
+    max-height: 100%;
+    max-width: 170px;
+    padding: 20px;
+    text-align: center;
+
+}
+
+#invoiceSection .summery_text {
+    padding: 20px;
+    font-size: 14px;
+    color: #3c3c3c;
+    line-height: 21px;
+    border-left: 1px solid #dcdcdc;
+    height: 100%;
+
+}
+
+#invoiceSection .payment_status {
+    vertical-align: middle;
+}
+
+
+#invoiceSection .payment_status .approved:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(/assets/images/approved.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+#invoiceSection .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/*invoiceSection Popup CSS End*/

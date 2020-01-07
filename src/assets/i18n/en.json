@@ -1,0 +1,58 @@
+{
+  "FORM-VALIDATIONS": {
+    "REQUIRED": "is required!",
+    "NOT-UNIQUE": "is not unique!",
+    "ALREADY-EXIST": "already exists!",
+    "EMAIL": "Please enter a valid email!",
+    "MIN-LENGTH": "Must be at least 10 characters!",    
+    "HAS-NUMBER": "Must contain at least 1 number!",
+    "HAS-CAPITAL-CASE": "Must contain at least 1 in Capital Case!",
+    "HAS-SMALL-CASE": "Must contain at least 1 Letter in Small Case!",
+    "HAS-SPECIAL-CHARACTERS": "Must contain at least 1 Special Character!",
+    "NO-PASSWORD-MATCH": "Passwords do not match!",
+    "EMAIL-TAKEN": "Email already exist!",
+    "EMAIL-NOT-EXIST": "Email do not exist in our system!",
+    "VALID-PHONE": "Phone number is not valid!",
+    "DEFAULT-PHONE-MAX-SELECTED": "Must be max 1 selected!",
+    "DEFAULT-PHONE-NOT-SELECTED": "Please select default mobile number!",
+    "DEFAULT-EMAIL-MAX-SELECTED": "Must be max 1 selected!",
+    "DEFAULT-EMAIL-NOT-SELECTED": "Please select default email!"
+  },
+
+  "TOP-NAVIGATION": {
+    "LOGIN": "Hello Angular 2 with ng2-translate!",
+    "REGISTER": "Change language"    
+  },
+  "LOGIN":{
+    "LOGIN-OPTION-TITLE":"Log in with your id or social media",
+    "LOGIN-PAGE-TITLE":"Login To Your Account",
+    "LOGIN-USERNAME":"USER NAME",
+    "LOGIN-USERNAME-PLACEHOLDER":"User name",
+    "LOGIN-PASSWORD-PLACEHOLDER":"Password",
+    "LOGIN-PASSWORD":"PASSWORD",
+    "LOGIN-BUTTON":"Log in",
+    "LOGIN-SOCIAL-MEDIA":"Login with Social media",
+    "GOOGLE":"google+",
+    "FACEBOOK":"Facebook",
+    "MICROSOFT":"Microsoft",
+    "TWITTER":"Twitter",
+    "REMEMBER-ME":"REMEMBER ME",
+    "FORGOT-PASSWORD":"Forgot Password?"
+  },
+  "SELLER-PROFILE":{
+    "PREFIX":"Prefix",
+    "YOUR-NAME":"Your Name",
+    "LAST-NAME":"Last Name",
+    "EMAIL":"Email",
+    "PHONE":"Mobile Phone",    
+    "DEFAULT-EMAIL-TITLE":"Set this email as default",
+    "DEFAULT-PHONE-TITLE":"Set this phone number as default",
+    "SAVE-BUTTON":"Save",
+    "UNDO-CHANGES-BUTTON":"Undo Changes"
+  },
+  "FOGOT":{   
+    "EMAIL":"Email",    
+    "SEND-BUTTON":"Send"
+   
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects", 
+  "projects": {
+    "topAutoBid": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {       
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/topAutoBid",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [    
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/flaticon.css",
+              "src/assets/css/mega-menu/mega_menu.css",
+              "src/assets/css/font-awesome.min.css",
+              "src/assets/css/owl-carousel/owl.carousel.css",
+              "src/assets/css/magnific-popup/magnific-popup.css",
+              "src/assets/revolution/css/settings.css",
+              "src/assets/css/slick/slick.css",
+              "src/assets/css/slick/slick-theme.css",
+              "src/assets/css/jquery-ui.css",
+              "src/assets/css/style.css",
+              "src/assets/css/developer.css",
+              "src/assets/css/responsive.css",              
+              "src/styles.css",
+              "src/assets/css/css-loader.css",
+              "src/assets/css/ngx-datatable.css"
+            ],
+            "scripts": [
+              "src/assets/js/jquery-3.3.1.min.js",
+              "src/assets/js/popper.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/mega-menu/mega_menu.js",
+              "src/assets/js/jquery-ui.js",  
+              "src/assets/js/jquery.appear.js",
+              "src/assets/js/counter/jquery.countTo.js",
+              "src/assets/js/owl-carousel/owl.carousel.min.js",
+            
+              "src/assets/js/magnific-popup/jquery.magnific-popup.min.js",
+              "src/assets/revolution/js/jquery.themepunch.tools.min.js",
+              "src/assets/js/isotope/isotope.pkgd.min.js",
+              "src/assets/revolution/js/jquery.themepunch.revolution.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.actions.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.carousel.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.kenburn.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.layeranimation.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.migration.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.navigation.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.parallax.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.slideanims.min.js",
+              "src/assets/revolution/js/extensions/revolution.extension.video.min.js",
+              "src/assets/js/slick/slick.min.js",              
+              "src/assets/js/custom.js",
+              "src/assets/js/sticky-kit.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",         
+          "options": {
+            "browserTarget": "topAutoBid:build",
+            "host": "localhost",
+            "port": 4200
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "topAutoBid:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "topAutoBid:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "topAutoBid-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "topAutoBid:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "topAutoBid:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "topAutoBid"
+}

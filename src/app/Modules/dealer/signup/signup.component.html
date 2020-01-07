@@ -1,0 +1,569 @@
+ <!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+
+
+<!--=================================
+ register-form  -->
+
+<section #contentSection class="register-form page-section-ptb">
+  <div class="container">
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12">
+        <div class="gray-form">
+		
+          <aw-wizard #wizard class="custom-css">
+            
+            <aw-wizard-step stepTitle="Dealership Type" (stepEnter)="scrollToSpecificDiv($event)" [canExit]="moveDirection.bind(this, dealershipTypeWizard.valid)">
+              <form [formGroup]="dealershipTypeWizard">
+                <div class="form-group">
+                  <ul class="stage0_ul">
+                    <li>
+                        <div class="Radio_BTN">
+                            <input type="radio" (click)="toggleDealershipType('Franchise')" value="Franchise" formControlName="dealership_type" id="franchise">
+                            <label class="text_doc_none" for="franchise">Are you a franchise dealership?</label>
+                        </div> 
+                    </li>
+                    <li class="stage2_li">
+                        <div class="Radio_BTN">
+                            <input type="radio" (click)="toggleDealershipType('Independent')" value="Independent" formControlName="dealership_type" id="independent">
+                            <label class="text_doc_none" for="independent">Are you an independent dealership?</label>
+                            
+                           
+                        </div> 
+                    </li>
+                  </ul>  
+                  <div [hidden]="!isIndependentSelected" formGroupName="dealership_bond" class="row">
+                    
+                    <div class="form-group col-md-12 mt-4">
+                      <span  class="independent_note">Currently we are mainly working with the franchise dealerships however we do take applications for the independent dealerships, and we only approve those independent dealerships that meet CarsGoat’s Terms of Service. Your dealership must have been in business for a minimum of 5 years and a minimum of 100 cars in the lot.</span>
+                     </div>
+                    <div class="form-group col-md-12">
+                      <div class="section-title my-3">
+                          <h5 class="stageheading_five">Upload Documents</h5>
+                          <div class="separator"></div>
+                      </div>            
+                        
+                    </div>
+
+                    <div class="btn_sec_red col-md-12">
+                      <div class="row">
+                    <!--Upload Images Section-->
+                      <div class="col-md-4">                                          
+                      <div class="form-group stage1_btn">
+
+                        <div class="dropzone dropzone-container" [dropzone]="dealerRetailDMVLicenseConfiguration" [disabled]="disabled"></div>
+                                                            
+                            
+                          <div class="thumbnails" *ngIf="checkObjectLength(retailDMVLicenseImagesArray.value) > 0">
+                                  <div class="thumbnail_list" *ngFor="let retailDMVLicenseImage of retailDMVLicenseImagesArray.value | keyvalue; let retailDMVLicenseImageIndex = index;">     
+                                    
+                                      <img *ngIf="retailDMVLicenseImage.value.file_mimetype != 'application/pdf'" src="{{retailDMVLicenseImage.value.file_path}}">
+    
+                                      <a class="upload_pdf" data-toggle="tooltip" title="{{retailDMVLicenseImage.value.file_name}}" *ngIf="retailDMVLicenseImage.value.file_mimetype == 'application/pdf'" href="{{retailDMVLicenseImage.value.file_path}}" target="_blank"><img src="assets/images/pdf_icon.png"></a>
+
+                                      <i (click)="removeImage(retailDMVLicenseImage.key, 'retailDMVLicenseDocument',retailDMVLicenseImage.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
+
+                                      
+                                  </div>
+                          </div>
+
+                      </div>    
+                    </div>
+                    <!--Upload Images Section-->
+
+
+
+                    <!--Upload Images Section-->
+                    <div class="col-md-4">                                             
+                      <div class="form-group stage1_btn">
+
+                        <div class="dropzone dropzone-container" [dropzone]="dealerResaleNumberConfiguration" [disabled]="disabled"></div>
+                                                            
+                            
+                        <div class="thumbnails" *ngIf="checkObjectLength(resaleNumberImagesArray.value) > 0">
+                                <div class="thumbnail_list" *ngFor="let resaleNumberImage of resaleNumberImagesArray.value | keyvalue; let resaleNumberImageIndex = index;">     
+                                  
+                                    <img *ngIf="resaleNumberImage.value.file_mimetype != 'application/pdf'" src="{{resaleNumberImage.value.file_path}}">
+
+                                    <a class="upload_pdf" data-toggle="tooltip" title="{{resaleNumberImage.value.file_name}}" *ngIf="resaleNumberImage.value.file_mimetype == 'application/pdf'" href="{{resaleNumberImage.value.file_path}}" target="_blank"><img src="assets/images/pdf_icon.png"></a>
+
+                                    <i (click)="removeImage(resaleNumberImage.key, 'resaleNumberDocument',resaleNumberImage.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
+
+                                    
+                                </div>
+                        </div>
+
+                      </div>    
+                    </div>
+                    <!--Upload Images Section-->
+
+
+                    <!--Upload Images Section-->
+                    <div class="col-md-4">                                          
+                      <div class="form-group stage1_btn">
+
+                        <div class="dropzone dropzone-container" [dropzone]="dealerBondDocumentsConfiguration" [disabled]="disabled"></div>
+                                                            
+                            
+                            <div class="thumbnails" *ngIf="checkObjectLength(bondDocumentImagesArray.value) > 0">
+                                    <div class="thumbnail_list" *ngFor="let bondDocumentImage of bondDocumentImagesArray.value | keyvalue; let bondDocumentImageIndex = index;">     
+                                      
+                                        <img *ngIf="bondDocumentImage.value.file_mimetype != 'application/pdf'" src="{{bondDocumentImage.value.file_path}}">
+      
+                                        <a class="upload_pdf" data-toggle="tooltip" title="{{bondDocumentImage.value.file_name}}" *ngIf="bondDocumentImage.value.file_mimetype == 'application/pdf'" href="{{bondDocumentImage.value.file_path}}" target="_blank"><img src="assets/images/pdf_icon.png"></a>
+
+                                        <i (click)="removeImage(bondDocumentImage.key, 'bondocument',bondDocumentImage.value.file_key)" class="fa fa-times" aria-hidden="true"></i>
+
+                                      
+                                    </div>
+                            </div>
+
+                      </div>    
+                    </div>
+                    <!--Upload Images Section-->
+                      </div>
+                      </div>
+
+                  <div class="form-group col-md-12">                    
+                      <label>Comments</label>
+                      <textarea minLength=10 maxLength=200 #dealership_bond_explanation class="grey_input form-control placeholder" rows="4" formControlName="dealership_bond_explanation" [ngClass]="{ 'is-invalid': (dealershipTypeWizard.controls.dealership_bond.get('dealership_bond_explanation').touched || isdealershipTypeWizardSubmitted) && dealershipTypeWizard.controls.dealership_bond.get('dealership_bond_explanation').errors }"></textarea>
+
+                      <p *ngIf="dealershipTypeWizard.controls.dealership_bond.get('dealership_bond_explanation').touched || isdealershipTypeWizardSubmitted">                      
+                          <app-form-validation-errors minLength=10 maxLength=200 errorPrefix="Explain " [errors]="dealershipTypeWizard.controls.dealership_bond.get('dealership_bond_explanation').errors"></app-form-validation-errors>   
+                      </p>
+                      
+                  </div>
+                  </div>
+
+
+                </div>
+                
+                <div class="form-group text-right">
+                  <button class="button red d-inline-block width-auto" (click)="validateDealershipTypeWizard()" type="button" awNextStep>Next Step</button>		
+                </div>
+              </form>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Account Owner" (stepEnter)="scrollToSpecificDiv($event)" [canExit]="moveDirection.bind(this, accountOwnerWizard.valid)">
+              <form [formGroup]="accountOwnerWizard">
+              <div formGroupName="name" class="row">
+                <div class="form-group col-md-4">
+                  <label>Prefix</label>
+                  <select formControlName="prefix" name="prefix">
+                    <option value="">Select</option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Ms.">Ms.</option>                
+                  </select>     
+                </div>
+                <div class="form-group col-md-4">
+                  <label>First Name*</label>
+                  <input class="form-control" type="text" placeholder="First Name" formControlName="first_name" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.name.get('first_name').touched || step1submitted) && accountOwnerWizard.controls.name.get('first_name').errors }">
+                    <p *ngIf="accountOwnerWizard.controls.name.get('first_name').touched || step1submitted">                      
+                      <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="First name " [errors]="accountOwnerWizard.controls.name.get('first_name').errors"></app-form-validation-errors>   
+                    </p>
+                </div> 
+                <div class="form-group col-md-4">
+                  <label>Last Name*</label>
+                  <input class="form-control" type="text" placeholder="Last Name" formControlName="last_name" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.name.get('last_name').touched || step1submitted) && accountOwnerWizard.controls.name.get('last_name').errors }">
+                  <p *ngIf="accountOwnerWizard.controls.name.get('last_name').touched || step1submitted">                        
+                      <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Last name " [errors]="accountOwnerWizard.controls.name.get('last_name').errors"></app-form-validation-errors>   
+                    </p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Title* </label>
+                <input class="form-control" type="text" placeholder="Title" name="title" formControlName="title" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.title.touched || step1submitted) && accountOwnerWizard.get('title').errors }">
+                <p *ngIf="accountOwnerWizard.controls.title.touched || step1submitted">
+                    <app-form-validation-errors  errorPrefix="Title " [errors]="accountOwnerWizard.get('title').errors"></app-form-validation-errors>      
+                  </p>
+              </div>
+
+              <div class="form-group">
+                <label>Email* </label>
+                <div formArrayName="emails">
+                    <div *ngFor="let emailObj of accountOwnerWizard.get('emails')['controls']; let e = index;">
+                        <div [formGroupName]="e">
+                          <input class="form-control" type="text" placeholder="Email Address" name="email" formControlName="email" [ngClass]="{ 'is-invalid': (emailObj.controls.email.touched || step1submitted) && emailObj.get('email').errors }">
+                          <p *ngIf="emailObj.controls.email.touched || step1submitted">
+                              <app-form-validation-errors  errorPrefix="Email " [errors]="emailObj.get('email').errors"></app-form-validation-errors>      
+                            </p>
+                        </div>
+                    </div>          
+                </div>  
+              </div>
+              
+              <div class="form-group">
+                <label>Phone Number  *</label>
+                <div formArrayName="phones">
+                  <div *ngFor="let phoneObj of accountOwnerWizard.get('phones')['controls']; let i = index;">
+                    <div class="relative " [formGroupName]="i">
+                      <div class="select--box--stage_setting">
+                      <!-- <select formControlName="country_code">
+                        <option value="+1">+1</option>
+                        <option value="+91">+91</option>
+                      </select> -->
+                      <input  mask="000-000-0000" class="form-control" type="text" placeholder="Phone Number "
+                        formControlName="phone" [ngClass]="{ 'is-invalid': (phoneObj.controls.phone.touched || step1submitted) && phoneObj.get('phone').errors }">
+                      </div>
+                        <small class="italic_font text-muted">This number will be used for sending verification code. If this will be only used only for MFA, then should be asked and activated during the MFA activation. </small>
+                      <p *ngIf="phoneObj.controls.phone.touched || step1submitted">
+                        <app-form-validation-errors errorPrefix="Phone Number " [errors]="phoneObj.controls.phone.errors"></app-form-validation-errors>
+                      </p>
+                    </div>
+                  </div>
+                </div>        
+              </div>  
+              
+             
+              <div formGroupName="location" class="row">
+                 
+                <div class="form-group col-md-4">
+                  <label>Zip Code*</label>
+                  <input  mask="00000" class="form-control" type="text" placeholder="Enter Zip Code" formControlName="zipcode" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.location.get('zipcode').touched || step1submitted) && accountOwnerWizard.controls.location.get('zipcode').errors }">
+                  <p class="error_msg" *ngIf="accountOwnerWizard.controls.location.get('zipcode').touched || step1submitted">                      
+                      <app-form-validation-errors minLength=2 maxLength=5 errorPrefix="Zip Code " patternError="Must enter valid zip code." [errors]="accountOwnerWizard.controls.location.get('zipcode').errors"></app-form-validation-errors>   
+                  </p>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>State*</label>
+                  <input  readonly class="form-control" type="text" placeholder="State" formControlName="state" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.location.get('state').touched || step1submitted) && accountOwnerWizard.controls.location.get('state').errors }">  
+                                
+                </div>              
+                <div class="form-group col-md-4">
+                  <label>City*</label>
+                  <input *ngIf="cities.length<=1" readonly class="form-control" type="text" placeholder="City" formControlName="city" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.location.get('city').touched || step1submitted) && accountOwnerWizard.controls.location.get('city').errors }">
+                  <select *ngIf="cities.length >1" formControlName="city" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.location.get('city').touched || step1submitted) && accountOwnerWizard.controls.location.get('city').errors }">
+                    
+                    <option *ngFor="let cityObject of cities" value="{{cityObject.city}}">{{cityObject.city}}</option>
+                  </select>
+                  
+                </div>
+  
+              </div>
+
+
+              <div class="form-group">
+              <label>Password*</label>
+                <input class="form-control" type="password" placeholder="Password" name="password" formControlName="password" [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.password.touched || step1submitted) && accountOwnerWizard.get('password').errors }">
+
+                <small class="italic_font text-muted">Minimum length is 10 –  To protect your account and identity, your password must include a minimum length of ten characters. </small>
+                
+                <p *ngIf="accountOwnerWizard.controls.password.touched || step1submitted">
+                    <app-form-validation-errors minLength=10 maxLength=50 errorPrefix="Password " [errors]="accountOwnerWizard.get('password').errors"></app-form-validation-errors>  
+                  </p>
+              </div> 
+              <div class="form-group">
+                <label>Confirm Password*</label>
+                <input [ngClass]="{ 'is-invalid': (accountOwnerWizard.controls.repassword.touched || step1submitted) && accountOwnerWizard.get('repassword').errors }"
+                  class="form-control" type="password" placeholder="Confirm Password" formControlName="repassword">
+                <p *ngIf="accountOwnerWizard.controls.repassword.touched || step1submitted">
+                  <app-form-validation-errors minLength=10 maxLength=50 errorPrefix="Confirm password" [errors]="accountOwnerWizard.get('repassword').errors"></app-form-validation-errors>
+                </p>
+              </div>        
+              
+
+              <div class="stage_step2_button">
+                <div class="form-group mr-4"><button class="button red d-inline-block width-auto" type="button" awPreviousStep>Previous Step</button></div>
+
+                <div class="form-group">
+                <button class="button red d-inline-block width-auto" (click)="checkFormValidity()" type="button" awNextStep>Next Step</button>		
+                </div>
+              </div>
+              </form>		
+            </aw-wizard-step>  
+                  
+            <aw-wizard-step stepTitle="Dealership Locations" (stepEnter)="scrollToSpecificDiv($event)" [canExit]="moveDirection.bind(this, (dealershipsItems.length !== 0 || signUpFormStep2.valid))">
+                <form [formGroup]="signUpFormStep2">
+
+                      
+                          <div formGroupName="dealerships">
+                            <div class="row">
+                              <!----------------------Left_section-------------------->
+                              <div class="col-lg-4 col-md-6 col-sm-6">
+                                  <div class="title">
+                                      <h5 class="text-red text_cap">Dealership Details</h5>
+                                  </div>
+                                  <div class="gray-form">
+                                      <div class="row">
+                                          <div class="form-group col-md-12">                                    
+                                              <label>Legal Corporation Name*</label>
+                                              <input class="form-control" type="text" placeholder="Legal Corporation Name" name="legalcoroporationname" formControlName="legalcoroporationname" [ngClass]="{ 'is-invalid': (signUpFormStep2.controls.dealerships.get('legalcoroporationname').touched || step2submitted) && signUpFormStep2.controls.dealerships.get('legalcoroporationname').errors }">
+                                              <p *ngIf="signUpFormStep2.controls.dealerships.get('legalcoroporationname').touched || step2submitted">
+                                                  <app-form-validation-errors minLength=2 maxLength=50  errorPrefix="Legal Corporation " [errors]="signUpFormStep2.controls.dealerships.get('legalcoroporationname').errors"></app-form-validation-errors>      
+                                                </p>
+                                          </div>
+                                          <div class="form-group col-md-12">
+                                              <label>Dealer License Number*</label>
+                                              <input class="form-control" type="text" placeholder="Dealer License Number" name="dealershipnumber" formControlName="dealershipnumber" [ngClass]="{ 'is-invalid': (signUpFormStep2.controls.dealerships.get('dealershipnumber').touched || step2submitted) && signUpFormStep2.controls.dealerships.get('dealershipnumber').errors }">
+
+                                              <p *ngIf="signUpFormStep2.controls.dealerships.get('dealershipnumber').touched || step2submitted">
+                                                  <app-form-validation-errors minLength=2 maxLength=50  errorPrefix="Dealer License Numbe " [errors]="signUpFormStep2.controls.dealerships.get('dealershipnumber').errors"></app-form-validation-errors>      
+                                                </p>
+                                          </div>
+                                          <div class="form-group col-md-12">
+                                              <label>Reseller Permit Number*</label>
+                                              <input class="form-control" type="text" placeholder="Reseller Permit Number" name="reseller_permit_number" formControlName="reseller_permit_number" [ngClass]="{ 'is-invalid': (signUpFormStep2.controls.dealerships.get('reseller_permit_number').touched || step2submitted) && signUpFormStep2.controls.dealerships.get('reseller_permit_number').errors }">
+
+                                              <p *ngIf="signUpFormStep2.controls.dealerships.get('reseller_permit_number').touched || step2submitted">
+                                                  <app-form-validation-errors minLength=2 maxLength=50  errorPrefix="Reseller Permit Number " [errors]="signUpFormStep2.controls.dealerships.get('reseller_permit_number').errors"></app-form-validation-errors>      
+                                                </p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>  
+                              <!----------------------Middle_section-------------------->
+                              <div class="col-lg-4 col-md-6 col-sm-6">
+                                  <div class="title">
+                                      <h5 class="text-red text_cap">Location</h5>
+                                  </div>
+                                  <div class="gray-form">
+
+                                      
+
+                                        
+                                      <div class="row">
+                                          <div class="form-group col-md-12">
+                                              <label>Main Address Line 1*</label>
+                                              <input class="form-control" type="text" placeholder="Main Address Line 1" name="mainaddressline1" formControlName="mainaddressline1" [ngClass]="{ 'is-invalid': (signUpFormStep2.controls.dealerships.get('mainaddressline1').touched || step2submitted) && signUpFormStep2.controls.dealerships.get('mainaddressline1').errors }">
+
+                                              <p *ngIf="signUpFormStep2.controls.dealerships.get('mainaddressline1').touched || step2submitted">
+                                                  <app-form-validation-errors  errorPrefix="Address Line1 " [errors]="signUpFormStep2.controls.dealerships.get('mainaddressline1').errors"></app-form-validation-errors>      
+                                                </p>
+                                          </div>
+                                          <div class="form-group col-md-12">
+                                              <label>Main Address Line 2</label>
+                                              <input class="form-control" type="text" placeholder="Main Address Line 2" name="mainaddressline2" formControlName="mainaddressline2">
+                                          </div>
+
+
+
+
+                                          <div formGroupName="location" class="col-md-12">
+                                              <div class="form-group">
+                                                <label>Zip Code*</label>
+                                                <input  (input)="fetchCityState($event.target.value)" mask="00000" class="form-control" type="text" placeholder="Enter Zip Code" formControlName="zipcode" [ngClass]="{ 'is-invalid': (signUpFormStep2.get('dealerships').get('location').get('zipcode').touched || step2submitted) && signUpFormStep2.get('dealerships').get('location').get('zipcode').errors }">
+                                                <p class="error_msg" *ngIf="signUpFormStep2.get('dealerships').get('location').get('zipcode').touched || step2submitted">                      
+                                                    <app-form-validation-errors minLength=2 maxLength=5 errorPrefix="Zip Code " patternError="Must enter valid zip code." [errors]="signUpFormStep2.get('dealerships').get('location').get('zipcode').errors"></app-form-validation-errors>   
+                                                </p>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label>State*</label>
+                                                  <input  readonly class="form-control" type="text" placeholder="State" formControlName="state" [ngClass]="{ 'is-invalid': (signUpFormStep2.get('dealerships').get('location').get('state').touched || step2submitted) && signUpFormStep2.get('dealerships').get('location').get('state').errors }">  
+                                                  <!-- <app-form-validation-errors minLength=2 maxLength=50 errorPrefix="State " [errors]="signUpFormStep2.get('dealerships').get('location').get('state').errors"></app-form-validation-errors>                 -->
+                                                </div>              
+                                                <div class="form-group">
+                                                  <label>City*</label>
+                                                  <input *ngIf="dealershipCities.length<=1" readonly class="form-control" type="text" placeholder="City" formControlName="city" [ngClass]="{ 'is-invalid': (signUpFormStep2.get('dealerships').get('location').get('city').touched || step2submitted) && signUpFormStep2.get('dealerships').get('location').get('city').errors }">
+                                                  <select *ngIf="dealershipCities.length >1" formControlName="city" [ngClass]="{ 'is-invalid': (signUpFormStep2.get('dealerships').get('location').get('city').touched || step1submitted) && signUpFormStep2.get('dealerships').get('location').get('city').errors }">
+                                                    
+                                                    <option *ngFor="let cityObject of dealershipCities" value="{{cityObject.city}}">{{cityObject.city}}</option>
+                                                  </select>
+                                                  <!-- <app-form-validation-errors minLength=2 maxLength=50 errorPrefix="City " [errors]="signUpFormStep2.get('dealerships').get('location').get('city').errors"></app-form-validation-errors> -->
+                                                </div>
+                                  
+                                
+                                            </div> 
+
+
+
+                                          
+                                          
+                                          
+                                        </div>
+                                      </div>
+                              </div>
+                              <!----------------------Right_section-------------------->
+                              
+                                <div *ngIf="dealershipsItems.length !== 0" class="col-lg-4 col-md-12 col-sm-12">
+                                    <div class="title">
+                                        <h5 class="text-red text_cap">Added Dealerships</h5>
+                                    </div>
+
+                                  
+                                    <div class="added_address bg-3 bg-overlay-black-70">
+                                        <ng-scrollbar #scrollable class="my-scrollbar">
+                                        <ul>
+                                            
+                                            <li *ngFor="let data of dealershipsItems; let i= index">
+                                                <div class="address_box">
+                                                    <span class="text-white d-block"><b>{{data.legalcoroporationname}}</b></span>
+                                                    <span class="text-white d-block"><b>{{data.dealershipnumber}}</b></span>
+                                                    <address>
+                                                      {{data.mainaddressline1}} {{data.mainaddressline2}}, <br>
+                                                      {{data.location.city}}, {{data.location.state}} - {{data.location.zipcode}}
+                                                    </address>
+                                                    <div class="actions">
+                                                        <button><i class="fa fa-pencil" (click)="EditDealership(i)" aria-hidden="true"></i></button>
+                                                        <button><i class="fa fa-trash" (click)="DeleteDealership(i)" aria-hidden="true"></i></button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                          
+                                        </ul>   
+                                      </ng-scrollbar>
+                                    </div>
+                                  
+                                  </div> 
+                                 
+                            </div> 
+                          </div>
+                        
+                      <div class="row">
+                          <div class="form-group col-md-4"><button class="button red" type="button" awPreviousStep>Previous Step</button></div>
+                          <div *ngIf="IsForUpdate == false" class="form-group col-md-4"><button class="button red" [disabled]="IsForUpdate == true" (click)="AddDealership()" type="button">Save and Add Another</button></div>
+                          <div *ngIf="IsForUpdate == true" class="form-group col-md-4"><button class="button red" [disabled]="IsForUpdate == false" (click)="UpdateDealership()" type="button">Update</button></div>
+                          <div *ngIf="IsForUpdate == false" class="form-group col-md-4"><button class="button red" [disabled]="IsForUpdate == true" (click)="checkStep2FormValidity()" type="button" awNextStep>Request Account</button></div>
+                      </div>                  
+                </form>
+            </aw-wizard-step>	
+                        
+            <!-- <aw-wizard-step stepTitle="Onboarding Scheduling" (stepEnter)="scrollToSpecificDiv($event)" [canExit]="moveDirection.bind(this, signUpFormStep3.valid)">
+            <form [formGroup]="signUpFormStep3">
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <span class="independent_note">Please let us know with your best availability, and we will try our best to reach out to you at the requested time. If for any reason we can’t contact you at the requested time, we’ll be in touch with you to reschedule this onboarding appointment for a different time. Thanks for your patience while we are going through many great applications and only approving the quality accounts just like yours. Our number one commitment is to make CarsGoat a great place to work with professionals and great people.</span>
+                    </div>
+                </div>
+              
+                <div class="row">
+                    <div class="form-group col-md-12 calendar_col">
+                        
+                        <label>Date*</label>
+                        <input class="form-control" type="text" (click)="d.toggle()" placeholder="mm-dd-yyyy" ngbDatepicker #d="ngbDatepicker" name="availabilitydate" formControlName="availabilitydate" [ngClass]="{ 'is-invalid': (signUpFormStep3.controls.availabilitydate.touched || step3submitted) && signUpFormStep3.get('availabilitydate').errors }">
+                        <button class="btn btn-outline-secondary d-none calendar" (click)="d.toggle()" type="date"></button>
+
+
+
+                        <p *ngIf="signUpFormStep3.controls.availabilitydate.touched || step3submitted">
+                            <app-form-validation-errors  errorPrefix="Date " [errors]="signUpFormStep3.get('availabilitydate').errors"></app-form-validation-errors>      
+                          </p>
+                    </div>
+                </div>
+
+                    <div class="row">
+                      <div class="form-group col-md-6" id="timepicker">
+                                    
+                        <label>Time*</label>
+                        <ngb-timepicker formControlName="time" [(ngModel)]="time" [meridian]="meridian" [spinners]="spinners"></ngb-timepicker>
+                        
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label>Time Zone*</label>		
+                        <div class="selected-box auto-hight">                   
+                        <select class="margin-top42" formControlName="timezone" [ngClass]="{ 'is-invalid': (signUpFormStep3.controls.timezone.touched || step3submitted) && signUpFormStep3.get('timezone').errors }">
+                          <option value="">Time Zone</option>
+                          <option value="HST">(UTC -10)Hawaii Standard Time</option>
+                          <option value="AKST">(UTC -9) Alaska Standard Time</option>					
+                          <option value="PST">(UTC -8) Pacific Standard Time</option>
+                          <option value="MST">(UTC -7) Mountain Standard Time</option>
+                          <option value="CST">(UTC -6) Central Standard Time</option>
+                          <option value="EST">(UTC -5) Eastern Standard Time</option>
+                        </select>
+                        <p *ngIf="signUpFormStep3.controls.timezone.touched || step3submitted">
+                          <app-form-validation-errors  errorPrefix="Timezone " [errors]="signUpFormStep3.get('timezone').errors"></app-form-validation-errors>      
+                          </p> 
+                        </div>					
+                      </div>
+
+
+                    </div>
+
+                              
+
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        <label>Language*</label>
+                        <select  formControlName="language" [ngClass]="{ 'is-invalid': (signUpFormStep3.controls.language.touched || step3submitted) && signUpFormStep3.get('language').errors }">
+                          <option value="">Select Language</option>
+                          <option value="en">English</option>                 
+                        </select>
+                        <p *ngIf="signUpFormStep3.controls.language.touched || step3submitted">
+                          <app-form-validation-errors  errorPrefix="Language " [errors]="signUpFormStep3.get('language').errors"></app-form-validation-errors>      
+                          </p>
+                      </div>
+                    </div>
+
+
+                   
+
+
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        <label for="one" class="text_transform_none">By creating an account, you agree to CarsGoat’s <a routerLink="/web/user-agreement"> Terms of Service </a> and <a routerLink="/web/privacy-policy"> Privacy Policy</a></label>
+                      </div>
+                    </div>
+
+                    <div class="row justify-content-end mt-4">
+                        <div class="form-group col-md-4"><button class="button red" type="button" awPreviousStep>Previous Step</button></div>                 
+                        <div class="form-group col-md-4"><button class="button red" type="button" (click)="finishFunction()">Request Account</button></div>
+
+                        
+
+                    </div>
+
+              
+            </form>
+            </aw-wizard-step>	 -->
+            
+            
+          </aw-wizard>	
+            
+          <p class="link">Already have an account? <a routerLink="/dealer/login"> Sign In</a> </p>
+        </div>
+     </div>
+       </div>
+    </div>
+</section>
+
+<!--=================================
+ register-form  -->
+
+
+
+
+ <!--=================================
+  signup-otp-form  -->
+ <!-- Modal -->
+ <div class="modal fade" #otpSection id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="!submitted">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Verification code has been sent.</h5>
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>-->
+      </div>
+      <form [formGroup]="otpVerificationForm" (ngSubmit)="onSubmitOtp()">
+        <div class="modal-body">            
+            <div class="form-group">
+              
+              <div class="form-group">
+                  <label>Verification Code* </label>
+                  <input [ngClass]="{ 'is-invalid': (otpVerificationForm.controls.ConfirmationCode.touched || otpFormsubmitted) && otpVerificationForm.get('ConfirmationCode').errors }"
+                    class="form-control" mask="000000" type="text" placeholder="Please enter the code here" formControlName="ConfirmationCode">
+                    <button  type="button" (click)="resendOTP()" class="verify_BTN"> Resend Code</button>
+                  <p *ngIf="otpVerificationForm.controls.ConfirmationCode.touched || otpFormsubmitted">
+                    <app-form-validation-errors minLength=6 maxLength=6 errorPrefix="Verification Code " [errors]="otpVerificationForm.get('ConfirmationCode').errors"></app-form-validation-errors>
+                  </p>
+              </div>                           
+            </div>              
+        </div>  
+        <div class="modal-footer">            
+          <button [ngClass]="{ 'submit-btn-disable': otpVerificationForm.invalid }" type="submit" class="button red">Verify </button>
+        </div>
+      </form>  
+    </div>
+  </div>
+</div>
+ 

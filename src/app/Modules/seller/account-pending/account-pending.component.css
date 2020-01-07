@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
+select {padding:11px;}
+button.verify_BTN {
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+    color: #444;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+}
+.relative{
+    position: relative;
+}
+
+.country_code select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9899;
+    min-width: auto!important;
+    max-width: fit-content;
+    padding: 0;
+    margin: 10px 0 0 10px;
+    background: none;
+}
+
+.country_code input {
+    padding-left: 60px;
+}
+
+.italic_font{
+    font-style:italic
+}
+.verify-text{
+    color: #28d6b9 !important;
+}
+.verify_image img{
+    height: 50px;
+    margin-top: 10px;
+}
+.login-link a{
+    color: red;
+    cursor: pointer;
+}
+
+/* Radio Buttons CSS START*/
+.Radio_BTN {
+    position: relative;
+    padding-left: 30px;
+}
+
+.Radio_BTN input[type="radio"] {
+    display: none;
+}
+.Radio_BTN label {
+    font-size: 13px;
+    margin: 0;
+    cursor: pointer;
+    line-height: 17px;
+    font-weight: 600;
+}
+
+.Radio_BTN label .addition_info {
+    text-transform: capitalize;
+    display: block;
+    font-size: 12px;
+    line-height: 17px;
+    margin-top: 8px;
+    font-weight: normal;
+}
+
+.Radio_BTN label:before {
+    border: 2px solid #ffffff;
+    height: 15px;
+    margin-top: 3px;
+    width: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 100%;
+    content: "";
+    opacity: 1;
+    transition: all 0.35s;
+    -webkit-transition: all 0.35s;
+    -ms-transition: all 0.35s;
+    -ms-transition: all 0.35s;
+    -o-transition: all 0.35s;
+    position: absolute;
+    left: 0;
+    top: 4px;
+    -webkit-box-shadow: 0 0 0px 2px #db2d2e;
+    -moz-box-shadow: 0 0 0px 2px #db2d2e;
+    -ms-box-shadow: 0 0 0px 2px #db2d2e;
+    -o-box-shadow: 0 0 0px 2px #db2d2e;
+    -o-box-shadow: 0 0 0px 2px #db2d2e;
+}
+
+.Radio_BTN input[type="radio"]:checked + label:before {
+    background: #db2d2e;
+}
+.Radio_BTN input[type="radio"]:checked + label {
+    color: #000;
+}
+
+/* Radio Buttons CSS END*/
+
+
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 1px;
+    bottom: auto;
+    background-color: white;
+    transition: .4s;
+    top: 1px;
+}
+
+/* input:checked + .slider {
+    background-color: #46ab55;
+} */
+
+
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+/* Rounded sliders */
+
+.verify_inner {
+    width: 50%;
+    margin: auto;
+}
+
+.verify_box .section-title > img {
+    max-width: 75px;
+    margin-bottom: 30px;
+} 
+.verify_inner .toggle_bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.verify_inner .toggle_bar h5{
+    margin: 0;
+    font-weight: normal;
+    font-size: 14px;
+    text-transform: capitalize
+}
+
+.verify_inner .collapseable_box {
+    background: #f6f6f6;
+    padding: 20px;
+    margin-top: 11px;
+    display: none;
+}
+.verify_inner .collapseable_box h6 {
+    font-weight: normal;
+    font-size: 14px;
+    margin: 0;
+    text-transform: capitalize
+}
+
+.verify_inner .collapseable_box ul li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.verify_inner .collapseable_box ul li label {
+    font-weight: normal!important;
+    /* text-transform: uppercase; */
+    font-size: 14px!important;
+}
+
+.border0{
+    border: 0;
+}
+
+.verify_inner .collapseable_box ul {
+    margin: 12px 0 20px 0;
+}
+.sign_in_link{
+    color: #d42335;
+}
+.verify_inner p {
+    margin-top: 12px;
+}
+
+.verify_inner button{
+    cursor: pointer;
+}
+.stage31-beautify h2{
+    font-size: 25px !important;
+}
+.stage31-beautify h2 span {
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 30px;
+    margin-top: 10px;
+    text-transform: none;
+}
+
+@media screen and (max-width:767px){
+    .verify_inner {
+        width: 80%;
+    }
+}
+@media screen and (max-width:575px){
+    .verify_box .section-title h2 {
+        font-size: 20px;
+    }
+    .verify_box .section-title > img{
+        margin-bottom: 13px;
+    }
+
+    .verify_inner {
+        width: 100%;
+    }
+
+    .verify_box .section-title {
+        margin-bottom: 25px;
+    }
+}
+
+/* 
+ */

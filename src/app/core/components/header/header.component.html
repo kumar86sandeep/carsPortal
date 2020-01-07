@@ -1,0 +1,190 @@
+<!--=================================
+ header -->
+<!-- <div [hidden]="!isFreeTrialEnabled" class="testorg-banner">
+  You have not subscribed to any plan yet and you will not be able to place any bids, please subscribe now by <span><a routerLink="/dealer/your-plan"
+      id="ember355">clicking here</a></span> and enjoy bidding.
+</div>
+<div [hidden]="!showPlanWillExpired" class="testorg-banner">
+  Your dealership plan expiring in {{calculateExpiredDaysLeft}} day(s). Please <span><a routerLink="/dealer/your-plan"
+      id="ember355">click here</a></span> to upgrade plan.
+</div> -->
+<header id="header" class="topbar-dark logo-right">
+  <!-- <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="topbar-left text-lg-left text-center">
+            <ul class="list-inline">
+              <li> <i class="fa fa-envelope-o"> </i> support@website.com</li>
+              <li> <i class="fa fa-clock-o"></i> Mon - Sat 8.00 - 18.00. Sunday Closed</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="topbar-right text-lg-right text-center">
+            <ul class="list-inline">
+              <li> <i class="fa fa-phone"></i> (007) 123 456 7890</li>
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!--=================================
+   mega menu -->
+
+  <div class="menu">
+    <!-- menu start -->
+    <nav id="menu" class="mega-menu custom_menu">
+      <!-- menu list items container -->
+      <section class="menu-list-items">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- menu logo -->
+              <ul class="menu-logo">
+                <li>
+                  <a routerLink="/"><img id="logo_dark_img" src="assets/images/applogo.png" alt="logo"> </a>
+                </li>
+              </ul>
+
+
+              <!-- menu links -->
+              <ul class="menu-links" style="float:right;">
+                <li><a style="text-transform: none;" routerLinkActive="active-link" routerLink="/web/home"> Home</a>
+                </li>
+                <li><a style="text-transform: none;" routerLinkActive="active-link" routerLink="/web/about-us">About
+                  </a></li>
+                <li><a style="text-transform: none;" routerLinkActive="active-link" href="http://34.223.107.37/cargoat/news/">News </a></li>
+                <li><a style="text-transform: none;" routerLinkActive="active-link" href="http://34.223.107.37/cargoat/blogs/">Blogs </a></li>
+                <li><a style="text-transform: none;" routerLinkActive="active-link" routerLink="/web/contact">Contact
+                  </a></li>
+                  <li><a style="text-transform: none;" routerLinkActive="active-link" href="http://34.223.107.37/cargoat/faq/">FAQ
+                  </a></li>
+                <li [hidden]="isLoggedin"><a href="javascript:void(0)" class="text_dec"> Sign In <i
+                      class="fa fa-angle-down fa-indicator"></i></a>
+                  <!-- drop down multilevel  -->
+                  <ul class="drop-down-multilevel">
+                    <li><a routerLinkActive="active-link" routerLink="/seller/login"> Seller</a></li>
+                    <li><a routerLinkActive="active-link" routerLink="dealer/login"> Dealer</a></li>
+                  </ul>
+                </li>
+                <li [hidden]="isLoggedin"><a href="javascript:void(0)" class="text_dec"> Create Account <i
+                      class="fa fa-angle-down fa-indicator"></i></a>
+                  <!-- drop down multilevel  -->
+                  <ul class="drop-down-multilevel">
+                    <li><a routerLinkActive="active-link" routerLink="/seller/signup"> Seller</a></li>
+                    <li><a routerLinkActive="active-link" routerLink="/dealer/signup"> Dealer</a></li>
+                  </ul>
+                </li>
+
+
+
+                <li *ngIf="isLoggedin" class="hoverTrigger "><a class="text_cap" href="javascript:void(0)">
+
+
+
+
+                    <div class="profile_img">
+                      <img [src]="profileData.profile_pic" alt="" class="img-fluid">
+                    </div>
+
+                    {{profileData.name.first_name}} <i class="fa fa-angle-down fa-indicator"></i>
+                    <div class="mobileTriggerButton"></div>
+                  </a>
+                  <!-- drop down multilevel  -->
+                  <ul class="drop-down-multilevel right-menu effect-fade" style="transition: all 400ms ease 0s;">
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLinkActive="active-link" routerLink="/dealer/dashboard"> Dashboard</a></li>
+                    <li>
+                      <a *ngIf="loggedinUserType=='Seller'" routerLinkActive="active-link" routerLink="/seller/seller-profile">Profile</a>
+                      <a *ngIf="loggedinUserType=='Dealer'" routerLinkActive="active-link" routerLink="/dealer/dealer-profile">Profile</a>
+                    </li>
+
+                    <li *ngIf="loggedinUserType=='Seller'"><a routerLink="/seller/car-listing"> Cars Listing</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLink="/dealer/car-listing"> Cars Listing</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLink="/dealer/disputes"> Disputes</a></li>
+                    <li *ngIf="loggedinUserType=='Seller'"><a routerLink="/seller/disputes"> Disputes</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLink="/dealer/purchases">My Purchases</a></li>
+                    <li *ngIf="loggedinUserType=='Seller'"><a routerLink="/seller/rate-review"> Rate and Review</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLink="/dealer/rate-review"> Rate and Review</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLink="/dealer/dealerships-list"> Dealerships</a>
+                    </li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLinkActive="active-link" routerLink="/dealer/your-plan">Your Plan</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLinkActive="active-link" routerLink="/dealer/invoices">Invoices</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLinkActive="active-link" routerLink="/dealer/transactions">Transactions</a></li>
+                    <li *ngIf="loggedinUserType=='Seller'"><a routerLinkActive="active-link" routerLink="/seller/transactions">Transactions</a></li>
+                    <li *ngIf="loggedinUserType=='Seller'"><a routerLinkActive="active-link" routerLink="/seller/saved-card-listings">Add Payment Method</a></li>
+                    <li *ngIf="loggedinUserType=='Dealer'"><a routerLinkActive="active-link" routerLink="/dealer/saved-card-listings">Add Payment Method</a></li>
+                    <!--li *ngIf="loggedinUserType=='Dealer' && !isFreeTrialEnabled && subscriptionStatus == 'live'"><a routerLink="/dealer/cancel-dealership"> Cancel Subscription</a></li-->
+                    <li><a href="#" (click)="logout()"> Logout</a></li>
+                  </ul>
+                </li>
+
+
+
+              </ul>
+              <!-- menu links -->
+
+
+              <div class="notification_menu" [hidden]="!isLoggedin">
+                <a id="filter_toggle_btn" href="javascript:void(0)" (click)="chatIconClick()" class="notifyme_bell">
+                  <span *ngIf="notifications?.length > 0" class="notification_count">{{notifications?.length}}</span>
+                  <img src="assets/images/chatnotification.png">
+                </a>
+
+                <div class="msg_notification">
+                  <ul>
+
+                    <li *ngFor="let noti of notifications;let i = index;">
+                      <div class="notification_row">
+                        <div class="thumb_left">
+                          <div class="notification_thumb" *ngIf="loggedinUserType == 'Seller'">
+                            <img [src]="noti?.dealer[0]?.profile_pic ? noti?.dealer[0]?.profile_pic:myImgUrl">
+                          </div>
+                          <div class="notification_thumb" *ngIf="loggedinUserType == 'Dealer'">
+                            <img [src]="noti?.seller[0]?.profile_pic? noti?.seller[0]?.profile_pic:myImgUrl">
+                          </div>
+                        </div>
+
+                        <div class="notification_info">
+                          <P *ngIf="loggedinUserType == 'Seller'"><a
+                              (click)="openSellerChat(noti)"><span>{{noti?.dealer[0]?.name.first_name}}</span> has a
+                              {{noti?.totalMessages}} {{noti?.totalMessages == 1? 'message' : 'messages'}} for you.</a>
+                          </P>
+                          <P *ngIf="loggedinUserType == 'Dealer'"><a
+                              (click)="openDealerChat(noti)"><span>{{noti?.seller[0]?.name.first_name}}</span> has a
+                              {{noti?.totalMessages}} {{noti?.totalMessages == 1? 'message' : 'messages'}} for you.</a>
+                          </P>
+                        </div>
+                      </div>
+                    </li>
+                    <li *ngIf="notifications?.length == 0">
+                      <div class="notification_info">
+                        <p>No new messages.</p>
+
+                      </div>
+                    </li>
+                  </ul>
+                  <!-- <a class="see_all" href="#">See All</a> -->
+                </div>
+
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </nav>
+    <!-- menu end -->
+  </div>
+</header>
+
+<!--=================================
+   header -->

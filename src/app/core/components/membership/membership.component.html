@@ -1,0 +1,25 @@
+<div class="modal fade bd-example-modal-lg feedback-modal_rating" #membershipexpmodal id="searchNameModal" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal-dialog mw-55 border-none  mx-auto mx-bem-75" role="document">
+
+  <div class="modal-content p-0">
+
+    <div class="modal-header feedback-header_bg">
+      <!-- <h5 class="modal-title text_cap" id="bidModal">Update Proxy Bid Price</h5> -->
+      <h5 class="modal-title text_cap" id="bidModal">Alert</h5>
+      <button type="button" class="close opac-1" (click)="cancelsubmitSearch()" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+     <p class="membership_warning">You have not subscribed to any plan yet and you will not be able to place any bids, please subscribe now by <a (click)="hidePopup()" routerLink="/dealer/your-plan">clicking here</a> and enjoy bidding.</p>
+    </div>
+  </div>
+
+
+
+</div>
+</div>

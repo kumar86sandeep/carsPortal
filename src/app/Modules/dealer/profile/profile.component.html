@@ -1,0 +1,266 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<!--=================================
+   breadcrumbs and inner-intro -->
+
+
+
+<!--=================================
+   register-form  -->
+
+<section  class="register-form page-section-ptb">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="section-title">
+          <!-- <span>Welcome to </span>
+          <h2>The dealer profile</h2>
+          <div class="separator"></div> -->
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12">
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">       
+        
+          <div class="user-thumb-col">
+            <div id="image-preview" class="user-thumb"></div>
+
+          
+          <p>Size of image: Upto 2 MB</p>
+          <p>File format: JPEG / JPG / PNG</p>          
+          <div class="dropzone file btn btn-md btn-zoho position-relative" [dropzone]="config"></div>
+          
+         
+          
+         
+        </div>
+
+
+          <div class="gray-form">
+
+            <div formGroupName="name" class="row">
+              <div class="form-group col-md-4">
+                <label>Prefix</label>
+                <select formControlName="prefix">
+                  <option value="">Select Prefix</option>
+                  <option value="Mr.">Mr.</option>
+                  <option value="Mrs.">Mrs.</option>
+                  <option value="Ms.">Ms.</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label>First Name*</label>
+                <input class="form-control" type="text" placeholder="First Name" formControlName="first_name" [ngClass]="{ 'is-invalid': (profileForm.controls.name.get('first_name').touched || submitted) && profileForm.controls.name.get('first_name').errors }">
+                <p *ngIf="profileForm.controls.name.get('first_name').touched || submitted">
+                  <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="First name " [errors]="profileForm.controls.name.get('first_name').errors"></app-form-validation-errors>
+                </p>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label>Last Name*</label>
+                <input class="form-control" type="text" placeholder="Last Name" formControlName="last_name" [ngClass]="{ 'is-invalid': (profileForm.controls.name.get('last_name').touched || submitted) && profileForm.controls.name.get('last_name').errors }">
+                <p *ngIf="profileForm.controls.name.get('last_name').touched || submitted">
+                  <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Last name " [errors]="profileForm.controls.name.get('last_name').errors"></app-form-validation-errors>
+                </p>
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label class="relative">Email * 
+                <!-- <span class="right-icon" (click)="cloneEmail()">
+                <i class="fa fa-plus "aria-hidden="true"></i>
+              </span> -->
+             </label>
+              <div formArrayName="emails">
+                <div *ngFor="let emailObj of profileForm.get('emails')['controls']; let i = index;let first = first;">
+                  <div [formGroupName]="i">
+                    <div class="relative"> <span class="right-icon right-icon2">
+                        <!-- <i *ngIf="!first" (click)="removeEmail(i)" class="fa fa-minus" aria-hidden="true"></i>-->
+                        </span>
+                    </div>
+                    <input class="form-control" type="text" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': (emailObj.controls.email.touched || submitted) && emailObj.get('email').errors }">
+                    <!--<span class="my-error not-verified"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>Not
+                       Verified
+                     </span>-->
+                    <p *ngIf="emailObj.controls.email.touched || submitted">
+                      <app-form-validation-errors errorPrefix="Email " [errors]="emailObj.controls.email.errors"></app-form-validation-errors>
+                    </p>
+                    <!-- <div class="remember-checkbox">
+                      <input type="checkbox" formControlName="default" id="default_email{{i}}">
+                      <label for="default_email{{i}}">Set this email as default</label>
+                    </div> -->
+                  </div>
+                </div>
+                <p *ngIf="profileForm.controls.emails.touched || submitted">
+                  <app-form-validation-errors [errors]="profileForm.get('default_email').errors"></app-form-validation-errors>
+                </p>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="relative">Mobile Phone * 
+                <!-- <span class="right-icon" (click)="clonePhone()"> -->
+                  <!-- <i class="fa fa-plus" aria-hidden="true"></i></span> -->
+              </label>
+
+
+              <div formArrayName="phones">
+                <div *ngFor="let phoneObj of profileForm.get('phones')['controls']; let i = index;let first = first;">
+                  <div [formGroupName]="i">
+                    <div class="relative"> <span class="right-icon right-icon2">
+                      <i *ngIf="!first" (click)="removePhone(i)" class="fa fa-minus" aria-hidden="true"></i></span></div>
+                      <div class="relative ">
+                    
+                        <!-- <select formControlName="country_code">
+                          <option value="+1">+1</option>
+                          <option value="+91">+91</option>
+                        </select> -->
+                      <input class="form-control" type="text" placeholder="Mobile Phone" formControlName="phone" mask="000-000-0000"
+                        [ngClass]="{ 'is-invalid': (phoneObj.controls.phone.touched || submitted) && phoneObj.get('phone').errors }">
+                      <!--<span class="my-error"> <i class="fa fa-check-circle" aria-hidden="true"></i>Not Verified</span>-->
+                      
+                     
+                      <p *ngIf="phoneObj.controls.phone.touched || submitted">
+                        <app-form-validation-errors errorPrefix="Mobile phone" [errors]="phoneObj.controls.phone.errors"></app-form-validation-errors>
+                      </p>
+                    </div>
+                    <!-- <div class="remember-checkbox">
+                      <input type="checkbox" formControlName="default" id="default_phone{{i}}">
+                      <label for="default_phone{{i}}">Set this phone number as default</label>
+                    </div> -->
+                  </div>
+                </div>
+                <p *ngIf="profileForm.controls.phones.touched || submitted">
+                  <app-form-validation-errors [errors]="profileForm.get('default_phone').errors"></app-form-validation-errors>
+                </p>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <a routerLink="/dealer/change-password" class="change-password-link">Change Password</a>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-6">
+                  <!--button type="button" class="button red" (click)="goBack()">Undo Changes</button-->
+              </div>
+              <div class="form-group col-md-6">
+                  <button [ngClass]="{ 'submit-btn-disable': !profileForm.valid }" type="submit" class="button red">Update
+                    </button>
+                
+              </div>
+            </div>
+            <div *ngIf="userData?.dealership_type=='Independent'">
+                <div class="form-group col-md-12">
+                  <div class="section-title my-3">
+                      <h5 class="stageheading_five">Uploaded Documents</h5>
+                      <div class="separator"></div>
+                  </div>                 
+                </div>
+                <div class="btn_sec_red col-md-12">
+                  <div class="row">
+                <!--Upload Images Section-->
+                  <div class="col-md-4">                                          
+                    <div class="form-group stage1_btn">   
+                      <label>Retail DMV License</label>
+                        <div class="thumbnails" *ngIf="(userData?.dealership_bond?.dealership_retail_DMV_documents).length > 0">
+                            <div class="thumbnail_list" *ngFor="let retailDMVLicenseImage of userData?.dealership_bond?.dealership_retail_DMV_documents">  
+                              
+                            <a *ngIf="getFileExtension(retailDMVLicenseImage.file_name)!='pdf'" href="{{retailDMVLicenseImage.file_path}}" download>                      
+                              <img title="{{retailDMVLicenseImage.file_name}}" alt="{{retailDMVLicenseImage.file_name}}"  width="150px" src="{{retailDMVLicenseImage.file_path}}">
+                            </a>
+                            <a download class="upload_pdf" data-toggle="tooltip" title="{{retailDMVLicenseImage.file_name}}" *ngIf="getFileExtension(retailDMVLicenseImage.file_name)=='pdf' " href="{{retailDMVLicenseImage.file_path}}" target="_blank">
+                                <img width="65px" src="assets/images/pdf-icon.png"></a>
+                            </div>
+                        </div>
+  
+                        <div class="thumbnails" *ngIf="(userData?.dealership_bond?.dealership_retail_DMV_documents).length <= 0">
+                          <div class="thumbnail_list">   
+                                       
+                              <img title="No Retail DMV License" alt="No Retail DMV License" width="150px" src="/assets/images/no_attached_document.png">
+                          
+                            </div>
+                        </div>
+  
+                    </div>    
+                  </div>
+                  <div class="col-md-4">                                          
+                    <div class="form-group stage1_btn">   
+                        <label>Resale Number</label>
+                        <div class="thumbnails" *ngIf="(userData?.dealership_bond?.dealership_resale_number_documents).length > 0">
+                          <div class="thumbnail_list" *ngFor="let resaleNumberImage of userData?.dealership_bond?.dealership_resale_number_documents">  
+                            
+                            
+                            <a *ngIf="getFileExtension(resaleNumberImage.file_name)!='pdf' " href="{{resaleNumberImage.file_path}}" download>                      
+                                <img title="{{resaleNumberImage.file_name}}" alt="{{resaleNumberImage.file_name}}"  width="150px" src="{{resaleNumberImage.file_path}}">
+                              </a>
+                            <a download class="upload_pdf" data-toggle="tooltip" title="{{resaleNumberImage.file_name}}" *ngIf="getFileExtension(resaleNumberImage.file_name)=='pdf' " href="{{resaleNumberImage.file_path}}" target="_blank"><img width="65px" src="assets/images/pdf-icon.png"></a>
+                          
+                          </div>
+                        </div>
+  
+                        <div class="thumbnails" *ngIf="(userData?.dealership_bond?.dealership_resale_number_documents).length <= 0">
+                          <div class="thumbnail_list">                        
+                            <img title="No Resale Number" alt="No Resale Number"  width="150px" src="/assets/images/no_attached_document.png">
+                            </div>
+                        </div>
+  
+                    </div>    
+                  </div>
+                  <div class="col-md-4">                                          
+                    <div class="form-group stage1_btn">   
+                        <label>Dealer Bond</label>
+                        <div class="thumbnails" *ngIf="(userData?.dealership_bond?.dealership_bond_documents).length > 0">
+                          <div class="thumbnail_list" *ngFor="let bondDocumentImage of userData?.dealership_bond?.dealership_bond_documents"> 
+                            
+                              <a *ngIf=" getFileExtension(bondDocumentImage.file_name)!='pdf' " href="{{bondDocumentImage.file_path}}" download>                      
+                                  <img title="{{bondDocumentImage.file_name}}" alt="{{bondDocumentImage.file_name}}"  width="150px" src="{{bondDocumentImage.file_path}}">
+                                </a>
+                              <a download class="upload_pdf" data-toggle="tooltip" title="{{bondDocumentImage.file_name}}" *ngIf=" getFileExtension(bondDocumentImage.file_name)=='pdf' " href="{{bondDocumentImage.file_path}}" target="_blank"><img width="65px" src="assets/images/pdf-icon.png"></a>
+  
+                          
+                        </div>
+  
+                        
+  
+                    </div>  
+                    <div class="thumbnails" *ngIf="(userData?.dealership_bond?.dealership_bond_documents).length <= 0">
+                      <div class="thumbnail_list">                        
+                        <img title="No Dealer Bond" alt="No Dealer Bond"  width="150px" src="/assets/images/no_attached_document.png">
+                        </div>
+                    </div>  
+                  </div>
+  
+                  
+                <!--Upload Images Section-->
+  
+  
+  
+                
+  
+  
+                
+                  </div>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--=================================
+   register-form  -->

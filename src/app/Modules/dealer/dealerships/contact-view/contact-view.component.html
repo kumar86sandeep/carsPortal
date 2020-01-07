@@ -1,0 +1,83 @@
+<!--=================================
+ listing-legal-contacts  -->
+<!-- Modal -->
+<div class="modal show" #legalContactsSection id="legalContactsForm"   tabindex="-1" role="dialog"
+  aria-labelledby="legalContactsForm">
+  <div class="modal-dialog  mw-75 border-none  mx-auto" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header bg-transparent pl-2">
+        <h5 class="modal-title" id="exampleModalLabel">Legal Contacts</h5>
+        <button  type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"> 
+        <div class="car-details">
+          <div class="container">
+
+            <div class="row">
+              <div class="col-md-12">
+
+                <div class="sidebar-widget">
+                  <div class="unordered-lists table-responsive text-center">
+                    <table class="table table-bordered-custom-modal table-striped table-image-set">
+                      <thead class="thead-dark-custom-modal">
+                        <tr>
+                          <th>Image</th>
+                          <th>Name</th>
+                          <!-- <th>Title</th> -->
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <!-- <th>Fax</th> -->
+                          <th>Primary Contact</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="dealershipObject?.legal_contacts.length <= 0">
+                        <tr>
+                          <td colspan="7" style="text-align:center">No records to display.</td>
+                        </tr>
+                      </tbody>
+
+                      <tbody *ngIf="dealershipObject?.legal_contacts.length>0">
+
+                        <tr *ngFor="let contact of dealershipObject?.legal_contacts">
+
+                          <td>
+                            <div class="table-circle-image">
+                              <img *ngIf="contact.profile_pic" title="Dealership Avatar" src="{{contact.profile_pic}}"
+                                class="img-fluid">
+                              <img *ngIf="!contact.profile_pic" title="Default Dealership Avatar"
+                                src="/assets/images/org.png" class="img-fluid">
+
+                            </div>
+                          </td>
+                          <td>{{contact.name.first_name}} {{contact.name.last_name}}</td>
+                          <!-- <td>{{contact.title}}</td> -->
+                          <td >{{ contact?.emails[0]?.email }}
+                          </td>
+                          <td >{{contact.phones[0]?.phone }}
+                          </td>
+                          <!-- <td *ngFor="let fax of contact.faxs"><span *ngIf="fax.default">{{ fax.number }}</span></td> -->
+                          <td *ngIf="contact.default_legal_contact">Yes</td>
+                          <td *ngIf="!contact.default_legal_contact">No</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--=================================
+      more-bids-details   -->

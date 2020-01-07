@@ -1,0 +1,55 @@
+app-place-bid.modal-header {
+    border: 0;
+    text-align: center;
+}
+app-place-bid .modal-title {
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+app-place-bid .modal-body label {
+    font-size: 14px;
+    font-weight: 600;
+}
+app-place-bid .modal-body {
+    padding: 15px 50px;
+}
+.modal_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.modal_img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+#bidModal .modal_img {
+    width: auto;
+    max-width: 160px;
+    border: 1px solid #eaeaea;
+    height: auto;
+    margin: auto;
+}
+.make_model {
+    text-decoration: underline;
+    font-weight: 600;
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    color: #272727;
+}
+ .stage_01_modal-options span {font-size: 15px;color: #4e4e4e;font-weight: 600;text-transform: capitalize;}
+.stage01_modal_div-gaps .col-md-2 {margin-bottom: 15px;padding-bottom: 20px;border-bottom: 1px solid #eee;}
+ .stage_01_modal-options {color: #696969;text-align: center;}
+ .stage_01_modal-options p {margin-bottom: 5px;}
+ .stage_01_modal-options span {font-size: 15px;color: #4e4e4e;font-weight: 600;text-transform: capitalize;}
+ .stage_01_my-5 {margin-top: 50px;margin-bottom: 25px;}
+ .stage_01_my-5 {margin-top: 50px;margin-bottom: 25px;}
+ .mw-55 {max-width: 850px !important;}
+ .break-all {word-break: break-all;}
+.left_margin{
+    margin-left: 10px !important;
+}
+.mw-55 {max-width: 850px !important;}

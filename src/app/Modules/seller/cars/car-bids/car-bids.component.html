@@ -1,0 +1,155 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<!--=================================
+    breadcrumbs and inner-intro -->
+<section class="blog page-section-ptb pad-b-30">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+          <h3 class="left_tittle">Bids on - {{bids[0]?.car?.vehicle_year}} {{bids[0]?.car?.basic_info?.vehicle_make}} {{bids[0]?.car?.basic_info?.vehicle_model}}</h3>
+        <div class="listing_outer blog-sidebar">
+          <div class="sorting-options-main">
+            <div class="row blog-sidebar listing_outer">
+              <div class="col-md-12 d-flex">
+                <div class="product-listing">
+                  <div class="price-search">
+                    <div class="search">
+                      <i class="fa fa-search"></i>
+                      <input type="search" class="form-control placeholder" (input)="onSearch($event.target.value)"
+                        placeholder="search.....">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="right_sec ml-auto">
+                  <!-- <div class="input-group date_filters_start d-inline-block">
+                     <button class="button red" (click)="downloadCsv(1)"> Download </button>
+                   </div> -->
+
+                  <div class="input-group date_filters_start d-inline-block">
+                    <input [(ngModel)]="bidStartDate" class="form-control" (dateSelect)="onBidDateSelected($event)"
+                      type="text" (click)="startDate.toggle()" placeholder="Bid Date" ngbDatepicker
+                      #startDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()"
+                        type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                    </div>
+                  </div>
+
+                  <div class="input-group date_filters_start d-inline-block">
+                    <input [(ngModel)]="bidEndDate" class="form-control" type="text"
+                      (dateSelect)="onAcceptedDateSelected($event)" (click)="endDate.toggle()" placeholder="End Date"
+                      ngbDatepicker #endDate="ngbDatepicker">
+
+
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()"
+                        type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                    </div>
+                  </div>
+
+
+                  <div data-toggle="tooltip" title="Reset Date Filter" (click)="clearDateFilters()"
+                    class="clear_inputs d-inline-block">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="sidebar-widget">
+
+          
+            <div class="unordered-lists table-responsive text-center">
+              <ngx-datatable #listingTable class="bootstrap" [rows]="bids"
+                [columns]="[{name:'Dealer Name'},{name:'Bid Date'},{name:'Buyer Rating'},{name:'Bid Price'},{name:'Action'}]"
+                [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                [externalPaging]="true" [externalSorting]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                [limit]="page.size" (page)='setPage($event)' (sort)="sortCallback($event)">
+                <ngx-datatable-column name="Dealer Name" prop="dealer_name" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    <span>
+                      {{ row?.dealer_name }}
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Bid Date" prop="bid_date" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    {{ row?.bid_date | date:'dd-MM-yyyy h:mm' }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Buyer Rating" prop="car_bids" [sortable]="false" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <ngb-rating [readonly]="true" aria-labelledby="Rating & Review" [max]="5" [rate]="row?.buyer_rating">
+                    </ngb-rating>
+                    <span class="rating-number">(5/5)</span>
+
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Bid Price" prop="price" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    {{ row?.price | currency:'USD':true:'2.2-2' }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Action" prop="contact" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    <span *ngIf="row?.status == 'active'"><a class="underLine" (click)="acceptBid(row?.bidId)">Accept</a> <a class="underLine"></a></span>
+                    <span *ngIf="row?.status == 'accepted'">Accepted</span>
+                    <span *ngIf="row?.status == 'rejected'">Rejected</span>
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+
+                <ngx-datatable-footer>
+                  <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+                    let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset"
+                    let-isVisible="isVisible">
+                    <div class="pagination_outer d-flex">
+                      <div class="showing_records">
+                        Showing <div class="selected-box number_records">
+                          <select class="selectpicker my_select" id="per-page"
+                            (change)="onLimitChange($event.target.value)">
+                            <option *ngFor="let option of pageLimitOptions" [value]="option.value"
+                              [selected]="option.value == currentPageLimit">
+                              {{ option.value }}
+                            </option>
+                          </select>
+                        </div> records on page
+                      </div>
+                      <div class="ml-auto">
+                        <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'"
+                          [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+                          [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount"
+                          [hidden]="!((rowCount / pageSize) > 1)" (change)="listingTable.onFooterPage($event)">
+                        </datatable-pager>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-footer>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--   dealer purchases listing -->

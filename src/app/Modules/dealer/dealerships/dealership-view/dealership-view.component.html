@@ -1,0 +1,148 @@
+<div class="modal fade bd-example-modal-lg" #contentSection id="dealershipViewForm" tabindex="-1" role="dialog"
+  aria-labelledby="dealershipViewForm" aria-hidden="true">
+  <div class="modal-dialog mw-75 border-none  mx-auto" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-transparent pl-2">
+        <h5 class="modal-title text_cap" id="exampleModalLabel">Dealership Information</h5>
+        <button type="button" class="close" (click)="close()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 text-center">
+          
+            <div class="upload-profile-photo">
+              <img *ngIf="dealershipObject?.profile_pic" title="Dealership Avatar" class="img-fluid"
+                src="{{dealershipObject?.profile_pic}}">
+              <img *ngIf="! dealershipObject?.profile_pic" title="Default Dealership Avatar" class="img-fluid"
+                src="/assets/images/org.png">
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 mt-4">
+            <div class="title">
+              <h5 class="text-red">Dealership Details</h5>
+            </div>
+          </div>
+
+          <div class="Car_details row w-100 mt-1">
+            <div class="col-md-6">
+              <ul>
+                <li><strong>Legal Corporation Name -</strong> {{dealershipObject?.legalcoroporationname}}</li>
+              </ul>
+            </div>
+
+            <div class="col-md-6 pl-3 pl-md-0">
+              <ul>
+                <li><strong>Dealership Number -</strong> {{dealershipObject?.dealershipnumber}}</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 pt-4">
+            <div class="title">
+              <h5 class="text-red">Location</h5>
+            </div>
+          </div>
+
+          <div class="Car_details row mt-1">
+            <div class="col-md-4">
+              <ul class="">
+                <li><strong>Address Line 1 -</strong> {{dealershipObject?.mainaddressline1}}</li>
+              </ul>
+            </div>
+
+            <div class="col-md-4">
+              <ul class="">
+                <li><strong>Address Line 2 -</strong> {{dealershipObject?.mainaddressline2}}</li>
+              </ul>
+            </div>
+
+            <div class="col-md-4">
+              <ul class="">
+                <li><strong>State -</strong> {{dealershipObject?.state}}</li>
+              </ul>
+            </div>
+
+            <div class="col-md-4">
+              <ul class="">
+                <li><strong>City -</strong> {{dealershipObject?.city}}</li>
+              </ul>
+            </div>
+
+            <div class="col-md-4">
+              <ul class="">
+                <li><strong>ZIP -</strong> {{dealershipObject?.zip}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <div class="col-md-12">
+            <div class="title">
+              <h5 class="text-red">Legal Contacts</h5>
+            </div>
+            <div class="sidebar-widget">
+              <div class="unordered-lists table-responsive text-center">
+                <table class="table table-bordered-custom-modal table-striped table-image-set">
+                  <thead class="thead-dark-custom-modal">
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <!-- <th>Title</th> -->
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <!-- <th>Fax</th> -->
+                      <th>Primary Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dealershipObject?.legal_contacts.length <= 0">
+                    <tr>
+                      <td colspan="7" style="text-align:center">No records to display.</td>
+                    </tr>
+                  </tbody>
+
+                  <tbody *ngIf="dealershipObject?.legal_contacts.length>0">
+
+                    <tr *ngFor="let contact of dealershipObject?.legal_contacts">
+
+                      <td>
+                        <div class="table-circle-image">
+                          <img *ngIf="contact.profile_pic" title="Dealership Avatar" src="{{contact.profile_pic}}"
+                            class="img-fluid">
+                          <img *ngIf="!contact.profile_pic" title="Default Dealership Avatar"
+                            src="/assets/images/org.png" class="img-fluid">
+
+                        </div>
+                      </td>
+                      <td>{{contact.name.first_name}} {{contact.name.last_name}}</td>
+                      <!-- <td>{{contact.title}}</td> -->
+                      <td >{{ contact?.emails[0]?.email }}
+                        </td>
+                        <td >{{contact.phones[0]?.phone }}
+                        </td>
+                      <!-- <td><span *ngFor="let fax of contact.faxs  | sortBy">{{ fax.country_code }} {{ fax.number | mask: '(000) 000-0000'}}</span></td> -->
+                      <td *ngIf="contact.default_legal_contact">Yes</td>
+                      <td *ngIf="!contact.default_legal_contact">No</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

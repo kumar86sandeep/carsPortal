@@ -1,0 +1,13 @@
+.timmer{
+    color: #db2d2e;
+}
+.timmer .timmer_label{
+    color: #999999 !important
+}
+.timmer1{
+   /* color: #050505 !important;*/
+    font-weight: 600
+}
+.timmer1 .timmer_label{
+    color: #050505 !important
+}

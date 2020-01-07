@@ -1,0 +1,124 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+
+<!--=================================
+ login-form  -->
+
+<section class="login-form page-section-ptb">
+  <div class="container">
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <div class="section-title">          
+          <h2>Account Sign In</h2> 
+           <div class="separator"></div>
+        </div>
+      </div>
+    </div> -->
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-12">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="gray-form clearfix">
+
+            <div class="form-group">
+              <label for="email">Email* </label>
+              <input id="email" class="form-control" [ngClass]="{ 'is-invalid': (loginForm.controls.email.touched || submitted) && loginForm.get('email').errors }"
+                type="text" placeholder="Enter Email" formControlName="email">
+              <p *ngIf="loginForm.controls.email.touched || submitted">
+                <app-form-validation-errors errorPrefix="Email " [errors]="loginForm.get('email').errors"></app-form-validation-errors>
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="Password">Password* </label>
+              <input id="Password" class="form-control" type="password" placeholder="Enter Password" formControlName="password"
+                [ngClass]="{ 'is-invalid': (loginForm.controls.password.touched || submitted) && loginForm.get('password').errors }">
+              <p *ngIf="loginForm.controls.password.touched || submitted">
+                <app-form-validation-errors errorPrefix="Password " [errors]="loginForm.get('password').errors"></app-form-validation-errors>
+              </p>
+
+            </div>
+
+            <div class="form-group">
+              <div class="remember-checkbox mb-4">
+                <input type="checkbox" formControlName="remember_me" id="remember_me">
+                <label for="remember_me"> Remember Me</label>
+                <a routerLink="/seller/forgot-password" class="float-right">Forgot Password?</a>
+
+              </div>
+            </div>
+
+            <button [ngClass]="{ 'submit-btn-disable': !loginForm.valid }" type="submit" class="button red">Sign In
+            </button>
+          
+          </div>
+        </form>
+        <br />
+        <p class="link">New to CarsGoat? <a routerLink="/seller/signup"> Create an Account</a> </p>
+        <div class="login-social text-center">
+          <h5>Sign In with Social media</h5>
+          <ul>
+            <li>
+              <button (click)="signInWithFB()" class="fb button" type="button"><i class="fa fa-facebook"></i> Facebook</button>
+
+
+            </li>
+            <li><button (click)="signInWithGoogle()" id="googleBtn" type="button" class="pinterest button"><i class="fa fa-google-plus"></i>
+                google+</button></li>
+            <li><button class="microsoft-btn-color button" (click)="microsoftSignIn()" type="button"><i class="fa fa-windows"></i> Microsoft</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--=================================
+ login-form  -->
+
+
+
+<!--=================================
+ login-otp-form  -->
+<!-- Modal -->
+<div class="modal fade" #otpSection id="loginOTPForm" tabindex="-1" role="dialog" aria-labelledby="loginOTPForm">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginOTPForm" style="text-transform:none">Verification code had been sent to your phone number.</h5>
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>-->
+      </div>
+      <form [formGroup]="loginOTPForm" (ngSubmit)="onSubmitOtp()">
+        <div class="modal-body">            
+            <div class="form-group">
+              
+              <div class="form-group">
+                  <label>Verification Code* </label>
+                  <input [ngClass]="{ 'is-invalid': (loginOTPForm.controls.code.touched || otpFormsubmitted) && loginOTPForm.get('code').errors }"
+                    class="form-control" mask="000000" type="text" placeholder="Please enter the code here" formControlName="code">
+					
+				  <button  type="button" (click)="resendOTP()" class="verify_BTN"> Resend</button>	
+                  <p *ngIf="loginOTPForm.controls.code.touched || otpFormsubmitted">
+                    <app-form-validation-errors minLength=6 maxLength=6 errorPrefix="Verification Code " [errors]="loginOTPForm.get('code').errors"></app-form-validation-errors>
+                  </p>
+              </div>                           
+            </div>              
+        </div>  
+        <div class="modal-footer">            
+          <button [ngClass]="{ 'submit-btn-disable': loginOTPForm.invalid }" type="submit" class="button red">Verify </button>
+        </div>
+      </form>  
+    </div>
+  </div>
+</div>
+
+
+<!--=================================
+confirm otp-form  -->

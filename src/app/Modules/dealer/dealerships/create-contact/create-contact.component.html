@@ -1,0 +1,279 @@
+<div class="modal fade" #contentSection id="newLegalContactForm" tabindex="-1" role="dialog"
+  aria-labelledby="newLegalContactForm">
+  <div class="modal-dialog mw-75 border-none  mx-auto" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header bg-transparent pl-2">
+        <h5 class="modal-title text_cap" id="exampleModalLabel">New Legal Contact</h5>
+
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <section class="register-form page-section-ptb">
+          <div class="container">
+
+            <div class="row justify-content-center">
+
+              <div class="col-lg-8 col-md-8">
+                <form [formGroup]="newLegalContactForm">
+                  <div class="user-thumb-col">
+                    <div id="legalContactPreview" class="user-thumb"></div>
+                    <!--<p>Size of image: Upto 2 MB</p>
+                <p>File format: JPEG / JPG / PNG</p>    -->
+                    <div class="dropzone file btn btn-md btn-zoho position-relative" [dropzone]="lconfig"></div>
+                  </div>
+                  <div class="gray-form">
+                    <div formGroupName="name" class="row">
+                      <div class="form-group col-md-4">
+                        <label>Prefix</label>
+                        <select formControlName="prefix">
+                          <option value="">Select Prefix</option>
+                          <option value="Mr.">Mr.</option>
+                          <option value="Mrs.">Mrs.</option>
+                          <option value="Ms.">Ms.</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <label>First Name*</label>
+                        <input class="form-control" type="text" placeholder="First Name" formControlName="first_name"
+                          [ngClass]="{ 'is-invalid': (newLegalContactForm.controls.name.get('first_name').touched || submitted) && newLegalContactForm.controls.name.get('first_name').errors }">
+                        <p *ngIf="newLegalContactForm.controls.name.get('first_name').touched || submitted">
+                          <app-form-validation-errors patternError="Must contain only characters." minLength=2
+                            maxLength=50 errorPrefix="First name "
+                            [errors]="newLegalContactForm.controls.name.get('first_name').errors">
+                          </app-form-validation-errors>
+                        </p>
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <label>Last Name*</label>
+                        <input class="form-control" type="text" placeholder="Last Name" formControlName="last_name"
+                          [ngClass]="{ 'is-invalid': (newLegalContactForm.controls.name.get('last_name').touched || submitted) && newLegalContactForm.controls.name.get('last_name').errors }">
+                        <p *ngIf="newLegalContactForm.controls.name.get('last_name').touched || submitted">
+                          <app-form-validation-errors patternError="Must contain only characters." minLength=2
+                            maxLength=50 errorPrefix="Last name "
+                            [errors]="newLegalContactForm.controls.name.get('last_name').errors">
+                          </app-form-validation-errors>
+                        </p>
+                      </div>
+                    </div>
+                    <!-- <div class="form-group" class="row">
+                      <div class="form-group col-md-12">
+                        <label>Title*</label>
+                        <input class="form-control" type="text" placeholder="Title" formControlName="title"
+                          [ngClass]="{ 'is-invalid': (newLegalContactForm.controls.title.touched || submitted) && newLegalContactForm.controls.title.errors }">
+                        <p *ngIf="newLegalContactForm.controls.title.touched || submitted">
+                          <app-form-validation-errors patternError="Must contain only characters." minLength=2
+                            maxLength=50 errorPrefix="Title " [errors]="newLegalContactForm.controls.title.errors">
+                          </app-form-validation-errors>
+                        </p>
+                      </div>
+                    </div> -->
+
+                    
+                    <div class="form-group">
+                      <label class="relative">Email * 
+                        <!-- <span class="right-icon" (click)="cloneEmail()">
+                        <i
+                            class="fa fa-plus " aria-hidden="true"></i>
+                          </span>  -->
+                        </label>
+                      <div formArrayName="emails">                        
+                        <div
+                          *ngFor="let emailObj of newLegalContactForm.get('emails')['controls']; let i = index;let first = first;">
+                          
+                          <div [formGroupName]="i">
+                            <!-- <div class="relative"> <span class="right-icon right-icon2">
+                                <i *ngIf="!first" (click)="removeEmail(i)" class="fa fa-minus"
+                                  aria-hidden="true"></i></span>
+                            </div> -->
+                            <input class="form-control" type="text" placeholder="Email" formControlName="email"
+                              [ngClass]="{ 'is-invalid': (emailObj.controls.email.touched || submitted) && emailObj.get('email').errors }">
+                            <!--<span class="my-error not-verified"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>Not
+                             Verified
+                           </span>-->
+                            <p *ngIf="emailObj.controls.email.touched || submitted">
+                              <app-form-validation-errors errorPrefix="Email "
+                                [errors]="emailObj.controls.email.errors"></app-form-validation-errors>
+                            </p>
+                            <!-- <div class="remember-checkbox">
+                              <input type="checkbox" formControlName="default" id="default_email{{i}}">
+                              <label for="default_email{{i}}">Set this email as default</label>
+                            </div> -->
+                          </div>
+                        </div>
+                        <p *ngIf="newLegalContactForm.controls.emails.touched || submitted">
+                          <app-form-validation-errors [errors]="newLegalContactForm.get('default_email').errors">
+                          </app-form-validation-errors>
+                        </p>
+                      </div>
+                    </div>
+
+               
+
+                    <div class="form-group">
+                      <label class="relative">Phone Number*
+                         <!-- <span class="right-icon" (click)="clonePhone()">
+                          <i class="fa fa-plus" aria-hidden="true"></i></span> -->
+                      </label>
+
+                   
+                      <div formArrayName="phones">
+                        <div
+                          *ngFor="let phoneObj of newLegalContactForm.get('phones')['controls']; let i = index;let first = first;">
+                          <div [formGroupName]="i">
+                            <!-- <div class="relative"> <span class="right-icon right-icon2">
+                                <i *ngIf="!first" (click)="removePhone(i)" class="fa fa-minus"
+                                  aria-hidden="true"></i></span></div> -->
+                            <div class="relative ">
+                              <!-- <select formControlName="country_code">
+                                <option value="+1">+1</option>
+                                <option value="+91">+91</option>
+                              </select> -->
+                              <input  class="form-control" type="text" placeholder="Phone Number" formControlName="phone"
+                                mask="000-000-0000"
+                                [ngClass]="{ 'is-invalid': (phoneObj.controls.phone.touched || submitted) && phoneObj.get('phone').errors }">
+                              <!--<span class="my-error"> <i class="fa fa-check-circle" aria-hidden="true"></i>Not Verified</span>-->
+                              <p *ngIf="phoneObj.controls.phone.touched || submitted">
+                                <app-form-validation-errors errorPrefix="Phone number"
+                                  [errors]="phoneObj.controls.phone.errors"></app-form-validation-errors>
+                              </p>
+                            </div>
+                            <!-- <div class="remember-checkbox">
+                              <input type="checkbox" formControlName="default" id="default_phone{{i}}">
+                              <label for="default_phone{{i}}">Set this phone number as default</label>
+                            </div> -->
+                          </div>
+                        </div>
+                        <p *ngIf="newLegalContactForm.controls.phones.touched || submitted">
+                          <app-form-validation-errors [errors]="newLegalContactForm.get('default_phone').errors">
+                          </app-form-validation-errors>
+                        </p>
+                      </div>
+
+                    </div>
+
+                    
+                    <!-- <div class="row">
+                      <div class="form-group col-md-12">
+
+                        <input class="form-control" type="text" placeholder="Address Line 1" formControlName="address_1"
+                          [ngClass]="{ 'is-invalid': (newLegalContactForm.controls.address_1.touched || submitted) && newLegalContactForm.controls.address_1.errors }">
+                        <p *ngIf="newLegalContactForm.controls.address_1.touched || submitted">
+                          <app-form-validation-errors patternError="Must contain only characters." minLength=2
+                            maxLength=50 errorPrefix="Address Line 1 "
+                            [errors]="newLegalContactForm.controls.address_1.errors"></app-form-validation-errors>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-12">
+
+                        <input class="form-control" type="text" placeholder="Address Line 2" formControlName="address_2"
+                          [ngClass]="{ 'is-invalid': (newLegalContactForm.controls.address_2.touched || submitted) && newLegalContactForm.controls.address_2.errors }">
+                        <p *ngIf="newLegalContactForm.controls.address_2.touched || submitted">
+                          <app-form-validation-errors patternError="Must contain only characters." minLength=2
+                            maxLength=50 errorPrefix="Address Line 2 "
+                            [errors]="newLegalContactForm.controls.address_2.errors"></app-form-validation-errors>
+                        </p>
+                      </div>
+                    </div> -->
+
+
+                    <!-- <div formGroupName="location">
+                        <div class="row">
+                          <div class="form-group col-md-12">
+                            <label>Zipcode*</label>
+                            <input  mask="00000" class="form-control" (input)="fetchCityState($event.target.value)"  type="text" placeholder="Enter Zipcode" formControlName="zipcode" [ngClass]="{ 'is-invalid': (newLegalContactForm.controls.location.get('zipcode').touched || submitted) && newLegalContactForm.controls.location.get('zipcode').errors }">
+                            <p class="error_msg" *ngIf="newLegalContactForm.controls.location.get('zipcode').touched || submitted">                      
+                                <app-form-validation-errors minLength=2 maxLength=5 errorPrefix="Zip " patternError="Must enter valid zip code." [errors]="newLegalContactForm.controls.location.get('zipcode').errors"></app-form-validation-errors>   
+                            </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>State*</label>
+                                <input  readonly class="form-control" type="text" placeholder="State" formControlName="state">  
+                                             
+                              </div>              
+                              <div class="form-group col-md-6">
+                                <label>City*</label>
+                                <input *ngIf="cities.length<=1" readonly class="form-control" type="text" placeholder="City" formControlName="city">
+                                <select *ngIf="cities.length >1" formControlName="city">
+                                  
+                                  <option *ngFor="let cityObject of cities" value="{{cityObject.city}}">{{cityObject.city}}</option>
+                                </select>                               
+                              </div>
+                        </div>
+                        
+          
+                    </div> -->
+
+
+                    
+                    <div class="row">                      
+                      <div class="remember-checkbox">
+                        <input type="checkbox" formControlName="default_legal_contact" id="default_legal_contact">
+                        <label for="default_legal_contact">Make Primary Contact</label>
+                      </div>
+                    </div>
+                    <div class="row">
+
+                      <div class="form-group col-md-4"><button [ngClass]="{'submit-btn-disable': IsForUpdateContact }" [disabled]="IsForUpdateContact" class="button red" (click)="pushLegalContact()"
+                          type="button">{{ legalContactItems.length?'Add another':'Add' }}</button></div>
+                      <div *ngIf="IsForUpdateContact" class="form-group col-md-4"><button class="button red"
+                          (click)="updateNewLegalContact()" type="button">Update</button></div>
+
+                      <div class="form-group col-md-4"><button [ngClass]="{ 'submit-btn-disable': IsForUpdateContact || legalContactItems.length <=0 }" [disabled]="IsForUpdateContact || legalContactItems.length <=0 " (click)="onCreateLegalContact()" class="button red" type="button">Save & Close</button></div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-lg-4 col-md-4">
+                <!----------------------Right_section-------------------->
+                <span #addedContentSection></span>
+                <div  *ngIf="legalContactItems.length" class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="title">
+                    <h5 class="text-red text_cap">Added Contacts</h5>
+                  </div>
+
+
+                  <div class="added_address bg-3 bg-overlay-black-70">
+                    <ng-scrollbar #scrollable class="my-scrollbar">
+                      <ul>
+
+                        <li *ngFor="let data of legalContactItems; let i= index">
+                          <div class="address_box">
+                            <span class="text-white d-block"><b>{{data.name.prefix}} {{data.name.first_name}}
+                                {{data.name.last_name}}</b></span>
+                            <span class="text-white d-block"><b>{{data.title}}</b></span>
+                            <!-- <address>
+                              {{data.address_1}} {{data.address_2}}, <br>
+                              {{data.location.city}}, {{data.location.state}} - {{data.location.zipcode}}
+                            </address> -->
+                            <div class="actions">
+                              <button type="button"><i class="fa fa-pencil" (click)="editNewLegalContact(i)"
+                                  aria-hidden="true"></i></button>
+                              <button type="button"><i class="fa fa-trash" (click)="deleteNewLegalContact(i)"
+                                  aria-hidden="true"></i></button>
+                            </div>
+                          </div>
+                        </li>
+
+                      </ul>
+                    </ng-scrollbar>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

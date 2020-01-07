@@ -1,0 +1,149 @@
+<form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
+<div class="filters_inner container">
+    <div class="top_filters">
+      <div class="row">
+        <div class="col-md-6 p-md-0">
+          <div class="range_filter dark year-slide">
+            <label class="text_cap" for="year">Year</label>
+            <input readonly formControlName="yearrange" type="text" id="year"  />
+            <div id="year-range"></div>          
+          </div>
+        </div>
+        <div class="col-md-6 p-md-0">
+          <div class="range_filter mileage-slide">
+            <label for="milage" class="text_cap">Mileage</label>          
+            <input readonly formControlName="mileagerange" type="text" id="mileage"  />
+            <div id="mileage-range"></div>  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom_filter gray-form">
+      <div class="row"> 
+        
+          
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>VIN or License Plate</label>
+            <div class="selected-box">
+                <input style="text-transform: uppercase" placeholder="Enter VIN Or License Plate" class="form-control text_cap" formControlName="vin_license_plate" type="text" />
+            </div>
+          </div>
+        </div>
+
+        
+
+        <!-- <div class="col-md-4">
+            <div class="form-group">
+                <label>Reserve not met</label>
+                <div class="toggle_outer"> 
+                <div class="switch_outer">
+                      <label class="switch">
+                        <input type="checkbox" >
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                </div>        
+            </div>           
+        </div> -->
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Buying Radius In Miles</label>
+                <div class="selected-box">
+                <select formControlName="radius" class="selectpicker my_select">
+                  <option value="">All</option>
+                  <option *ngFor="let radiusObject of radius | keyvalue" value="{{radiusObject.key}}">{{radiusObject.value}}</option>
+                </select>
+              </div>
+            </div>            
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Make</label>
+            <div class="selected-box">
+              <select formControlName="make" (change)="listingModel($event)" class="selectpicker my_select">
+                <option [attr.data-makeName]="" value="">All</option>
+                <option *ngFor="let make of makes" [attr.data-makeName]="make.name | lowercase" value="{{make.id_car_make}}">{{make.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Model</label>
+            <div class="selected-box">
+              <select  formControlName="model" (change)="listingTrim($event)" class="selectpicker my_select">
+                  <option [attr.data-modelName]=""  value="">All</option>
+                  <option *ngFor="let model of models" [attr.data-modelName]="model.name | lowercase"  value="{{model.id_car_model}}">{{model.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+              <label>Trims</label>
+              <div class="selected-box">
+                <select (change)="multipleSelection($event,'trim')" multiple formControlName="trim" class="selectpicker my_select">
+                    <option  [value]="">All</option>
+                    <option *ngFor="let trimObject of trims" [value]="trimObject.name">{{trimObject.name}}</option>
+                </select>
+              </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Car Condition</label>
+            <div class="selected-box">
+                <select (change)="multipleSelection($event,'condition')" formControlName="condition" multiple class="selectpicker my_select">      
+                    <option value="">All</option>             
+                    <option *ngFor="let carCondition of carConditions " [value]="carCondition.value">{{carCondition.value}}</option>
+                  </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Interior Colors</label>
+            <div class="selected-box">
+              <select (change)="multipleSelection($event,'interior_color')"  formControlName="interior_color" multiple class="selectpicker my_select">
+                  <option value="">All</option>
+                  <option *ngFor="let interiorColor of colors | keyvalue" value="{{interiorColor.value.label}}">{{interiorColor.value.label}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Exterior Colors</label>
+            <div class="selected-box">
+              <select (change)="multipleSelection($event,'exterior_color')" formControlName="exterior_color" multiple class="selectpicker my_select">
+                  <option value="">All</option>
+                  <option *ngFor="let exteriorColor of colors | keyvalue" value="{{exteriorColor.value.label}}">{{exteriorColor.value.label}}</option>
+              </select>
+            </div>
+          </div>
+        </div>        
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>State</label>
+            <div class="selected-box">
+                <select formControlName="state" class="selectpicker my_select">
+                  <option value="">All</option>
+                  <option *ngFor="let state of states" value="{{state.name}}">{{state.name}}</option>
+                </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="submission_buttons">
+            <button  class="button">Apply Filters</button>
+            <button type="button" class="button  black_BTN"  (click)="resetFilters()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

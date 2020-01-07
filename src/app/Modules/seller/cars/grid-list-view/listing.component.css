@@ -1,0 +1,57 @@
+.sidebar_content {
+    color: #363636;
+    background: none;
+}
+.product-listing ul.list-group .checkbox label{
+    padding-left: 0px; 
+}
+.btn_active{
+    color:#db2d2e;
+}
+
+.product-listing ul.list-group .checkbox label button {
+    text-align: left;
+}
+
+.car-item .car-overlay-banner ul {
+    top: 50%;
+}
+.car-item .car-overlay-banner ul li {
+
+    margin: 0 3px;
+}
+.car-item .car-overlay-banner ul li a{
+    line-height: 31px;
+    cursor: pointer;
+}
+
+
+.car-image img {
+    position: relative;
+}
+.sold_badge_section img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 13%;
+}
+
+
+
+.align_icons_center ul li{
+    margin: 0 3px;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}
+.see_all_bids{
+    text-align: center;
+    color:#db2d2e ;
+}
+.see_all_bids:hover{
+    color: red;
+   
+}
+.see_all_bids a:hover{
+    border-bottom: 1px solid red;
+}

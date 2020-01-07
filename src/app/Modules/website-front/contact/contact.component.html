@@ -1,0 +1,137 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+ <!--=================================
+  breadcrumbs and inner-intro -->
+ 
+<!--=================================
+ contact -->
+ 
+
+ <section class="contact-2 page-section-ptb white-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 justify-content-center">
+           <div class="section-title">
+             <span>We’d love to hear from you</span>
+             <h2>Let's get in touch!</h2>
+             <div class="separator"></div>
+           </div>
+        </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-8 col-sm-12 mb-lg-0 mb-1">
+          <div class="gray-form row">
+           <div class="col-md-12">            
+           
+             <form class="form-horizontal" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+              <h5>We have completed over a 1000+ projects for five hundred clients. Give us your next project.</h5>
+              <p>It would be great to hear from you! If you got any questions, please do not hesitate to send us a message. We are looking forward to hearing from you! We reply within 24 hours !</p>
+              <div class="contact-form">
+                 <div class="form-group">
+                   <input [ngClass]="{ 'is-invalid': (contactForm.controls.name.touched || submitted) && contactForm.get('email').errors }" formControlName="name" placeholder="Name*" class="form-control" >
+                   <p *ngIf="contactForm.controls.name.touched || submitted">
+                      <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Name " [errors]="contactForm.get('name').errors"></app-form-validation-errors>
+                   </p>
+               </div> 
+                 <div class="form-group">
+                   <input  [ngClass]="{ 'is-invalid': (contactForm.controls.email.touched || submitted) && contactForm.get('email').errors }" formControlName="email" placeholder="Email*" class="form-control">
+                   <p *ngIf="contactForm.controls.email.touched || submitted">
+                      <app-form-validation-errors errorPrefix="Email " [errors]="contactForm.get('email').errors"></app-form-validation-errors>
+                   </p>
+                  </div>
+                  <div class="form-group relative">
+                      <div class="relative ">
+                    <!-- <select formControlName="country_code">
+                        <option value="+1">+1</option>
+                        <option value="+91">+91</option>
+                      </select> -->
+                    <input  [ngClass]="{ 'is-invalid': (contactForm.controls.phone.touched || submitted) && contactForm.get('phone').errors }" mask="000-000-0000" formControlName="phone"  placeholder="Phone number*" class="form-control">
+                    <p *ngIf="contactForm.controls.phone.touched || submitted">
+                        <app-form-validation-errors minLength=10 errorPrefix="Phone number" [errors]="contactForm.get('phone').errors"></app-form-validation-errors>
+                     </p>
+                    </div>
+                </div>
+                   <div class="form-group">
+                     <textarea [ngClass]="{ 'is-invalid': (contactForm.controls.comment.touched || submitted) && contactForm.get('comment').errors }" formControlName="comment" class="form-control input-message" placeholder="Message*" rows="7" ></textarea>
+                     <p *ngIf="contactForm.controls.comment.touched || submitted">
+                        <app-form-validation-errors errorPrefix="Message " [errors]="contactForm.get('comment').errors"></app-form-validation-errors>
+                     </p>
+                </div>
+                  
+                
+                   <button [ngClass]="{ 'submit-btn-disable': !contactForm.valid }" type="submit" class="button red">Send your message </button>
+                 </div>
+              </form>
+             
+            </div>
+          </div>
+         </div>
+         <div class="col-lg-4 col-sm-12">
+           <a target='_blank' href="https://www.google.com/maps/dir//33.6216376,-117.7025604/@33.621638,-117.70256,13z?hl=en-GB">
+            <div class="feature-box-3">
+              <div class="icon">
+                 <i class="fa fa-map-marker"></i>
+               </div>
+               <div class="content">
+                 <h5>Address </h5>
+                  <p>24552 Raymond Way, #1178, CA 92609, USA </p>
+                </div>
+              </div>
+            </a>
+              <a href="tel:+0071234567890">
+              <div class="feature-box-3">
+              <div class="icon">
+                 <i class="fa fa-phone"></i>
+               </div>
+               <div class="content">
+                 <h5>Phone Number</h5>
+                  <p>(800) 793-1919 </p>
+                </div>
+              </div>
+              </a>
+              <a href="mailto:info@carsgoat.com">
+                <div class="feature-box-3">
+                <div class="icon">
+                  <i class="fa fa-envelope-o"></i>
+                </div>
+                <div class="content">
+                  <h5>Email  </h5>
+                    <p> info@carsgoat.com </p>
+                  </div>
+                </div>
+              </a>
+              <div class="opening-hours gray-bg">
+                  <h6>Opening Hours</h6>
+                  <ul class="list-style-none">
+                    <li><strong>Sunday</strong> <span class="text-red"> Closed</span></li>
+                    <li><strong>Monday</strong> <span> 9:00 AM to 9:00 PM</span></li>
+                    <li><strong>Tuesday </strong> <span> 9:00 AM to 9:00 PM</span></li>
+                    <li><strong>Wednesday </strong> <span> 9:00 AM to 9:00 PM</span></li>
+                    <li><strong>Thursday </strong> <span> 9:00 AM to 9:00 PM</span></li>
+                    <li><strong>Friday </strong> <span> 9:00 AM to 9:00 PM</span></li>
+                    <li><strong>Saturday </strong> <span> 9:00 AM to 9:00 PM</span></li>
+                  </ul>
+                </div>
+           </div>
+       </div>
+    </div>
+  </section>
+  
+  <!--=================================
+   contact -->
+  
+  
+  <!--=================================
+   contact-map -->
+  
+   <section class="contact-map">
+    <div class="container-fluid">
+        <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=24552%20Raymond%20Way%2C%20%231178%2C%20CA%2092609%2C%20USA&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" allowfullscreen></iframe>
+    </div>
+   </section>
+  
+  <!--=================================
+   contact-map -->

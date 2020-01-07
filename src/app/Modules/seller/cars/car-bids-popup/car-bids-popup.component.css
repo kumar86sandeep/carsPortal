@@ -1,0 +1,55 @@
+.accept_btn{
+    background-color: #129012;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+    
+}
+
+.raject_btn{
+    background-color: #ec1009;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;margin-left: 2px;
+    
+}
+
+.text_for{
+    text-transform: none !important;
+}
+
+.rejection_header h3{
+    text-transform: none;
+}
+.text_change{
+    text-transform: none;
+}
+
+
+
+
+    #toastr-node-126{
+        border:5px solid red; z-index:99999999 !important;
+    }
+    .toastr.toastr-error.ng-star-inserted {z-index: 9999999999;}
+
+
+
+    .star {
+        position: relative;
+        display: inline-block;
+        font-size: 3rem;
+        color: #d3d3d3;
+        font-size: 18px;
+      }
+    .full {
+        color: red;
+      }
+      .half {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        color: red;
+      }

@@ -1,0 +1,40 @@
+<ngb-rating  [readonly]="isDisable" aria-labelledby="Rating & Review" [max]="MaxRateStars" (click)="show()" [rate]="currentRating" [(ngModel)]="rating"></ngb-rating>
+
+
+
+<!-- Review form  -->
+
+<div class="modal fade" #contentSection id="contentSection" tabindex="-1" role="dialog" aria-labelledby="contentSection">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contentSection">Rate & Review: Submit with/without review.</h5>   
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>   
+      </div>
+      <form [formGroup]="ratingReviewForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">            
+            <div class="form-group">
+              
+              <div class="form-group">
+                  
+                  <textarea [ngClass]="{ 'is-invalid': (ratingReviewForm.controls.comment.touched || isSubmitted) && ratingReviewForm.get('comment').errors }"
+                  rows="5" class="form-control"placeholder="Enter Review" formControlName="comment"></textarea>
+                  <p *ngIf="ratingReviewForm.controls.comment.touched || isSubmitted">
+                    <app-form-validation-errors minLength=100 maxLength=1000 errorPrefix="Review " [errors]="ratingReviewForm.get('comment').errors"></app-form-validation-errors>
+                  </p>
+              </div>                           
+            </div>              
+        </div>  
+        <div class="modal-footer">            
+          <button [ngClass]="{ 'submit-btn-disable': ratingReviewForm.invalid }" type="submit" class="button red">Submit </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!--review form  -->

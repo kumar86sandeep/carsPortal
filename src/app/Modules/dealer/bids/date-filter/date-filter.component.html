@@ -1,0 +1,27 @@
+<form [formGroup]="dateFilterForm" class="d-inline-block">
+    <div class="input-group date_filters_start d-inline-block">
+      <input readonly formControlName="startDate" class="form-control"
+        (dateSelect)="onStartDateSelected($event)" type="text" (click)="startDate.toggle()"
+        placeholder="Start date" ngbDatepicker #startDate="ngbDatepicker">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()"
+          type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+      </div>
+    </div>
+
+    <div class="input-group date_filters_start d-inline-block">
+      <input readonly formControlName="endDate" class="form-control" type="text"
+        (dateSelect)="onEndDateSelected($event)" (click)="endDate.toggle()" placeholder="End date"
+        ngbDatepicker #endDate="ngbDatepicker">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()"
+          type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+      </div>
+    </div>
+
+
+    <div (click)="clearDateFilters()" data-toggle="tooltip" title="Reset Date Filter"
+      class="clear_inputs d-inline-block">
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+    </div>
+  </form>

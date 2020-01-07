@@ -1,0 +1,1077 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+
+<!--=================================
+ blog  -->
+<section class="blog page-section-ptb pad-b-30">
+  <div class="container">
+    <div class="row ">
+      <div class="col-md-12 d-flex">
+        <a routerLink="/seller/addnewcar/dashboard" class="createNew ml-auto"><i class="fa fa-plus-circle"
+            aria-hidden="true"></i> Create New Car</a>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="blog-sidebar">
+
+
+
+          <div class="sorting-options-main">
+            <div class="row sorting-options top_sorting">
+              <div class="col-md-12 d-flex">
+                <div class="change-view-button">
+                                
+                  <a  title="Grid View" title="Back to Grid View" routerLink="/seller/car-listing/"><i class="fa fa-th"></i></a>
+                  <a  title="Listing View" title="Back to List View" routerLink="/seller/car-listing/list"><i class="fa fa-list-ul"></i></a>
+                  <a class="active" title="Table View" href="javascript:void(0)"><i class="fa fa-table"></i></a>  
+                </div>
+
+
+                <div class="ml-auto text-right product-listing">
+                  <a (click)="saveSearch()"
+                  class="button red red_save_btn" *ngIf="showsaveSearch && !searchApplied  && searchData.length < 10">Save this search</a>
+                  <span class="search_car_section" *ngIf="searchApplied">Selected search : {{selectedSearch?.searchName}}</span>
+
+                  <div class="price-search">
+                    <div class="search search_box_outer">
+                      <i class="fa fa-search"></i>
+                      <input type="search" class="form-control placeholder" autocomplete="off" name="search" [(ngModel)]="search" id="search_field_dash" (click)="applySearch()"  (input)="onSearch($event.target.value)"
+                        placeholder="Type Make, Model, Trim etc..">
+                        <div class="search_suggestions">
+                          <ul>
+                            <li  [ngClass]="{red_background:selectedSearchId == search._id} " id="search_item" *ngFor="let search of searchData;let i = index;" >
+                              <div class="row">
+                                <div class="col-md-10"  (click)="getSearchData(search)">
+                                  <a
+                                 >{{search?.searchName}}
+      
+      
+                                </a>
+                                </div>
+                                <div class="col-md-2">
+                                <i (click)="removeSearch(search._id)" class="fa fa-times" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </li>
+                          </ul>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+            </div>
+
+
+            <div class="row blog-sidebar listing_outer">
+
+
+
+
+
+
+
+              <div class="col-md-12 d-flex">
+
+                <div class="sidebar-widget mb-0">
+                  <div class="tags">
+
+                    <ul>
+                      
+
+                      <li [ngClass]="{ active: page.type=='active'}"><button
+                          (click)="onChangeListType('active')">Active</button></li>
+                
+                      <li [ngClass]="{ active: page.type=='inactive'}"><button
+                          (click)="onChangeListType('inactive')">Inactive</button></li>
+                      <li [ngClass]="{ active: page.type=='accepted'}"><button
+                          (click)="onChangeListType('accepted')">Transactions</button></li>
+                      <li [ngClass]="{ active: page.type=='sold'}"><button
+                          (click)="onChangeListType('sold')">Sold</button></li>
+                      <li [ngClass]="{ active: page.type=='archived'}"><button
+                          (click)="onChangeListType('archived')">Archived</button></li>
+                          <li [ngClass]="{ active: page.type=='spam'}"><button
+                            (click)="onChangeListType('spam')">Spammed</button></li>
+                            <li [ngClass]="{ active: page.type=='auction'}"><button
+                              (click)="onChangeListType('auction')">Ended Auctions</button></li>
+                      <li [ngClass]="{ active: page.type=='all'}"> <button
+                            (click)="onChangeListType('all')">All</button></li>
+
+                    </ul>
+                  </div>
+                </div>
+                <div class="right_sec ml-auto">
+
+                  <form [formGroup]="dateFilterForm" class="d-inline-block">
+                    <div class="input-group date_filters_start d-inline-block">
+                      <input readonly formControlName="startDate" class="form-control"
+                        (dateSelect)="onStartDateSelected($event)" type="text" (click)="startDate.toggle()"
+                        placeholder="Start date" ngbDatepicker #startDate="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()"
+                          type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                      </div>
+                    </div>
+
+                    <div class="input-group date_filters_start d-inline-block">
+                      <input readonly formControlName="endDate" class="form-control" type="text"
+                        (dateSelect)="onEndDateSelected($event)" (click)="endDate.toggle()" placeholder="End date"
+                        ngbDatepicker #endDate="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()"
+                          type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                      </div>
+                    </div>
+
+
+                    <div (click)="clearDateFilters()" data-toggle="tooltip" title="Reset Date Filter"
+                      class="clear_inputs d-inline-block">
+                      <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-widget">
+            <div class="unordered-lists table-responsive text-center">
+
+<!-- 
+              <ngx-datatable #listingTable class="bootstrap" [rows]="cars"
+                [columns]="[{name:'Year'},{name:'Make'},{name:'Model'},{name:'Trim'},{name:'Listed'},{name:'Status'},{name:'Bids'}]"
+                [sorts]="[{prop: 'created_at', dir: 'desc'}]" [columnMode]="'force'" [headerHeight]="50"
+                [footerHeight]="80" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                [limit]="page.size" [rowHeight]="120" (sort)="onSort($event)" (page)="setPage($event)">
+
+                <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+                  <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+
+                    <div class="row_detail col-md-12">
+                      <div class="row_detail_inner">
+                        <div class="listing_section">
+                          <div class="container">
+
+                            <div class="row no-gutters">
+
+
+
+
+                              <div class="col-md-12">
+                                <div class="row mx-0">
+
+
+
+                                  <div class="col-md-12">
+                                    <div class="row">
+
+
+
+
+
+
+
+                                      <div class="col-md-6 border_class">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Interior Material:</div>
+                                          <div class="list_content text-center">{{row?.interior_material}}</div>
+                                        </div>
+                                      </div>
+
+
+
+                                      <div class="col-md-6 border_class">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Interior Color:</div>
+                                          <div class="list_content text-center">{{row?.interior_color}}</div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_to_be_picked_up">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Miles Drive?:</div>
+                                          <div class="list_content text-center">{{row?.willing_to_drive_how_many_miles}}
+                                            </div>
+                                        </div>
+                                      </div>
+
+
+
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_transmission_style">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Transmission:</div>
+                                          <div class="list_content text-center">{{row?.vehicle_transmission_style}}
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_engine_cylinders">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Engine:</div>
+                                          <div class="list_content text-center">{{row?.vehicle_engine_cylinders}}
+                                            {{row?.vehicle_engine_model}}</div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_min_selling_price">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Minimum Selling Price:</div>
+                                          <div class="list_content text-center">${{row?.vehicle_min_selling_price}}
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+
+
+
+
+                                  <div class="custom_flex_width">
+                                    <div class="col-md-12 mb-3">
+                                      <div class="row">
+
+                                        <div class="col-md-12">
+                                          <div class="option_outer">
+                                            <h2>Standard Options</h2>
+
+
+                                            <div class="option_box">
+                                              <ol class="three_column">
+                                                <li *ngFor="let se  of row.standard_equipments;let i = index;">
+
+                                                  <input type="checkbox" disabled [checked]="se.selected" id="o" />
+                                                  <label for="o">{{se?.name}}</label>
+
+                                                </li>
+                                              </ol>
+                                            </div>
+
+                                            <h2>Additional Options</h2>
+                                            <div class="row">
+                                              <div class="col-md-4">
+                                                <div class="option_box">
+                                                  <h5>Entertainment & Instrumentation</h5>
+                                                  <ol>
+
+
+                                                    <li
+                                                      *ngFor="let aeo of row.additional_options.entertainments;let i = index;">
+                                                      <input id="aeo_{{i}}" [checked]="aeo.selected" disabled
+                                                        type="checkbox" />
+                                                      <label for="aeo_{{i}}">{{aeo?.name}}</label>
+                                                    </li>
+
+                                                  </ol>
+                                                </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                <div class="option_box">
+                                                  <h5>Wheels & Tires</h5>
+                                                  <ol>
+                                                    <li
+                                                      *ngFor="let wheel of row.additional_options.wheels;let i = index;">
+                                                      <input id="wheel_{{i}}" [checked]="wheel.selected" disabled
+                                                        type="checkbox" />
+                                                      <label for="wheel_{{i}}">{{wheel?.name}}</label>
+                                                    </li>
+                                                  </ol>
+                                                </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                <div class="option_box">
+                                                  <h5>Accessory Packages</h5>
+                                                  <ol>
+
+
+                                                    <li
+                                                      *ngFor="let accessory of row.additional_options.accessory_packages;let i = index;">
+                                                      <input id="accessory_{{i}}" [checked]="accessory.selected"
+                                                        type="checkbox" disabled />
+                                                      <label for="accessory_{{i}}">{{accessory.name}}</label>
+                                                    </li>
+
+                                                  </ol>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                          </div>
+
+                                        </div>
+
+
+
+
+
+
+
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                              </div>
+
+
+
+
+
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+
+
+
+                    </div>
+                  </ng-template>
+                </ngx-datatable-row-detail>
+
+                <ngx-datatable-column [width]="50" [sortable]="false" [resizeable]="false" [draggable]="false">
+                  <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                    <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded"
+                      [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row)">
+                    </a>
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="" [sortable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="table-thumb">
+                      <img src="{{row?.cover_image}}">
+                    </div>
+                    <div class="print _vin">{{ row?.vin ? row?.vin : row?.license_plate }}</div>
+                    <div class="print _vin" *ngIf="row.car_expired == 0 && row.type == 'active'"><app-timmer [inputDate]="row.expiry_date"></app-timmer></div>
+                    
+                    
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Title" [sortable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.year }} {{ row.make | titlecase }} {{ row.model | titlecase }} <br />
+                    <span *ngIf="row?.trim?.length <= 18" data-toggle="tooltip"
+                      title="{{row?.trim}}">{{ row?.trim | slice:0:18}}</span>
+                    <span *ngIf="row?.trim?.length > 18" data-toggle="tooltip"
+                      title="{{row?.trim}}">{{ row?.trim | slice:0:18}}...</span>
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Exterior Color"
+                  prop="basic_info.vehicle_exterior_color" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.exterior_color }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Mileage" prop="vehicle_mileage"
+                  [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.miles }} Mi
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Car Condition" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span *ngIf="row?.vehicle_condition?.vehicle_condition_value?.length <= 18" data-toggle="tooltip"
+                      title="{{row?.vehicle_condition?.vehicle_condition_value}}">{{ row?.vehicle_condition?.vehicle_condition_value | slice:0:18 }}</span>
+                    <span *ngIf="row?.vehicle_condition?.vehicle_condition_value?.length > 18" data-toggle="tooltip"
+                      title="{{row?.vehicle_condition?.vehicle_condition_value}}">{{ row?.vehicle_condition?.vehicle_condition_value | slice:0:18 }}...</span>
+
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="bids"  prop="best_bid"
+                  [sortable]="true">
+                  <ng-template let-rowIndex="rowIndex" let-row="row"  ngx-datatable-cell-template>
+                  
+                    <b *ngIf="row.type =='accepted'">
+                      {{ row?.won_bid | currency:'USD':true:'1.2-2'}}
+                    </b>
+                    <b *ngIf="row.type !='accepted'">
+                      {{ row?.higest_bid | currency:'USD':true:'1.2-2'}}
+                    </b>
+
+                    <span *ngIf="row?.totalBids && row.is_spam !='true'" class="left_bids">
+
+                      <button *ngIf="row.totalBids == 1 && row?.type != 'sold'" (click)="show(row?._id)">See
+                        ({{row?.totalBids}}) bid</button>
+                      <button *ngIf="row.totalBids > 1 && row?.type != 'sold'" (click)="
+                        (row?._id)">See all
+                        ({{row?.totalBids}}) bids</button>
+                      <button *ngIf="row.totalBids > 1 && row?.type == 'sold'" (click)="show(row?._id)">Bids
+                        Placed</button>
+
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+
+              
+
+                <ngx-datatable-column *ngIf="page.type!='accepted'" [resizeable]="false" [draggable]="false"
+                  name="Created At" prop="created_at" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.created_at | date:'MM-dd-yy'}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column *ngIf="page.type=='accepted'" [resizeable]="false" [draggable]="false"
+                  name="Updated At" prop="updated_at" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.updated_at | date:'MM-dd-yy'}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Action" [sortable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+
+                    <span class="actions">
+                   
+                      <a title="Car Detail" (click)="savePageType()"
+                        routerLink="/seller/car-detail/{{row._id}}/dashboard"><i class="fa fa-eye"></i></a>
+                      <a title="Edit Location" *ngIf="row.type=='active ' && row.is_spam !='true' && row.totalBids == 0"
+                        (click)="showEditLocationPopup(row)"><i class="fa fa-globe"></i></a>
+                      <a title="Edit Car" *ngIf="row.type=='active' && row.totalBids == 0&& row.is_spam !='true'"
+                        routerLink="/seller/editcar/{{row._id}}/dashboard"><i class="fa fa-pencil"></i></a>
+
+                      <button title="Delete Car" *ngIf="row.type=='active'&& row.totalBids == 0 && row.is_spam !='true'" type="button" (click)="delete(row)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+
+                      <button title="Deactivate Car" *ngIf="row.type=='active' && row.is_spam !='true'" type="button"
+                        (click)="changeCarStatus(row,'inactive')">
+                        <img src="/assets/images/car_active.png">
+                      </button>
+                      <button title="Activate Car" *ngIf="row.type =='inactive' && row.is_spam !='true'" type="button"
+                        (click)="changeCarStatus(row,'active')">
+                        <img src="/assets/images/car_inactive.png">
+                      </button>
+                      <button title="Unarchive Car" *ngIf="row.type=='archived' && row.is_spam !='true'" type="button"
+                        (click)="changeCarStatus(row,'active')">
+                        <img src="/assets/images/car_archive.png">
+                      </button>
+                      <button title="Archive Car" *ngIf="row.type=='active' && row.is_spam !='true'" type="button"
+                        (click)="changeCarStatus(row,'archived')">
+                        <img src="/assets/images/car_unarchive.png">
+                      </button>
+
+                      <button *ngIf="page.type == 'accepted' || page.type == 'sold'" title="Start Chat" type="button"
+                        (click)="showChat(row, row?.bid_dealer_id)">
+                        <i class="fa fa-comments-o" aria-hidden="true"></i>
+                      </button>
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-footer>
+                  <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+                    let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset"
+                    let-isVisible="isVisible">
+                    <div class="pagination_outer d-flex">
+                      <div class="showing_records">
+                        Showing <div class="selected-box number_records">
+                          <select class="selectpicker my_select" id="per-page"
+                            (change)="onLimitChange($event.target.value)">
+                            <option *ngFor="let option of pageLimitOptions" [value]="option.value"
+                              [selected]="option.value == currentPageLimit">
+                              {{ option.value }}
+                            </option>
+                          </select>
+                        </div> records on page
+                      </div>
+                      <div class="ml-auto">
+                        <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'"
+                          [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+                          [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount"
+                          [hidden]="!((rowCount / pageSize) > 1)" (change)="listingTable.onFooterPage($event)">
+                        </datatable-pager>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-footer>
+              </ngx-datatable> -->
+
+
+              <ngx-datatable #listingTable class="bootstrap table-view" [rows]="cars"
+                [columns]="[{name:'Year'},{name:'Make'},{name:'Model'},{name:'Trim'},{name:'Listed'},{name:'Status'},{name:'Bids'}]"
+                [sorts]="[{prop: 'created_at', dir: 'desc'}]" [columnMode]="'force'" [headerHeight]="50"
+                [footerHeight]="80" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                [limit]="page.size" [rowHeight]="60" (sort)="onSort($event)" (page)="setPage($event)">
+
+
+
+                <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+                  <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+
+                    <div class="row_detail col-md-12">
+                      <div class="row_detail_inner">
+                        <div class="listing_section">
+                          <div class="container">
+
+                            <div class="row no-gutters">
+
+
+
+
+
+                              <div class="col-md-12">
+                                <div class="row mx-0">
+
+
+
+                                  <div class="col-md-12">
+                                    <div class="row">
+
+
+
+
+
+
+
+
+                                      <div class="col-md-6 border_class">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Interior Material:</div>
+                                          <div class="list_content text-center">{{row?.interior_material}}</div>
+                                        </div>
+                                      </div>
+
+
+
+                                      <div class="col-md-6 border_class">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Interior Color:</div>
+                                          <div class="list_content text-center">{{row?.interior_color}}</div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_to_be_picked_up">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Miles Drive?:</div>
+                                          <div class="list_content text-center">{{row?.willing_to_drive_how_many_miles}}
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_transmission_style">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Transmission:</div>
+                                          <div class="list_content text-center">{{row?.vehicle_transmission_style}}
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_engine_cylinders">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Engine:</div>
+                                          <div class="list_content text-center">{{row?.vehicle_engine_cylinders}}
+                                            {{row?.vehicle_engine_cylinders}} {{row?.vehicle_engine_model}}</div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6 border_class" *ngIf="row?.vehicle_min_selling_price">
+                                        <div class="d-flex justify-content-between border_bottom">
+                                          <div class="list_content text-center">Minimum Selling Price:</div>
+                                          <div class="list_content text-center">${{row?.vehicle_min_selling_price}}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+                                  <div class="custom_flex_width">
+
+
+                                    <div class="col-md-12 mb-3">
+                                      <div class="row">
+
+                                        <div class="col-md-12">
+                                          <div class="option_outer">
+                                            <h2>Standard Options</h2>
+
+
+                                            <div class="option_box">
+                                              <ol class="three_column">
+                                                <li *ngFor="let se  of row.standard_equipments;let i = index;">
+
+                                                  <input type="checkbox" disabled [checked]="se.selected" id="o" />
+                                                  <label for="o">{{se?.name}}</label>
+
+                                                </li>
+                                              </ol>
+                                            </div>
+
+                                            <h2>Additional Options</h2>
+                                            <div class="row">
+                                              <div class="col-md-4">
+                                                <div class="option_box">
+                                                  <h5>Entertainment & Instrumentation</h5>
+                                                  <ol>
+
+
+                                                    <li
+                                                      *ngFor="let aeo of row.additional_options.entertainments;let i = index;">
+                                                      <input id="aeo_{{i}}" [checked]="aeo.selected" disabled
+                                                        type="checkbox" />
+                                                      <label for="aeo_{{i}}">{{aeo?.name}}</label>
+                                                    </li>
+
+                                                  </ol>
+                                                </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                <div class="option_box">
+                                                  <h5>Wheels & Tires</h5>
+                                                  <ol>
+                                                    <li
+                                                      *ngFor="let wheel of row.additional_options.wheels;let i = index;">
+                                                      <input id="wheel_{{i}}" [checked]="wheel.selected" disabled
+                                                        type="checkbox" />
+                                                      <label for="wheel_{{i}}">{{wheel?.name}}</label>
+                                                    </li>
+                                                  </ol>
+                                                </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                <div class="option_box">
+                                                  <h5>Accessory Packages</h5>
+                                                  <ol>
+
+
+                                                    <li
+                                                      *ngFor="let accessory of row.additional_options.accessory_packages;let i = index;">
+                                                      <input id="accessory_{{i}}" [checked]="accessory.selected"
+                                                        type="checkbox" disabled />
+                                                      <label for="accessory_{{i}}">{{accessory.name}}</label>
+                                                    </li>
+
+                                                  </ol>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                          </div>
+
+                                        </div>
+
+
+
+
+
+
+
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+                                </div>
+                              </div>
+
+
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+
+
+
+                    </div>
+                  </ng-template>
+                </ngx-datatable-row-detail>
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="" [sortable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span _ngcontent-c5=""
+                      class="{{row?.vehicle_condition?.vehicle_condition_value}}">{{row?.vehicle_condition?.vehicle_condition_value}}</span>
+                    <div class="table-thumb">
+                      <img src="{{row?.cover_image}}">
+                    </div>
+
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="" [sortable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <ul class="header_img">
+                      <li class="car_icon"><img src="/assets/images/vehicle.jpg">
+                        <div class="car_tooltip">Exterior Color: {{row.exterior_color | titlecase}}</div>
+                      </li>
+                      <li class="car_icon"><img src="/assets/images/wheel-4.jpg">
+                        <div class="car_tooltip">Interior Color: {{row.interior_color | titlecase}}</div>
+                      </li>
+                    </ul>
+
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Car" [sortable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.year }} {{ row.make | titlecase }} {{ row.model | titlecase }} <br />
+                  
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Mileage"
+                  prop="basic_info.vehicle_mileage" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.miles |number}} mi
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Trim "
+                  prop="basic_info.vehicle_exterior_color" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template let-expanded="expanded">
+                    {{ row?.trim }}
+                    <a href="javascript:void(0)" title="Expand/Collapse Row" (click)="toggleExpandRow(row)"><i
+                        *ngIf="!expanded" aria-hidden="true" class="fa fa-arrow-down"></i> <i *ngIf="expanded"
+                        class="fa fa-arrow-up" aria-hidden="true"></i></a>
+
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Current Bid "
+                  prop="basic_info.vehicle_exterior_color" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                      <b 
+                          class="">{{row?.higest_bid | currency}} </b>
+        
+                    <span *ngIf="row?.totalBids" class="left_bids">
+
+
+
+                      <button class="btn_spacing_section" *ngIf="row?.totalBids == 1" (click)="show(row)"> See
+                        ({{row?.totalBids}})
+                        bid</button>
+                      <button class="btn_spacing_section mb-3" *ngIf="row?.totalBids >1" (click)="show(row)">
+                        See all ({{row?.totalBids}})
+                        bids</button>
+
+
+
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Posted on "
+                  prop="basic_info.vehicle_exterior_color" [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                   {{row.created_at | date:'MM-dd-yyyy'}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+
+
+
+               
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Time Left" prop="miles"
+                  [sortable]="true">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="print _vin" *ngIf="row.car_expired == 0 && (page.type == 'active' || page.type == 'all')">
+                      <app-timmer [inputDate]="row.expiry_date"></app-timmer>
+                    </div>
+                    <div *ngIf="row.car_expired == 1 || (page.type != 'active' && page.type !='all')" class="print _vin">
+                      00:00:00 
+                    </div>
+                    
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column *ngIf="page.type =='transactions' || page.type =='purchased' || page.type == 'applied'" [resizeable]="false"
+                [draggable]="false" name="My Bid" prop="miles" [sortable]="true">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.my_bid?.bid_price | currency}}
+                </ng-template>
+              </ngx-datatable-column>
+             
+       
+
+
+                <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Action" [sortable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    <div class="actions">
+                      <div class="dots">
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                      </div>
+                      <ul class="dot_actions">
+                        <li><a (click)="savePageType()" routerLink="/seller/car-detail/{{row._id}}/dashboard"><i
+                              class="fa fa-eye"></i>Car Detail</a></li>
+                        <li *ngIf="row.type=='active' && row.totalBids == 0&& row.is_spam !='true'"><a routerLink="/seller/editcar/{{row._id}}/dashboard">
+                          <i class="fa fa-pencil" aria-hidden="true"></i>Edit</a></li> 
+                        
+                        <li *ngIf="row.type=='active'&& row.totalBids == 0 && row.is_spam !='true'" (click)="delete(row)"><a  >
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>Delete</a></li>  
+
+                        <li *ngIf="row.type =='inactive' && row.is_spam !='true'" (click)="changeCarStatus(row,'active')"><a   >
+                          <i class="fa fa-toggle-off" aria-hidden="true"></i>Activate car</a></li>  
+
+                        <li *ngIf="row.type=='active' && row.is_spam !='true'" (click)="changeCarStatus(row,'inactive')"><a  >
+                            <i class="fa fa-toggle-on" aria-hidden="true"></i>Deactivate car</a></li>
+                            
+                        <li *ngIf="row.type=='active' && row.is_spam !='true'" (click)="changeCarStatus(row,'archived')" ><a  >
+                          <i class="fa fa-archive" aria-hidden="true"></i>Archive</a></li>  
+                          <li  *ngIf="row.type=='archived' && row.is_spam !='true'" (click)="changeCarStatus(row,'active')">
+                              <a 
+                            ><i class="fa fa-file-archive-o" aria-hidden="true"></i>
+                            
+                        </a>Unarchive car
+                          </li>  
+                        <li *ngIf="page.type == 'accepted' || page.type == 'sold'"  (click)="showChat(row, row?.bid_dealer_id)">
+                            <a 
+                           >
+                            <i class="fa fa-comments-o" aria-hidden="true"></i> Start Chat
+                        </a>
+                        </li>
+                        <li   *ngIf="row.type=='accepted' || row.type =='sold'">
+                          <a title="Download Certificate" alt="Download Certificate" href="{{row.certificate_url}}" download><i class="fa fa-file-pdf-o" aria-hidden="true"></i>Certificate
+                          </a>                        
+                        
+                      </li>
+                      <li   *ngIf="page.type=='auction' &&  row.type =='active'" (click)="relistCar(row)">
+                        <a title="Relist the car" alt="Relist"  ><i class="fa fa-car" aria-hidden="true"></i>Re-list Car
+                        </a>                        
+                      
+                    </li>
+                      
+                      </ul>
+
+
+
+                      <!-- <span class="actions"> -->
+                   
+                          
+                          <!-- <a title="Edit Location" *ngIf="row.type=='active ' && row.is_spam !='true' && row.totalBids == 0"
+                            (click)="showEditLocationPopup(row)"><i class="fa fa-globe"></i></a> -->
+                          <!-- <a title="Edit Car" *ngIf="row.type=='active' && row.totalBids == 0&& row.is_spam !='true'"
+                            routerLink="/seller/editcar/{{row._id}}/dashboard"><i class="fa fa-pencil"></i></a> -->
+    
+                          <!-- <button title="Delete Car" *ngIf="row.type=='active'&& row.totalBids == 0 && row.is_spam !='true'" type="button" (click)="delete(row)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                          </button>
+    
+                          <button title="Deactivate Car" *ngIf="row.type=='active' && row.is_spam !='true'" type="button"
+                            (click)="changeCarStatus(row,'inactive')">
+                            <img src="/assets/images/car_active.png">
+                          </button>
+                          <button title="Activate Car" *ngIf="row.type =='inactive' && row.is_spam !='true'" type="button"
+                            (click)="changeCarStatus(row,'active')">
+                            <img src="/assets/images/car_inactive.png">
+                          </button>
+                          <a title="Unarchive Car" *ngIf="row.type=='archived' && row.is_spam !='true'" type="button"
+                            (click)="changeCarStatus(row,'active')">
+                            <img src="/assets/images/car_archive.png">
+                        </a>
+                          <button title="Archive Car" *ngIf="row.type=='active' && row.is_spam !='true'" type="button"
+                            (click)="changeCarStatus(row,'archived')">
+                            <img src="/assets/images/car_unarchive.png">
+                          </button> -->
+    
+                         
+                        <!-- </span> -->
+
+
+
+
+                    </div>
+
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-footer>
+                  <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+                    let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset"
+                    let-isVisible="isVisible">
+                    <div class="pagination_outer d-flex">
+                      <div class="showing_records">
+                        Showing <div class="selected-box number_records">
+                          <select class="selectpicker my_select" id="per-page"
+                            (change)="onLimitChange($event.target.value)">
+                            <option *ngFor="let option of pageLimitOptions" [value]="option.value"
+                              [selected]="option.value == currentPageLimit">
+                              {{ option.value }}
+                            </option>
+                          </select>
+                        </div> records on page
+                      </div>
+                      <div class="ml-auto">
+                        <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'"
+                          [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+                          [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount"
+                          [hidden]="!((rowCount / pageSize) > 1)" (change)="listingTable.onFooterPage($event)">
+                        </datatable-pager>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-footer>
+              </ngx-datatable>
+
+
+
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!--=================================
+blog -->
+
+
+<!-- Dealers Chat Listing-->
+<div id="sellerChatListing">  
+    <i class="fa fa-times close_BUTN chat_close_box" aria-hidden="true" (click)="chatHistoryClose()"></i>
+      <div class="conversation-wrap">
+          <div class="chat_header_title">
+              <h4>Chat History</h4>
+          </div>
+        
+
+            <div *ngIf="chatDealers.length <= 0" class="media conversation">
+              <p class="no_chat_found">No chat found</p>
+          </div>
+        <div *ngFor="let dealerObject of chatDealers" class="media conversation" [ngClass]="{'active_chat_client': selectedChat == dealerObject.chat_id}">
+          <div style="width:100%;">
+            
+          <div class="chatHandOver chat_bagde_number_parent" (click)="showChat(dealerObject, dealerObject.dealer[0]._id)">
+          <a class="pull-left" href="javascript:void(0)">
+            <img *ngIf="dealerObject.dealer[0].profile_pic" class="media-object img-circle" style="width: 50px; height: 50px;border: 1px solid #ccc;border-radius:50%; margin:10px 10px;"
+              src="{{dealerObject.dealer[0].profile_pic}}">
+            <img *ngIf="!dealerObject.dealer[0].profile_pic" class="media-object img-circle" style="width: 50px; height: 50px;border: 1px solid #ccc;border-radius:50%; margin:10px 10px;"
+              src="/assets/images/default-user.png">
+              <span *ngIf="dealerObject.unread_messages.length >0" style="top:0px;" class="badge chat_badge_number badge-light">{{ dealerObject.unread_messages.length}}</span>
+          </a>
+        
+          <div class="media-body chat_box_body">
+            <div class="d-flex_custom">
+              <h5 class="media-heading">{{dealerObject.dealer[0].name.first_name}} {{dealerObject.dealer[0].name.last_name}} </h5>
+              <span class="text-muted" title="{{dealerObject.messages[0].created_at | date:'MM-dd-yyyy h:mm a'}}">{{dealerObject.messages[0].created_at | date:'h:mm a'}}</span>
+            </div>
+            <p style="margin:0;font-size: 12px;">
+              <span *ngIf="dealerObject.messages[0].is_seller">You:</span>&nbsp;<span *ngIf="(dealerObject.messages[0].message.length <=50)">{{dealerObject.messages[0].message}}</span>
+              <span *ngIf="(dealerObject.messages[0].message.length >50)">{{dealerObject.messages[0].message | slice:0:30}}...</span>
+            </p>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>  
+  </div>
+  <!-- End Chat Listing -->
+
+
+<!-- chat window html  -->
+<div class="chat_box">
+    <i class="fa fa-times close_BUTN chat_close_box" aria-hidden="true" (click)="chatClose()"></i>
+  <div class="chat_head">
+    <div class="img_thumb">
+      <img [src]="dealer?.profile_pic != null ?dealer?.profile_pic :defaultUserImgUrl" alt="">
+    </div>
+    <div class="info">
+      <h3 class="name text_cap">{{dealer?.name.first_name}} {{dealer?.name.last_name}}</h3>
+      <div class="status">{{dealer?.isOnline?'Online':'Offline'}}</div>
+    </div>
+    
+  </div>
+  <div class="chat_body" id="chatScroll">
+    <ul>
+      <li *ngFor="let msg of messages;let i = index;" [ngClass]="msg.is_seller?'sender':'replier'">
+        <div class="message">
+          <p>{{msg?.message}}</p>
+        </div>
+        <span class="sent_time">{{msg?.created_at | date: 'h:mm a'}} <img src="assets/images/tick.png" alt=""></span>
+      </li>
+      <!-- <li class="replier">
+              <div class="message">
+                  <p>It is a long established fact that a reader will be distracted by the readable content</p>
+              </div>
+              <span class="sent_time"><img src="assets/images/tick.png" alt="">09:41 PM</span>
+          </li>
+          <li class="sender">
+              <div class="message">
+                  <p>It is a long established fact that a reader will be distracted by the readable content</p>
+              </div>
+              <span class="sent_time">09:41 PM<img src="assets/images/tick.png" alt=""></span>
+          </li> -->
+    </ul>
+  </div>
+  <div class="chat_footer">
+    <div class="sending_area">
+      <form (ngSubmit)="sendMessage()">
+        <input type="text" placeholder="Type Here...." name="messageBody" [(ngModel)]="messageBody" autocomplete="off">
+        <div class="action">
+          <!-- <div class="attachment">
+                  <input type="file" id="attachment">
+                  <label for="attachment"> <img src="assets/images/attachment.svg" alt=""></label>
+              </div> -->
+          <div class="send_btn">
+            <button type="submit" class="send_BTN"><img src="assets/images/send_icon.svg" alt=""></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-search-name (onCloseModal)="cancelsubmitSearch($event)" (onSubmit)="submitSearch($event)" [isModalOpen]="isSearchModelOpen">
+</app-search-name>
+
+<app-deactivate-car (onCloseModal)="cancelSubmit($event)" (onSubmit)="submitDeactivateReason($event)" [isModalOpen]="isDeactivateResonModelOpen"></app-deactivate-car>
+<app-car-bids-popup (onClose)="hide($event)" (onAccept)="acceptBid($event)" (onReject)="rejectBid($event)" [isOpen]="isBidListingModalOpen"
+  [carId]="selectedCarId"></app-car-bids-popup>
+
+<app-edit-location-popup (showEditLocationPopup)="showEditLocationPopup($event)"
+  (hideEditLocationPopup)="hideEditLocationPopup($event)" [isOpen]="isEditLocationModalOpen"
+  [carDetails]="selectedCarId"></app-edit-location-popup>

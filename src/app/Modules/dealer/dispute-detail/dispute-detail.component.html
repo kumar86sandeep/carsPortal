@@ -1,0 +1,81 @@
+  <!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+
+ <!--=================================
+    blog  -->
+  
+  <section class="dispute_spacing">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+              <div class="back_BTN">
+                <a (click)="goBack()">
+                  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                </a>
+                
+              </div>
+            </div>
+          </div>
+      <h3 class="dispute_title">{{disputeDetail?.title}}</h3>
+      <div class="dispute_content">
+        <p>{{disputeDetail?.description}}</p>
+      </div>
+
+
+      <div class="description_list" *ngIf="messages?.length > 0">
+        <h4>Discussion</h4>
+      </div>
+
+      <div class="msg-group center">
+        <ng-container *ngIf="messages?.length > 0">
+          <div class="dispute_media" *ngFor="let msg of messages;let i = index;"
+            [ngClass]="msg?.is_admin ? 'dispute_admin_sec' : 'dis-even-stage'">
+            <ng-container *ngIf="msg?.is_admin">
+              <div class="dispute_left-image">
+                <div class="dispute_left-image-outer">
+                  <img [src]="msg?.admin_id?.profile_pic ? msg?.admin_id?.profile_pic:'assets/images/default-user.png'" class="">
+                </div>
+              </div>
+              <div class="card-body dispute_left dispute_right-content">
+                <h6 class="card-subtitle">{{msg?.admin_id?.name?.first_name}} {{msg?.admin_id?.name?.last_name}}</h6>
+                <span class="card-text float-left">{{msg?.created_at | date:'MM-dd-yy'}}</span>
+                <p [innerHTML]="msg?.message"> </p>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!msg?.is_admin">
+              <div class="dispute_left-image">
+                <div class="dispute_left-image-outer">
+                  <img [src]="disputeDetail.dealer_id?.profile_pic ? disputeDetail.dealer_id?.profile_pic : 'assets/images/default-user.png'" class="">
+                </div>
+              </div>
+              <div class="card-body dispute_left dispute_right-content">
+                <h6 class="card-subtitle">{{disputeDetail.dealer_id?.name?.first_name}} {{disputeDetail?.dealer_id?.name?.last_name}}</h6>
+                <span class="card-text float-left">{{msg?.created_at | date:'MM-dd-yy'}}</span>
+                <p [innerHTML]="msg?.message"> </p>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="description_list">
+        <h4>Message</h4>
+      </div>
+
+      <form  class="dispute_form">
+        <trumbowyg id="trum"
+        [initialContent]="initialContentOne"  
+               [options]="options1"
+               [update]="update$"
+               (savedContent)="contentOne=$event">
+      
+    </trumbowyg>
+
+        <br>
+        <button type="button" class="button red" (click)="sendMessage()">Send Message</button>
+      </form>
+    </div>
+  </section>

@@ -1,0 +1,81 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+
+ <!--=================================
+    blog  -->
+ 
+ 
+ <section #listingSection class="blog page-section-ptb pad-b-30">
+   <div class="container">
+      <div class="row ">
+          <div class="col-md-12 d-flex">
+              <a routerLink="/dealer/add-payment-method" class="createNew ml-auto"><i class="fa fa-plus-circle"
+                  aria-hidden="true"></i> Add New Payment Method</a>
+          </div>
+      </div> 
+     <div class="row">
+ 
+       <div class="col-md-12">
+         <div class="blog-sidebar"> 
+ 
+         
+           <div class="bid-section sidebar-widget">
+           
+
+             <div class="unordered-lists table-responsive text-center">
+
+               <ngx-datatable #listingTable class="bootstrap" [rows]="paymentListings"                 
+                  [columnMode]="'force'" [headerHeight]="50"
+                 [footerHeight]="80" [externalPaging]="false" 
+                  [rowHeight]="60" >
+ 
+                
+                  <ngx-datatable-column  [resizeable]="false" [draggable]="false"
+                   name="Card Holder Name" prop="Card Holder Name" [sortable]="false">
+                   <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row?.card_holder_name}}
+                   </ng-template>
+                 </ngx-datatable-column>
+                  
+
+                 <ngx-datatable-column  [resizeable]="false" [draggable]="false"
+                   name="Card Type" prop="Card Type" [sortable]="false">
+                   <ng-template let-row="row" ngx-datatable-cell-template>
+                     {{ row?.card_type}}
+                   </ng-template>
+                 </ngx-datatable-column>
+
+                 
+ 
+                 <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Credit Card Number"
+                   prop="credit_card_number" [sortable]="false">
+                   <ng-template let-row="row" ngx-datatable-cell-template>
+                     Ending with {{ row?.credit_card_number }}
+                   </ng-template>
+                 </ngx-datatable-column>
+ 
+                 
+
+                 
+ 
+                 <ngx-datatable-column [resizeable]="false" [draggable]="false" name="Action"  [sortable]="false">
+                   <ng-template let-row="row" ngx-datatable-cell-template>
+                     <a [hidden]="row.default" class="mr-2" alt="Mark as Default"  href="javascript:void(0)"><i class="fa fa-credit-card-alt non_default" aria-hidden="true"></i></a>&nbsp;&nbsp; 
+                     <a [hidden]="row.default" (click)="removeCard(row?.stripe_card_id)" title="Remove Card" alt="Remove Card" href="javascript:void(0)"><i class="fa fa-remove" aria-hidden="true"></i></a>
+                     <a href="javascript:void(0)" class="card-icon-active" title="Default Card" alt="Default Card" [hidden]="!row.default"><i class="fa fa-credit-card-alt" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                     <a  [hidden]="row.default"class="default_card" (click)="defaultCard(row?.stripe_card_id)">Make as default</a>
+                   </ng-template>
+                 </ngx-datatable-column>                
+
+               </ngx-datatable>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </section>
+ 

@@ -1,0 +1,60 @@
+<div class="modal fade" #contentSection id="contentSection" tabindex="-1" role="dialog" aria-labelledby="contentSection">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+      <div class="modal-header justify-content-center">
+              <h5 class="underline_heading text_transform">Edit Car Location</h5>    
+              <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>     
+      </div>
+      
+            
+      <div class="modal-body">   
+         
+          <div class="col-md-12">
+            <form [formGroup]="vehicleDetails">   
+                <div formGroupName="vehicle_location" class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                            <label for="">Zip Code*</label>                      
+
+                                <input #zipcode mask="00000" type="text" class="form-control placeholder" (input)="fetchCityState($event.target.value)" placeholder="Zip Code" formControlName="zipcode" [ngClass]="{ 'is-invalid': (vehicleDetails.controls.vehicle_location.get('zipcode').touched || isVehicleDetailsSubmitted) && vehicleDetails.controls.vehicle_location.get('zipcode').errors }">
+
+                                <p class="error_msg" *ngIf="vehicleDetails.controls.vehicle_location.get('zipcode').touched || isVehicleDetailsSubmitted">                      
+                                    <app-form-validation-errors minLength=2 maxLength=5 errorPrefix="Zip Code " patternError="Must enter valid zip code." [errors]="vehicleDetails.controls.vehicle_location.get('zipcode').errors"></app-form-validation-errors>   
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                            <label for="">State*</label>
+                            <input type="text" class="dis_inpt-txt" formControlName="state" value="" placeholder="State" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                            <label for="">City*</label>
+                                    <input *ngIf="cities.length <= 1" readonly class="form-control" type="text" placeholder="City" formControlName="city">
+
+                                <select class="simple_select selectpicker" *ngIf="cities.length > 1" formControlName="city">
+                                    <option *ngFor="let cityObject of cities" value="{{cityObject.city}}">{{cityObject.city}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="submission_btns mt-3 col-md-12 text-center">                               
+                            <button class="button red" type="button" [disabled]="vehicleDetails.invalid" (click)="updateLocation()">Update</button>
+                        </div> 
+
+                    </div> 
+                </form>    
+
+          </div>             
+          
+      </div>  
+    
+      
+  </div>
+  </div>
+</div>

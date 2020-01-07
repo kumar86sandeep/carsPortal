@@ -1,0 +1,7 @@
+.ngx-datatable .datatable-body-cell{
+overflow: visible !important
+}
+.left_tittle {
+    margin-bottom: 20px;
+    font-size: 22px;
+}

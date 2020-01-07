@@ -1,0 +1,101 @@
+.slider {
+    position: static;   
+}
+.image_filter{
+    z-index: 9999;
+}
+.img-thumbnail{
+    max-width:50% !important;
+
+}
+
+/* Back Button CSS */
+.bem-input-inline-view {
+    width: 100%;
+    font-size: 13px;
+    line-height: 30px;
+    text-align: left !important;
+    color: #1c1c1c !important;
+    padding: 2px 8px;
+}
+ .back_BTN a {
+    margin-bottom: 20px;
+    color: #db2d2e;
+    border: 1px solid red;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
+    margin-left: 5px;
+    padding: 5px 10px;
+
+} 
+.back_BTN a:hover {
+    background: #db2d2e;
+    color: #fff!important;
+}
+/* Back Button CSS */
+i.fa.fa-question-circle {
+    margin-right: 8px;
+}
+a.print_btn {
+    width: 17% !important;
+    padding: 0 15px;
+    border: 1px solid #333 !important;
+    color: #333 !important;
+    margin: 0 2px
+}
+a.print_btn:hover{
+    background:#333 !important;
+    color:#fff !important;
+}
+i.fa.fa-print {
+    margin-right: 12px;
+}
+
+a.car_status_btn img {
+    width: 24%;
+    
+}
+
+.print_btn_row {
+    margin-bottom: 20px;
+    color: #db2d2e;
+    border: 1px solid red;
+    width: 180px !important;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    justify-content: center;
+    cursor: pointer;
+    transition: .3s;
+}
+
+
+.actions button {
+    margin: 0px 9px;
+    line-height: 2.1;
+    border: 0;
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+    border: #000 1px solid;
+    padding: 2px 11px;
+    border-radius: 50%;
+}
+
+
+app-car-detail-page input.bem-input-table-view {
+    width: 88% !important;
+    margin-right: 10% !important;
+    padding: 10px !important;
+    height: 100% !important;
+    font-size: 13px;
+}
+.timmer1 {
+    font-size: 16px;
+}

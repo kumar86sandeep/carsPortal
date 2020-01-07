@@ -1,0 +1,172 @@
+<div class="modal fade" #contentSection id="newDealershipForm" tabindex="-1" role="dialog"
+  aria-labelledby="newDealershipForm">
+  <div class="modal-dialog mw-75 border-none  mx-auto" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-transparent pl-2">
+        <h5 *ngIf="updateExistingDealership" class="modal-title text_cap" id="exampleModalLabel">Update dealership</h5>
+        <h5 *ngIf="!updateExistingDealership" class="modal-title text_cap" id="exampleModalLabel">Create dealership</h5>
+
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="newDealershipForm">
+          <div class="row">
+            <!----------------------Left_section-------------------->
+            <div [ngClass]="{'col-lg-6':updateExistingDealership, 'col-lg-4':!updateExistingDealership}"
+              class="col-md-6 col-sm-6">
+              <div class="title">
+                <h5 class="text-red text_cap">Dealership Details</h5>
+              </div>
+              <div class="gray-form">
+                <div class="user-thumb-col">
+                  <div id="dealershipPreview" class="user-thumb"></div>
+
+
+                  <!--<p>Size of image: Upto 2 MB</p>
+                <p>File format: JPEG / JPG / PNG</p>    -->
+                  <div class="dropzone file btn btn-md btn-zoho position-relative" [dropzone]="config"></div>
+
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>Legal Corporation Name*</label>
+                    <input class="form-control" type="text" placeholder="Legal Corporation Name"
+                      name="legalcoroporationname" formControlName="legalcoroporationname"
+                      [ngClass]="{ 'is-invalid': (newDealershipForm.get('legalcoroporationname').touched || submitted) && newDealershipForm.get('legalcoroporationname').errors }">
+                    <p *ngIf="newDealershipForm.get('legalcoroporationname').touched || submitted">
+                      <app-form-validation-errors minLength=2 maxLength=50 errorPrefix="Legal Corporation "
+                        [errors]="newDealershipForm.get('legalcoroporationname').errors"></app-form-validation-errors>
+                    </p>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label>Dealership Number*</label>
+                    <input class="form-control" type="text" placeholder="Dealership Number" name="dealershipnumber"
+                      formControlName="dealershipnumber"
+                      [ngClass]="{ 'is-invalid': (newDealershipForm.get('dealershipnumber').touched || submitted) && newDealershipForm.get('dealershipnumber').errors }">
+
+                    <p *ngIf="newDealershipForm.get('dealershipnumber').touched || submitted">
+                      <app-form-validation-errors minLength=1  errorPrefix="Dealership Number "
+                        [errors]="newDealershipForm.get('dealershipnumber').errors"></app-form-validation-errors>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!----------------------Middle_section-------------------->
+            <div [ngClass]="{'col-lg-6':updateExistingDealership, 'col-lg-4':!updateExistingDealership}"
+              class="col-md-6 col-sm-6">
+              <div class="title">
+                <h5 class="text-red text_cap">Location</h5>
+              </div>
+              <div class="gray-form">
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>Main Address Line 1*</label>
+                    <input class="form-control" type="text" placeholder="Main Address Line 1" name="mainaddressline1"
+                      formControlName="mainaddressline1"
+                      [ngClass]="{ 'is-invalid': (newDealershipForm.get('mainaddressline1').touched || submitted) && newDealershipForm.get('mainaddressline1').errors }">
+
+                    <p *ngIf="newDealershipForm.get('mainaddressline1').touched || submitted">
+                      <app-form-validation-errors errorPrefix="Address Line1 "
+                        [errors]="newDealershipForm.get('mainaddressline1').errors"></app-form-validation-errors>
+                    </p>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label>Main Address Line 2</label>
+                    <input class="form-control" type="text" placeholder="Main Address Line 2" name="mainaddressline2"
+                      formControlName="mainaddressline2">
+                  </div>
+
+
+
+                  <div formGroupName="location">
+                 
+                    <div class="form-group col-md-12">
+                      <label>Zip Code*</label>
+                      <input  mask="00000" (input)="fetchCityState($event.target.value)" class="form-control" type="text" placeholder="Enter Zipcode" formControlName="zipcode" [ngClass]="{ 'is-invalid': (newDealershipForm.controls.location.get('zipcode').touched || submitted) && newDealershipForm.controls.location.get('zipcode').errors }">
+                      <p class="error_msg" *ngIf="newDealershipForm.controls.location.get('zipcode').touched || submitted">                      
+                          <app-form-validation-errors minLength=2 maxLength=5 errorPrefix="Zip " patternError="Must enter valid zip code." [errors]="newDealershipForm.controls.location.get('zipcode').errors"></app-form-validation-errors>   
+                      </p>
+                    </div>
+    
+                    <div class="form-group col-md-12">
+                      <label>State*</label>
+                      <input  readonly class="form-control" type="text" placeholder="State" formControlName="state">                                   
+                    </div>              
+                    <div class="form-group col-md-12">
+                      <label>City*</label>
+                      <input *ngIf="cities.length<=1" readonly class="form-control" type="text" placeholder="City" formControlName="city">
+                      <select *ngIf="cities.length >1" formControlName="city">                        
+                        <option *ngFor="let cityObject of cities" value="{{cityObject.city}}">{{cityObject.city}}</option>
+                      </select>                     
+                    </div>
+      
+                </div>
+
+
+
+
+                  
+
+                 
+                </div>
+              </div>
+            </div>
+            <!----------------------Right_section-------------------->
+
+            <div *ngIf="dealershipsItems.length !== 0 && !updateExistingDealership"
+              class="col-lg-4 col-md-12 col-sm-12">
+              <div class="title">
+                <h5 class="text-red text_cap">Added Dealerships</h5>
+              </div>
+
+
+              <div class="added_address bg-3 bg-overlay-black-70">
+                <ng-scrollbar #scrollable class="my-scrollbar">
+                  <ul>
+
+                    <li *ngFor="let data of dealershipsItems; let i= index">
+                      <div class="address_box">
+                        <span class="text-white d-block"><b>{{data.legalcoroporationname}}</b></span>
+                        <span class="text-white d-block"><b>{{data.dealershipnumber}}</b></span>
+                        <address>
+                          {{data.mainaddressline1}} {{data.mainaddressline2}}, <br>
+                          {{data.location.city}}, {{data.location.state}} - {{data.location.zipcode}}
+                        </address>
+                        <div class="actions">
+                          <button type="button"><i class="fa fa-pencil" (click)="editNewDealership(i)"
+                              aria-hidden="true"></i></button>
+                          <button type="button"><i class="fa fa-trash" (click)="deleteNewDealership(i)"
+                              aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </li>
+
+                  </ul>
+                </ng-scrollbar>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="row">
+
+            <div *ngIf="!updateExistingDealership" class="form-group col-md-4">
+              <button class="button red"
+                (click)="pushDealership()" type="button">{{dealershipsItems.length>0?'Add another':'Add'}}</button></div>
+            <div *ngIf="IsForUpdate" class="form-group col-md-4"><button class="button red"
+                (click)="updateNewDealership()" type="button">Update</button></div>
+            <div *ngIf="updateExistingDealership" class="form-group col-md-4"><button class="button red"
+                (click)="onUpdateExistingDealership()" type="button">Update Dealership</button></div>
+            <div *ngIf="!updateExistingDealership" class="form-group col-md-4"><button [disabled]="IsForUpdate || dealershipsItems.length <=0"
+                (click)="onCreateDealership()" [ngClass]="{ 'submit-btn-disable': IsForUpdate || dealershipsItems.length <=0 }" class="button red" type="button">Save & close</button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

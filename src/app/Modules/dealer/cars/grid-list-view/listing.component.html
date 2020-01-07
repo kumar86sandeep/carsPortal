@@ -1,0 +1,734 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<!--=================================
+product-listing  -->
+
+<section #listingSection class="product-listing page-section-ptb">
+
+  <div class="container">
+
+
+
+    <div class="row">
+      <div class="col-xl-3 col-lg-4 col-md-4">
+        <div class="listing-sidebar">
+          <div class="widget">
+            <div class="widget-search">
+              <h5>Advanced Search</h5>
+              <ul class="list-style
+            -none">
+                <li><i class="fa fa-star"> </i> Total Results Found <span
+                    class="float-right">({{ page.filteredElements}})</span></li>
+                <li><i class="fa fa-filter"> </i> Filtered Results <span
+                    class="float-right">({{page.totalElements}})</span></li>
+              </ul>
+            </div>
+            <div class="clearfix">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <a href="#">Year</a>
+
+                  <ul>
+                    <li *ngFor="let year of yearsRange;"><span class="checkbox">
+                        <label>
+                          <!-- <input type="checkbox"  [checked]="year.checked" value="{{year.value}}" (change)="vehicleStatisticsByYear(year.value,'year')"> {{year.value}}-->
+
+
+                          <button type="button" [ngClass]="{btn_active: (page?.filters?.year == year.value)}"
+                            (click)="vehicleStatisticsByYear(year.value,'year')" href="javascript:void(0)"
+                            class="sidebar_content">{{year.value}}</button>
+                        </label>
+                      </span></li>
+                  </ul>
+                </li>
+
+                <li [attr.disabled]="makes.length<=0 || page.filters?.year?.length<=0"
+                  [ngClass]="{disabledcls: makes.length<=0 || page.filters?.year?.length<=0}" class="list-group-item">
+                  <a [attr.disabled]="makes.length<=0 || page.filters?.year?.length<=0"
+                    [ngClass]="{disabledcls: makes.length<=0 || page.filters?.year?.length<=0}" href="#">Make</a>
+                  <ul id="makeFilter">
+                    <!--<li><span class="checkbox">
+                            <label>
+                              <input type="checkbox"> All Makes
+                            </label>
+                          </span></li>-->
+                    <li *ngFor="let make of makes">
+                      <span class="checkbox">
+                        <label>
+                          <button type="button" [ngClass]="{btn_active: (page?.filters?.make == make.make_display )}"
+                            (click)="vehicleStatisticsByMake(make.make_display, 'make')" href="javascript:void(0)"
+                            class="sidebar_content">{{make.make_display}}</button>
+
+                          <!--
+                                <input type="checkbox" [checked]="make.checked" value="{{make.make_display}}" (change)="vehicleStatisticsByMake(make.make_display, 'make')"> {{make.make_display}}
+                              -->
+                        </label>
+                      </span></li>
+                  </ul>
+                </li>
+
+                <li [attr.disabled]="models.length<=0 || page.filters?.make?.length<=0"
+                  [ngClass]="{disabledcls: models.length<=0 || page.filters?.make?.length<=0}" class="list-group-item">
+                  <a [attr.disabled]="models.length<=0 || page.filters?.make?.length<=0"
+                    [ngClass]="{disabledcls: models.length<=0 || page.filters?.make?.length<=0}" href="#">Model</a>
+                  <ul id="modelFilter">
+                    <!--<li><span class="checkbox">
+                              <label>
+                                <input type="checkbox"> All Models
+                              </label>
+                            </span></li>-->
+                    <li *ngFor="let model of models">
+                      <span class="checkbox">
+                        <label>
+
+                          <!-- <input type="checkbox" [checked]="model.checked" value="{{model.name}}" (change)="vehicleStatisticsByModel(model.name,'model')"> {{model.name}}-->
+
+                          <button type="button" [ngClass]="{btn_active: (page?.filters?.model == model.model_name)}"
+                            (click)="vehicleStatisticsByModel(model.model_name, 'model')" href="javascript:void(0)"
+                            class="sidebar_content">{{model.model_name | titlecase}}</button>
+
+                        </label>
+                      </span></li>
+                  </ul>
+                </li>
+
+                <li [attr.disabled]="trims.length<=0 || page.filters?.model?.length<=0"
+                  [ngClass]="{disabledcls: trims.length<=0 || page.filters?.model?.length<=0}" class="list-group-item">
+                  <a [attr.disabled]="trims.length<=0 || page.filters?.model?.length<=0"
+                    [ngClass]="{disabledcls: trims.length<=0 || page.filters?.model?.length<=0}" href="#">Trim</a>
+                  <ul id="trimFilter">
+                    <!--<li><span class="checkbox">
+                          <label>
+                            <input type="checkbox" [checked]="isAllTrimSelected" (change)="resetAll('trim')"> All Trims
+                          </label>
+                        </span></li>-->
+                    <li *ngFor="let trim of trims">
+                      <span class="checkbox">
+                        <label>
+                          <!--
+                            <input type="checkbox" [checked]="trim.checked"  value="{{trim.name}}" (change)="uncheckAllFetchRecords(trim.name, 'trim')"> {{trim.name}} 
+                           -->
+                          <button [ngClass]="{btn_active: (page?.filters?.trim == trim.model_trim)}" type="button"
+                            (click)="uncheckAllFetchRecords(trim.model_trim, 'trim')" href="javascript:void(0)"
+                            class="sidebar_content">{{trim.model_trim}} </button>
+                        </label>
+                      </span></li>
+                  </ul>
+                </li>
+
+
+                <li class="list-group-item">
+                  <a href="#">Exterior Color</a>
+                  <ul>
+                    <!-- <li><span class="checkbox">
+                          <label>
+                            <input [checked]="isAllExtriorColorSelected" type="checkbox" (change)="uncheckAllFetchRecords('All Exterior Colors', 'exterior_color')"> All Exterior Colors
+                          </label>
+                        </span></li> -->
+                    <li *ngFor="let exteriorColor of exteriorColors">
+                      <span class="checkbox">
+                        <label>
+
+                          <!--
+                              <input type="checkbox" [checked]="exteriorColor.checked" value="{{exteriorColor.label}}" (change)="uncheckAllFetchRecords(exteriorColor.label, 'exterior_color')"> <span [ngStyle]="{'background': exteriorColor.value}"  class="color_circle"></span> {{exteriorColor.label}} 
+                            -->
+
+                          <button type="button"
+                            [ngClass]="{btn_active: (page?.filters?.exterior_color == exteriorColor.label)}"
+                            (click)="uncheckAllFetchRecords(exteriorColor.label, 'exterior_color')"
+                            href="javascript:void(0)" class="sidebar_content">{{exteriorColor.label}} </button>
+                        </label>
+                      </span></li>
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <a href="#">Interior Color</a>
+                  <ul>
+                    <!--<li><span class="checkbox">
+                          <label>
+                            <input [checked]="isAllInteriorColorSelected" type="checkbox" value="" (change)="uncheckAllFetchRecords('All Interior Colors', 'interior_color')"> All Interior Colors
+                          </label>
+                        </span></li>-->
+                    <li *ngFor="let interiorColor of interiorColors">
+
+                      <span class="checkbox">
+                        <label>
+                          <!--
+                            <input class="interior_color" [checked]="interiorColor.checked" type="checkbox" value="{{interiorColor.label}}" (change)="uncheckAllFetchRecords(interiorColor.label, 'interior_color')">  <span [ngStyle]="{'background': interiorColor.value}"  class="color_circle"></span> {{interiorColor.label}}
+    
+                           -->
+
+                          <button [ngClass]="{btn_active: (page?.filters?.interior_color == interiorColor.label)}"
+                            type="button" (click)="uncheckAllFetchRecords(interiorColor.label, 'interior_color')"
+                            href="javascript:void(0)" class="sidebar_content">{{interiorColor.label}} </button>
+                        </label>
+                      </span></li>
+                  </ul>
+                </li>
+
+
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xl-9 col-lg-8 col-md-8">
+
+
+
+
+        <div class="sorting-options-main">
+
+          <div class="row sorting-options top_sorting">
+            <div class="col-md-12 d-sm-flex">
+              <div class="change-view-button">
+                <!-- <a [ngClass]="{active: isGridListing}" title="Grid View" href="javascript:void(0)"
+                  (click)="onChangeListingType('grid')"><i class="fa fa-th"></i></a>
+                <a [ngClass]="{active: !isGridListing}" title="Listing View" href="javascript:void(0)"
+                  (click)="onChangeListingType('list')"><i class="fa fa-list-ul"></i></a> -->
+
+
+                <a [ngClass]="{active: isGridListing}" title="Grid View" href="javascript:void(0)"
+                  (click)="onChangeListingType('grid')"><i class="fa fa-th"></i></a>
+                <a [ngClass]="{active: !isGridListing}" title="Listing View" href="javascript:void(0)"
+                  (click)="onChangeListingType('list')"><i class="fa fa-list-ul"></i></a>
+                <a title="Table View" routerLink="/dealer/dashboard"><i class="fa fa-table"></i></a>
+
+              </div>
+
+
+              <div class="ml-auto text-right">
+
+                <a (click)="saveSearch()" *ngIf="showsaveSearch && !searchApplied && searchData.length < 10"
+                  class="button red red_save_btn">Save this search</a>
+                <span class="search_car_section" *ngIf="searchApplied">Selected search :
+                  {{selectedSearch?.searchName}}</span>
+                <div class="price-search">
+                  <div class="search search_box_outer">
+                    <i class="fa fa-search"></i>
+                    <input type="search" name="search" [(ngModel)]="search" id="search_field_dash"
+                      class="form-control placeholder" autocomplete="off" (click)="applySearch()"
+                      (input)="onSearch($event.target.value)" placeholder="Type Make, Model, Trim etc..">
+                    <div class="search_suggestions">
+                      <ul>
+                        <li [ngClass]="{red_background:selectedSearchId == search._id} " id="search_item"
+                          *ngFor="let search of searchData;let i = index;">
+
+
+
+
+                          <div class="row">
+                            <div class="col-md-10" (click)="getSearchData(search)">
+                              <a>{{search?.searchName}}
+
+
+                              </a>
+                            </div>
+                            <div class="col-md-2">
+                              <i (click)="removeSearch(search._id)" class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                        </li>
+
+
+                      </ul>
+                    </div>
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+
+
+
+
+            </div>
+
+
+
+          </div>
+
+          <!--<form [formGroup]="filtersForm">-->
+          <div class="row blog-sidebar listing_outer">
+            <div class="col-md-12 d-flex flex-wrap mt-2">
+
+              <div class="right_sec ml-xl-auto mt-sm-2 mt-xl-0">
+
+                <div class="selected-box">
+                  <select (change)="onSort($event)" class="my_select">
+                    <option value="">Sort by </option>
+                    <option value="vehicle_finance_details.vehicle_min_selling_price,asc">Price: Lowest first</option>
+                    <option value="vehicle_finance_details.vehicle_min_selling_price,desc">Price: Highest first
+                    </option>
+                    <option value="vehicle_year,asc">Year: Lowest first</option>
+                    <option value="vehicle_year,desc">Year: Highest first </option>
+                    <option value="basic_info.vehicle_make,asc">Make: A to Z </option>
+                    <option value="basic_info.vehicle_make,desc">Make: Z to A </option>
+                  </select>
+                </div>
+
+                <form [formGroup]="dateFilterForm" class="d-inline-block">
+                  <div class="input-group date_filters_start d-inline-block">
+                    <input readonly formControlName="startDate" class="form-control"
+                      (dateSelect)="onStartDateSelected($event)" type="text" (click)="startDate.toggle()"
+                      placeholder="Start Date" ngbDatepicker #startDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()"
+                        type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                    </div>
+                  </div>
+
+                  <div class="input-group date_filters_start d-inline-block">
+                    <input readonly formControlName="endDate" class="form-control" type="text"
+                      (dateSelect)="onEndDateSelected($event)" (click)="endDate.toggle()" placeholder="End Date"
+                      ngbDatepicker #endDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()"
+                        type="button"><span><i class="fa fa-calendar" aria-hidden="true"></i></span></button>
+                    </div>
+                  </div>
+
+
+                  <div (click)="clearDateFilters()" data-toggle="tooltip" title="Reset Date Filter"
+                    class="clear_inputs d-inline-block">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                  </div>
+                </form>
+              </div>
+              <div class="sidebar-widget mb-0 mt-2">
+                <div class="tags">
+
+                  <ul>
+
+                    <li [ngClass]="{ active: page.type=='all'}"><button
+                        (click)="onChangeListType('all')">Active</button></li>
+
+                    <li [ngClass]="{ active: page.type=='applied'}" (click)="onChangeListType('applied')">
+                      <button>My Bids</button></li>
+                    <li [ngClass]="{ active: page.type=='wishlist'}"><button (click)="onChangeListType('wishlist')">Wish
+                        List</button></li>
+
+                    <li [ngClass]="{ active: page.type=='hidden'}"><button
+                        (click)="onChangeListType('hidden')">Hidden</button></li>
+                    <li [ngClass]="{ active: page.type=='transactions'}"><button
+                        (click)="onChangeListType('transactions')">Transactions</button></li>
+                    <li [ngClass]="{ active: page.type=='purchased'}" (click)="onChangeListType('purchased')">
+                      <button>Purchased</button></li>
+                    <li [ngClass]="{ active: page.type=='auction'}" (click)="onChangeListType('auction')">
+                      <button>Ended Auctions </button></li>
+                  </ul>
+                </div>
+              </div>
+
+
+
+              <!--<div class="col-lg-4">
+                <div class="price-slide">
+                  <div class="price">
+                    <label for="bids">Price Range</label>
+                    <input readonly formControlName="amount" type="text" id="amount" class="bids" />
+                    <div id="price-range"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="price-slide year-slide">
+                  <div class="price">
+                    <label for="years">Year Range</label>
+                    <input readonly formControlName="years" type="text" class="years" />
+                    <div id="year-range"></div>
+                  </div>
+                </div>
+              </div>-->
+            </div>
+          </div>
+          <!--</form>-->
+
+        </div>
+
+        <div class="col-md-12">
+          <span class="filter_tags_outer" *ngFor="let filterKey of CustomizeFiltersObject()  ">
+            <span class="round-filter" *ngFor="let filter of page.filters[filterKey]">
+              {{filter}} <a [attr.data-key]="filterKey" [attr.data-value]="filter"
+                (click)="removeFilter($event)">&times;</a>
+            </span>
+
+          </span>
+        </div>
+
+
+
+        <div *ngIf="!cars.length" class="no_record">
+          <p>No record found</p>
+        </div>
+        <!-- Grid view -->
+
+        <div *ngIf="isGridListing" class="row">
+          <div
+            *ngFor="let car of cars | paginate: { itemsPerPage: currentPageLimit, currentPage: currentPage, totalItems: page.totalElements }"
+            class="col-xl-4 col-sm-6 ">
+
+            <!-- <div class="car-item gray-bg text-center">
+              <div class="car-image">
+                <img class="img-fluid" src="{{car.cover_image}}" alt="">
+                <div class="car-overlay-banner">
+                  <ul>
+                    <li><a (click)="savePageFilters()" routerLink="/dealer/car-detail/{{car._id}}"><i
+                          class="fa fa-eye"></i></a></li>
+
+                  </ul>
+                </div>
+              </div>
+
+              <div class="car-content">
+                <div class="star">
+                  <i class="fa fa-registered"></i> {{car.year}}
+                  <i class="fa fa-road"></i> {{car.miles | number}} mi
+                </div>
+                <a (click)="savePageFilters()" routerLink="/dealer/car-detail/{{car._id}}"
+                  class="vin_number">{{car?.vin ? car?.vin : car?.license_plate}}</a>
+                <a class="text_cap" (click)="savePageFilters()"
+                  routerLink="/dealer/car-detail/{{car._id}}">{{car.make | titlecase}} {{car.model | titlecase}}</a>
+                <div class="separator"></div>
+                <div class="price">
+                  
+                  <span class="new-price">{{car.offer_in_hand | currency:'USD':true:'2.2-2'}} </span>
+                </div>
+                <div class="new-price" >
+                  <div class="timmer" *ngIf="car.car_expired == 0">
+                    
+                       <app-timmer [inputDate]="car.expiry_date"></app-timmer>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>-->
+
+
+            <div class="list_box car-item">
+              <div class="car_img">
+                <img class="" src="{{car.cover_image}}" alt="Car Image">
+                <div class="car-overlay-banner text-center">
+                  <ul>
+                    <li class="icon_listing"><a (click)="savePageFilters()" routerLink="/dealer/car-detail/{{car._id}}"><i
+                          class="fa fa-eye"></i></a></li>
+                    <li class="icon_listing" title="Update to sold" *ngIf="page.type=='transactions'"><a
+                        (click)="changeStatusToSold(car)"><i class="fa fa-ban"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="car_detail">
+                <div class="car-header">
+                  <div class="row">
+                    <div class="col-9">
+                      <div class="header-description">
+                        <h6>{{car.year}}- {{car.make | titlecase}} {{car.model | titlecase}}</h6>
+                        <span class="miles"><img src="/assets/images/road.jpg">{{car.miles | number}} mi</span>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <ul class="header_img">
+                        <li class="car_icon"><img src="/assets/images/vehicle.jpg">
+                          <div class="car_tooltip">Exterior Color: {{car.exterior_color | titlecase}}</div>
+                        </li>
+                        <li class="car_icon"><img src="/assets/images/wheel-4.jpg">
+                          <div class="car_tooltip">Interior Color: {{car.interior_color | titlecase}}</div>
+                        </li>
+                      </ul>
+
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="car_body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p><span>Trim</span>{{car.trim | titlecase}}</p>
+                    </div>
+                  </div>
+                  <!-- <div class="row">
+                        <div class="col-md-12">
+                          <div class="see_all_bids" *ngIf="car?.totalBids > 0 && car?.type !='sold'"><a
+                              (click)="show(car)">
+                              See {{car?.totalBids}}
+                              {{car?.totalBids == 1 ? ' bid' :' all bids' }}</a></div>
+                          <div class="highest_price">
+                            <div class="see_all_bids"><a *ngIf="car?.totalBids > 0 && car?.type =='sold'"
+                                (click)="show(car)" href="javascript::void(0)">
+                                Bids Placed</a></div>
+                          </div>
+                        </div>
+                      </div> -->
+                  <div class="row">
+                    <!-- <div class="col-7">
+                          <p><span>Market Value</span>$1,400</p> 
+                         </div>
+                         <div class="col-5">
+                          <p *ngIf="car.vehicle_min_selling_price<=0"><span>Reserve Bid</span>Not Set</p>     
+                          <p *ngIf="car.vehicle_min_selling_price>0"><span>Reserve Bid</span>{{(car.vehicle_min_selling_price*75)/100 | currency}}</p> 
+                         </div> -->
+                    <div class="col-7">
+                      <h6 class="current_bid"><span>Current Bid</span>{{ car.higest_bid | currency}}</h6>
+                    </div>
+                    <div class="col-5">
+                      <h6 class="current_bid"
+                        *ngIf="car.car_expired == 0 && (page?.type == 'all'|| page.type == 'applied'|| page?.type == 'wishlist')">
+                        <span>Time Left</span>
+                        <app-timmer [inputDate]="car.expiry_date"></app-timmer>
+                      </h6>
+                      <h6 class="current_bid"
+                        *ngIf="car.car_expired == 1 || ( page?.type != 'all' && page?.type != 'wishlist'&& page.type!='applied')">
+                        <span>Time Left</span>
+                        00:00:00
+                      </h6>
+
+
+                    </div>
+                  </div>
+                  <div class="list-footer"
+                    *ngIf="(car.car_expired == 0 && (page.type == 'all' || page.type == 'wishlist')) || ((car?.higest_bid == car?.my_bid?.bid_price && car.car_bids[0]?.bid_date < car?.my_bid?.bid_date) && car.car_expired == 0) || ((car?.higest_bid> car?.my_bid?.bid_price && page.type=='applied' && car?.my_bid_status == 'active' && car.car_expired == 0) )">
+                    <div class="row">
+                      <div class="col-md-7 pr-0">
+                        <input type="text" [(ngModel)]="car.placebid_price" maxLength=17 currencyMask placeholder=""
+                          class="cg-bem-inputone auto-bem-hw">
+                      </div>
+                      <div class="col-5">
+                        <button type="button" (click)="increaseBidPrice(car)" class="btn btn-danger w-100">Bid</button>
+                      </div>
+                      <div class="col-12">
+                        <button type="button" (click)="placeProxyBid(car)" class="w-100 btn btn-secondary">Proxy
+                          Bid</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span _ngcontent-c5=""
+              class="{{car?.vehicle_condition?.vehicle_condition_value}}">{{car?.vehicle_condition?.vehicle_condition_value}}</span>
+
+
+
+          </div>
+        </div>
+        <!-- Grid View-->
+        <div id="list_view" class="car-list" *ngIf="!isGridListing">
+          <div
+            *ngFor="let car of cars | paginate: { itemsPerPage: currentPageLimit, currentPage: currentPage, totalItems: page.totalElements }"
+            class="car-grid Listing_view">
+            <!--<div class="row">
+                <div class="col-md-4">
+                  <div class="car-item gray-bg text-center">
+                    <div class="car-image">
+                      <img class="img-fluid" src="{{car?.cover_image}}">
+                      <div class="car-overlay-banner">
+                        <ul>
+                          <li><a (click)="savePageFilters()" routerLink="/dealer/car-detail/{{car._id}}"><i
+                                class="fa fa-eye"></i></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="car-details">
+                    <div class="listing_head">
+                    <div class="car-title">
+                      <a (click)="savePageFilters()" class="text_cap"
+                        routerLink="/dealer/car-detail/{{car._id}}">{{car.make | titlecase}} {{car.model | titlecase}}</a>
+                      <br>  <a class="vin_number_sec" (click)="savePageFilters()" routerLink="/dealer/car-detail/{{car._id}}"
+                        >{{car?.vin ? car?.vin : car?.license_plate}}</a>
+                    </div>
+
+                    <div class="price">
+                    
+                      <span class="new-price">{{car.offer_in_hand | currency:'USD':true:'2.2-2'}} </span>
+                    </div>
+                  </div>
+
+                    <p>{{car?.comments}}</p>
+                  
+                  
+                    <div class="car-list">
+                      <ul class="list-inline">
+                        <li><i class="fa fa-registered"></i> {{car.year}}</li>
+                        <li><i class="fa fa fa-road"></i> {{car.miles | number}}</li>
+                        <li class="timmer" *ngIf="car.car_expired == 0">
+                          <app-timmer [inputDate]="car.expiry_date"></app-timmer>
+                          
+                        </li>
+                      
+                      
+                      </ul>
+                      <a class="button red float-right" (click)="savePageFilters()"
+                      routerLink="/dealer/car-detail/{{car._id}}">Details</a>
+                    </div>
+                  </div>
+                </div>
+              </div>-->
+
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="list_box">
+                  <span
+                    class="{{car?.vehicle_condition?.vehicle_condition_value}}_tag">{{car?.vehicle_condition?.vehicle_condition_value}}</span>
+
+                  <div class="row">
+                    <div class="col-md-4 car-item">
+                      <div class="car_img">
+                        <img class="img-fluid" src="{{car?.cover_image}}" alt="car">
+                        <div class="car-overlay-banner text-center">
+                          <ul>
+                            <li class="icon_listing" title="Car Detail"><a (click)="savePageFilters()"
+                                routerLink="/dealer/car-detail/{{car._id}}"><i class="fa fa-eye"></i></a></li>
+                            <li class="icon_listing" title="Update to sold" *ngIf="page.type=='transactions'"><a
+                                (click)="changeStatusToSold(car)"><i class="fa fa-ban"></i></a></li>
+
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="car_detail">
+                        <div class="car-header">
+                          <div class="row">
+                            <div class="col-7">
+                              <div class="header-description">
+                                <h6>{{car.year}}- {{car.make | titlecase}} {{car.model | titlecase}}</h6>
+                                <span class="miles"><img src="/assets/images/road.jpg">{{car.miles | number}} mi</span>
+                              </div>
+                            </div>
+                            <div class="col-5">
+                              <ul class="header_img">
+                                <li class="car_icon car"><img src="/assets/images/car-icon-1.png">
+                                  <div class="car_tooltip">Exterior Color: {{car.exterior_color | titlecase}}</div>
+                                </li>
+                                <li class="car_icon wheel"><img src="/assets/images/wheel2-1.png">
+                                  <div class="car_tooltip">Interior Color: {{car.interior_color | titlecase}}</div>
+                                </li>
+                              </ul>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="car_body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <p><span>Trim</span>{{car.trim | titlecase}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <!-- <div class="col-lg-3 col-sm-6">
+                                    <div class="see_all_bids" *ngIf="car?.totalBids > 0 && car?.type !='sold'"><a
+                                        (click)="show(car)">
+                                        See {{car?.totalBids}}
+                                        {{car?.totalBids == 1 ? ' bid' :' all bids' }}</a></div>
+                                    <div class="highest_price">
+                                      <div class="see_all_bids"><a *ngIf="car?.totalBids > 0 && car?.type =='sold'"
+                                          (click)="show(car)" href="javascript::void(0)">
+                                          Bids Placed</a></div>
+                                    </div>
+                                  </div> -->
+                            <!-- <div class="col-lg-3 col-sm-6">
+                                <p><span>Market Value</span>$1,400</p> 
+                              </div>
+                              <div class="col-lg-3 col-sm-6">
+                                <p *ngIf="car.vehicle_min_selling_price<=0"><span>Reserve Bid</span>Not Set</p>     
+                                <p *ngIf="car.vehicle_min_selling_price>0"><span>Reserve Bid</span>{{(car.vehicle_min_selling_price*75)/100 | currency }}</p>  
+                              </div> -->
+                            <div class="col-lg-3 col-sm-6">
+                              <h6 class="current_bid"><span>Current Bid</span>{{ car.higest_bid | currency}}</h6>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                              <h6 class="current_bid"
+                                *ngIf="car.car_expired == 0 && (page?.type == 'all' || page?.type == 'applied'|| page?.type == 'wishlist')">
+                                <span>Time Left</span>
+                                <app-timmer [inputDate]="car.expiry_date"></app-timmer>
+                              </h6>
+                              <h6 class="current_bid"
+                                *ngIf="car.car_expired == 1 ||( page?.type != 'all' &&  page?.type != 'wishlist'&& page.type!='applied')">
+                                <span>Time Left</span>
+                                00:00:00
+                              </h6>
+                            </div>
+                          </div>
+                          <div class="list-footer"
+                            *ngIf="(car.car_expired == 0 && (page.type == 'all' || page.type == 'wishlist')) || ((car?.higest_bid == car?.my_bid?.bid_price && car.car_bids[0]?.bid_date < car?.my_bid?.bid_date) && car.car_expired == 0) || ((car?.higest_bid> car?.my_bid?.bid_price && page.type=='applied' && car?.my_bid_status == 'active' && car.car_expired == 0) )">
+                            <input type="text" [(ngModel)]="car.placebid_price" maxLength=17 currencyMask
+                              placeholder="">
+                            <button type="button" (click)="increaseBidPrice(car)" class="btn btn-danger">Bid</button>
+                            <button type="button" (click)="placeProxyBid(car)" class="btn btn-secondary">Proxy
+                              Bid</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+
+          </div>
+        </div>
+
+
+        <div class="pagination_outer d-flex flex-wrap">
+          <div class="showing_records">
+            Showing <div class="selected-box number_records">
+              <select class="selectpicker my_select" id="per-page" (change)="onLimitChange($event.target.value)">
+                <option *ngFor="let option of pageLimitOptions" [value]="option.value"
+                  [selected]="option.value == currentPageLimit">
+                  {{ option.value }}
+                </option>
+              </select>
+            </div> records on page
+          </div>
+
+
+
+
+          <div *ngIf="cars.length>0"
+            class="pagination-nav d-flex justify-content-center pagination_nav_changes ml-sm-auto">
+            <pagination-controls (pageChange)="onPageChange($event)" directionLinks="true" maxSize="5" previousLabel=""
+              nextLabel="" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="~page"
+              screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<app-increase-bid [isOpen]="isBidModalOpen" [modalType]=[modalType] [car]="car" (onCancel)="cancelUpdateBid($event)"
+  (onClose)="closeBidModal($event)" (onSuccess)="onBidSuccess($event)"></app-increase-bid>
+
+<app-search-name (onCloseModal)="cancelsubmitSearch($event)" (onSubmit)="submitSearch($event)"
+  [isModalOpen]="isSearchModelOpen">
+</app-search-name>
+<app-payment-method-alert (onClose)="hideAddPaymentModal($event)" [isModalOpen]="isAddPaymentMethodModal">
+</app-payment-method-alert>
+<app-membership (onCloseModal)="cancelMembershipModal($event)" [isModalOpen]="isMemberShipModelOpen">
+</app-membership>
+<app-place-bid [isOpen]="isPlaceBidModalOpen" [car]="car" (onClose)="closePlaceBidModal($event)"
+  (onSuccess)="onBidSuccess($event)"></app-place-bid>
+<!--=================================
+ product-listing  -->

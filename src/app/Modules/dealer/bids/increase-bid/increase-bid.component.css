@@ -1,0 +1,49 @@
+.black_BTN_Bid{
+/* float: right; */
+margin-left:-11px;
+}
+
+.btn_red{
+    float:right;
+    /* margin-left: 15px; */
+    
+}
+.price_alert{
+    text-align: center;
+}
+
+.price_alert span{
+    font-weight: 600;
+   
+}
+
+.price_style{
+    font-weight: 600
+}
+.submission_Btns .black_BTN_Bid {
+margin-left: auto !important;
+}
+.submission_Btns {
+    display: flex;
+}
+.submission_Btns .btn_red{
+    margin-left: 15px;
+}
+app-increase-bid .mw-55 {
+    max-width: 550px !important;
+}
+
+p.price_alert_2 span {
+    display: block;
+    font-size: 25px;
+    margin: 14px 0;
+    color:#db2d2e;
+    font-weight: 700;
+}
+
+p.price_alert_2 {
+    margin-top: 8px;
+    color: black;
+    font-size: 20px;
+
+}

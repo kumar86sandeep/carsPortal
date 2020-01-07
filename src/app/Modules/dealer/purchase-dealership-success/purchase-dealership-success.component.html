@@ -1,0 +1,33 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+ <!--=================================
+  breadcrumbs and inner-intro -->
+ 
+	<section class="testimonial-1 white-bg page page-section-ptb">
+    <div class="thankyou_col">
+        <div class="thankyou_img">  <img src="../../../../assets/images/thumbs_up_1.png"/></div>
+      <div class="thankyou_text">Congratulations!!</div>
+      
+      <div class="thankyou_subscribing">
+        <span>You have successfully activated your subscription with CarsGoat. Please note the following subscription details:</span>
+        <ul class="plan_details">
+          <li><label>Plan: </label> <span>{{subscriptionName}}</span></li>
+          <li><label>Amount: </label> <span>{{subscriptionAmount}}</span></li>
+          <li><label>Next Renew Date: </label> <span>{{subscriptionAutoRenewDate | date:'MM-dd-yyyy'}}</span></li>          
+        </ul>
+      </div>
+      <div class="thankyou_subscribing">
+        <span>We’ll automatically charge your account per winning bid at the following rates – we’ll also showcase the applied coupon details if applicable:</span>
+        <ul class="service_fee_details">
+          <li>Car Value $1-$4,999, CarsGoat fee = $150</li>
+          <li>Car Value $5k-$9,999, CarsGoat fee = $200</li>
+          <li>Car Value $10k-$19,999, CarsGoat fee = $250</li>
+          <li>Car Value $20k+, CarsGoat fee = $350</li>
+        </ul>
+      </div>
+      <a routerLink="/dealer/dashboard" class="button red">Go to Dashboard</a>
+		</div>
+</section>

@@ -1,0 +1,103 @@
+<div class="modal show" #contentSection id="moreBidForm"   tabindex="-1" role="dialog"
+  aria-labelledby="moreBidForm">
+  <div class="modal-dialog  mw-75 border-none  mx-auto" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header bg-transparent pl-2">
+        <h5 class="modal-title text_change" id="exampleModalLabel">Car Bid Listing</h5>
+        <button  type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"> 
+        <div class="car-details">
+          <div class="container">
+
+            <div class="row">
+              <div class="col-md-12">
+
+                <div class="sidebar-widget">
+                  <div class="unordered-lists table-responsive text-center">
+                    <table class="table table-bordered-custom-modal table-striped table-image-set">
+                      <thead class="thead-dark-custom-modal">
+                        <tr>                        
+                          <th></th>
+                          <th>Dealership</th>
+                          <th>Legal Contact</th>
+                          <th>Price</th>
+                          <th>Buyer Rating</th>
+                          <th>Applied On</th> 
+                          <th>Bid Status</th>  
+                          <th>Action</th>                        
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="bids?.length <= 0">
+                        <tr>
+                          <td colspan="4" style="text-align:center">No records to display.</td>
+                        </tr>
+                      </tbody>
+
+                      <tbody *ngIf="bids?.length>0">
+
+                        <tr *ngFor="let bid of bids; let i = index">
+
+                         
+                          <td> <div class="profile_img"><img  class="img-fluid" [src]="bid?.dealership[0]?.profilepic?bid?.dealership[0]?.profilepic:'assets/images/org.png'"/></div> </td>
+                          <td>{{ delalerId == bid?.dealer[0]?._id? bid?.dealership[0]?.legalcoroporationname : '-------'}}</td>
+                          <td>{{delalerId == bid?.dealer[0]?._id? bid.legal_contact : '--------'}} </td>
+                          <td>{{ bid.bid_price | currency:'USD':true:'1.2-2'}}</td>              
+                          <td>
+                              <ng-template #t let-fill="fill">
+                                  <span class="star" [class.full]="fill === 100">
+                                    <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                                  </span>
+                                </ng-template>
+                              <ngb-rating [readonly]="true" title="({{bid?.dealer_rating_average}}/5)" [starTemplate]="t"  aria-labelledby="Rating & Review" [max]="5" [rate]="bid?.dealer_rating_average">
+                                </ngb-rating>
+                                <!-- <span>({{bid?.dealer_rating_average}}/5)</span></td> -->
+                          <td> {{bid.bid_date | date:'MM-dd-yyyy'}}</td>  
+                          <td><span [ngClass]="{ red_btn: bid?.bid_acceptance =='rejected'}">{{bid?.bid_acceptance == 'rejected'? 'Rejected' :''}}</span></td>  
+                          <td><span class="raject_btn" *ngIf="bid?.bid_acceptance =='active' && delalerId == bid?.dealer[0]?._id" (click)="cancelBid(bid?._id)">Cancel</span> </td>                    
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cancelBidModal" #cancelBidModal  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header rejection_header">
+        <h5 class="modal-title text_cap">Cancel Bid</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="text_for" for="reason">Give your reason why do you want to cancel this bid:</label>
+          <textarea class="form-control" [(ngModel)]="cancelReason" rows="5" id="reason"></textarea>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="button red" (click)="submitCancelation()">Submit</button>
+        <button type="button " class="btn back_btn" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>

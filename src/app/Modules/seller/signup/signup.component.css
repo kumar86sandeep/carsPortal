@@ -1,0 +1,35 @@
+select {padding:11px;}
+button.verify_BTN {
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+    color: #444;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+}
+.relative{
+    position: relative;
+}
+
+.country_code select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9899;
+    min-width: auto!important;
+    max-width: fit-content;
+    padding: 0;
+    margin: 10px 0 0 10px;
+    background: none;
+}
+
+.country_code input {
+    padding-left: 60px;
+}
+
+.italic_font{
+    font-style:italic
+}

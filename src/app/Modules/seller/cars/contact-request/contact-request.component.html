@@ -1,0 +1,80 @@
+<div class="modal fade" #contentSection id="newLegalContactForm" tabindex="-1" role="dialog"
+  aria-labelledby="newLegalContactForm">
+  <div class="modal-dialog mw-75 border-none  mx-auto" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header bg-transparent pl-2">
+        <h5 class="modal-title" id="exampleModalLabel">Request More Info</h5>
+
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">           
+              <p class="sub-title">Please fill out the information below and one of our representatives will
+                contact you regarding your more information request. </p>
+              <form [formGroup]="contactRequestForm" (ngSubmit)="onSubmit()" class="gray-form reset_css" id="rmi_form">  
+          
+               
+                <div class="alrt">
+                  <span class="alrt"></span>
+                </div>
+                <div class="form-group">
+                  <label>Name*</label>
+                  <input type="text" class="form-control" formControlName="name" id="rmi_name" [ngClass]="{ 'is-invalid': (contactRequestForm.controls.name.touched || submitted) && contactRequestForm.get('name').errors }"/>
+                  <p *ngIf="contactRequestForm.controls.name.touched || submitted">
+                      <app-form-validation-errors errorPrefix="Name " minLength=2 maxLength=50 [errors]="contactRequestForm.get('name').errors"></app-form-validation-errors>
+                  </p>
+                </div>
+                <div class="form-group">
+                  <label>Email address*</label>
+                  <input type="text" class="form-control" formControlName="email" id="rmi_email" [ngClass]="{ 'is-invalid': (contactRequestForm.controls.email.touched || submitted) && contactRequestForm.get('email').errors }"/>
+                  <p *ngIf="contactRequestForm.controls.email.touched || submitted">
+                      <app-form-validation-errors errorPrefix="Email " [errors]="contactRequestForm.get('email').errors"></app-form-validation-errors>
+                  </p>
+                </div>
+                <div class="form-group">
+                    
+                  <label>Phone*</label>
+                  <div class="relative country_code">
+                  <select formControlName="country_code">
+                      <option value="+1">+1</option>
+                      <option value="+91">+91</option>
+                    </select>
+                  <input type="text" mask="000-000-0000" class="form-control" formControlName="phone" [ngClass]="{ 'is-invalid': (contactRequestForm.controls.phone.touched || submitted) && contactRequestForm.get('phone').errors }" />
+                </div>
+                  <p *ngIf="contactRequestForm.controls.phone.touched || submitted">
+                      <app-form-validation-errors errorPrefix="Phone " [errors]="contactRequestForm.get('phone').errors"></app-form-validation-errors>
+                  </p>
+            
+                </div>
+                <div class="form-group">
+                  <label>Message</label>
+                  <textarea class="form-control" formControlName="message" id="rmi_message" [ngClass]="{ 'is-invalid': (contactRequestForm.controls.message.touched || submitted) && contactRequestForm.get('message').errors }"></textarea>
+                  <p *ngIf="contactRequestForm.controls.message.touched || submitted">
+                      <app-form-validation-errors errorPrefix="Message " minLength=2 maxLength=200 [errors]="contactRequestForm.get('message').errors"></app-form-validation-errors>
+                  </p>
+                </div>
+                <div class="form-group">
+                  <label>Preferred Contact*</label>
+                  <div class="Radio_BTN">
+                      <input type="radio" formControlName="preference" value="email"  id="email"/>
+                    <label for="email">Email</label>
+                  </div>
+                  <div class="Radio_BTN">
+                      <input type="radio" formControlName="preference" value="phone" id="phone"/>
+                    <label for="phone">Phone</label>
+                  </div>
+                </div>
+               
+                <div class="form-group">                
+                  <button type="submit" class="button red">Submit </button>
+                
+                </div>
+              </form>
+          
+      </div>
+    </div>
+  </div>
+</div>
+

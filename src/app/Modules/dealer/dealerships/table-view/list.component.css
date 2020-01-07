@@ -1,0 +1,17 @@
+.row_detail span{
+  width: auto;
+}
+
+.row_detail span.value {
+  margin-left: 10px;
+}
+
+.row_detail .table td, .row_detail .table th {
+  padding: 7px 10px;
+}
+.row_detail table {
+  margin: 0;
+}
+.row_detail_inner > .row {
+  padding: 13px 2px;
+}

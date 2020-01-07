@@ -1,0 +1,59 @@
+<!--payment_done Popup Start-->
+<div class="modal fade" #invoiceSection id="invoiceSection" tabindex="-1" role="dialog" aria-labelledby="invoiceSection">
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+              <img src="assets/images/check.png" alt="check_Image">
+              <h2>Thank You For Your Payment</h2>
+              <button type="button" (click)="reloadTransactions('transactions')" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+
+          <!-- Modal body -->
+          <div *ngIf="isInvoiceOpen" class="modal-body">
+              <div class="order_details">
+                  <div class="address">
+                      <b>{{transactionDetails?.transaction_details['purchase_units'][0].shipping.name.full_name}}</b>
+                      {{transactionDetails?.transaction_details['purchase_units'][0].shipping.address.address_line_1}}<br>
+                      {{transactionDetails?.transaction_details['purchase_units'][0].shipping.address.admin_area_1}}, {{transactionDetails?.transaction_details['purchase_units'][0].shipping.address.admin_area_2}},<br>
+                      {{transactionDetails?.transaction_details['purchase_units'][0].shipping.address.country_code}}, {{transactionDetails?.transaction_details['purchase_units'][0].shipping.address.postal_code}}
+                  </div>
+
+                  <div class="payment_detail">
+                      <div class="payment_date">Payment Date : <span>{{ transactionDetails.transaction_details.create_time | date:'MM-dd-yy, h:mm a'}}</span></div>
+                      <div class="payment_method">Payment Method : <span>Paypal</span></div>
+                  </div>
+              </div>
+              <div class="order_summery">
+                  <div class="row no-gutters">
+                      <div class="col-sm-3">
+                          <div class="image">
+                              <img src="{{transactionDetails?.car_details?.cover_image}}" alt="Buy_car_image" class="img-fluid">
+                          </div>
+                      </div>
+                      <div class="col-sm-9">
+                          <div class="summery_text">
+                              <div class="car_name"><b>{{transactionDetails?.car_details.make}} {{transactionDetails?.car_details.model}}</b></div>
+                              <div class="order_id"><span class="text_transform">Transaction Id :</span> <span>
+                                {{transactionDetails?.transaction_details.id}}</span></div>
+                              <div class="order_amount"><span class="text_transform">Amount :</span> <span> ${{transactionDetails?.transaction_details['purchase_units'][0].amount.value}}</span></div>
+                              <div class="payment_status"><span class="text_transform">Transaction Status :</span> <span class="approved">{{transactionDetails?.transaction_details.status}}</span></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- payment_done Modal footer -->
+          <div class="modal-footer">             
+            <button [useExistingCss]="true" printSectionId="invoiceSection" ngxPrint class="button red">Print</button>
+          </div>
+
+      </div>
+  </div>
+</div>
+
+<!--payment_done Popup END-->

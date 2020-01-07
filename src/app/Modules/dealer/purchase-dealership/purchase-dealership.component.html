@@ -1,0 +1,17 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+
+ <!--=================================
+   blog  -->
+<section class="form-pad">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <iframe [src]="iframeUrl | safe: 'resourceUrl'" width="100%" height="1200" class="form"></iframe>
+      </div>
+    </div>
+  </div>
+</section>

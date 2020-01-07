@@ -1,0 +1,31 @@
+        html {background: #deecb7;}
+        .notification_menu {position: relative; margin: 37px 30px 0px 0px;float: right;}
+        .notifyme_bell {width: 30px;height: 30px;position: relative;cursor: pointer;display: inline-block;}
+        .notifyme_bell span.notification_count {position: absolute;top: -6px;right: -6px;height: 18px;width: 18px;overflow: hidden;background: #db2d2e;color: #FFF;
+        text-align: center;border-radius: 100%;font-size: 9px;font-weight: bold;line-height: 16px;border: 2px solid #fff;}
+        .notifyme_bell img {width: 100%;}
+        
+        
+        .msg_notification {background: #fff; border:1px solid #ccc;
+position: absolute; width:200px;box-sizing: border-box; padding:10px; top:64px;display: none;}
+        .msg_notification ul {width:100%; margin:0px 0px 10px 0px; padding:0px;}
+        .msg_notification ul li {width:100%; margin:0px; padding:5px 0px; border-bottom:1px solid #ccc;line-height: normal !important;}
+        .notification_row {display:table;}
+        .thumb_left {display: table-cell;width: 35px;}
+        .notification_thumb {width: 35px;height: 35px;border: 1px solid #ccc;border-radius: 100%;overflow: hidden;}
+        .notification_thumb img {width:100%; height:100%; object-fit:cover;}
+        .notification_info {display:table-cell; vertical-align: top;padding-left:5px;}
+        .notification_info p {    width: 100%;margin: 0px;padding: 5px 0px;font-size: 12px;color: #5d5d5d;text-decoration: none;line-height: normal;}        .notification_info p span {font-weight:bold;}
+        .notification_info p a {color:inherit;}
+        .msg_notification ul li:last-child {border-bottom:0px;}
+        .see_all {width:100%; text-align: center; color:#db2d2e; text-transform: capitalize;padding:10px 0px; text-decoration: none; font-size: 13px; font-weight:bold; display: inline-block;}
+        .mega-menu.custom_menu .menu-links > li {line-height: normal;}
+        .mega-menu.custom_menu  .menu-links {margin-top:20px;}
+        .mega-menu .drop-down-multilevel {z-index:-1;}
+        .mega-menu .menu-links li.hoverTrigger:hover > .drop-down-multilevel.effect-fade {z-index:1;}
+        
+        app-header .mega-menu .menu-links > li > a{ text-transform: none !important }
+        @media screen and (max-width:767px) {
+        .notification_menu {float:none; position:absolute; margin:17px 0px 0px 55px;}
+        .msg_notification {top:44px;}
+        }

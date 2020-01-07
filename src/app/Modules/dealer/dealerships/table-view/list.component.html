@@ -1,0 +1,317 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+<app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<!--=================================
+  breadcrumbs and inner-intro -->
+
+
+
+<!--=================================
+ Dealerships Listing  -->
+
+<section class="blog page-section-ptb pad-b-30">
+  <div class="container">
+    <div class="row ">
+      <div class="col-md-12 d-flex">
+        <a href="javascript:void(0)" (click)="show(1,'createDealership')" class="createNew ml-auto"><i
+            class="fa fa-plus-circle" aria-hidden="true"></i> Create Dealership</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="listing_outer blog-sidebar">
+          <div class="sorting-options-main">
+         
+
+            <div class="row blog-sidebar listing_outer">
+                <div class="col-md-12 d-flex">
+              <div class="product-listing">
+                <div class="price-search">
+                    <div class="search">
+                      <i class="fa fa-search"></i>
+                      <input type="search" class="form-control placeholder" (input)="onSearch($event.target.value)"
+                        placeholder="Type Legal Corp., Dealership No., State, City etc..">
+                    </div>
+                  </div>
+            </div>
+
+
+              <div class="right_sec ml-auto">
+
+                <form [formGroup]="dateFilterForm" class="d-inline-block"> 
+                  <div class="input-group date_filters_start d-inline-block">
+                      <input readonly formControlName="startDate"  class="form-control" (dateSelect)="onStartDateSelected($event)" type="text" (click)="startDate.toggle()" placeholder="Created Date"
+                          ngbDatepicker #startDate="ngbDatepicker">
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()"
+                              type="button"><span><i class="fa fa-calendar"
+                                      aria-hidden="true"></i></span></button>
+                      </div>
+                  </div>
+               
+                  <div class="input-group date_filters_start d-inline-block">
+                      <input readonly formControlName="endDate" class="form-control" type="text" (dateSelect)="onEndDateSelected($event)" (click)="endDate.toggle()" placeholder="Last Date"
+                          ngbDatepicker #endDate="ngbDatepicker">
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()"
+                              type="button"><span><i class="fa fa-calendar"
+                                      aria-hidden="true"></i></span></button>
+                      </div>
+                  </div>
+          
+          
+                  <div (click)="clearDateFilters()" data-toggle="tooltip" title="Reset Date Filter" class="clear_inputs d-inline-block">
+                      <i class="fa fa-refresh" aria-hidden="true"></i>
+                  </div>
+              </form>
+              </div>
+            </div>
+            </div>
+
+
+          </div>
+
+
+
+
+          <div class="sidebar-widget">
+            <div class="unordered-lists table-responsive text-center">
+
+              <ngx-datatable #listingTable class="bootstrap" [rows]="dealerships" [sorts]="[{prop: 'created', dir: 'desc'}]" [externalPaging]="true" [count]="page.totalElements"
+              [offset]="page.pageNumber" [limit]="page.size" [columnMode]="'force'" [headerHeight]="50" [limit]="currentPageLimit" [footerHeight]="80"  [rowHeight]="50" (sort)="onSort($event)" (page)="setPage($event)">
+
+
+                <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                        
+                        <div class="row_detail col-md-12" *ngIf="! row?.legal_contacts.length">
+                            <div class="row_detail_inner" >
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        Default legal contact not attached.
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row_detail col-md-12" *ngIf="row?.legal_contacts.length">
+                            
+                            <div *ngFor="let contact of row?.legal_contacts"> 
+                                  <div class="row_detail_inner" *ngIf="contact.default_legal_contact">   
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">                                   
+                                            <h6 class="text_cap">Default Legal Contact</h6>
+                                      </div>
+
+                                        <div class="col-md-12">
+                                            <div class="vehicle_table_details">
+                                                
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered">
+                                                      <tr>
+                                                          <!-- <td><span class="head">Title:</span><span class="value">{{contact.title}}</span></td> -->
+                                                          <td><span class="head">Prefix:</span><span class="value">{{contact.name.prefix ?contact.name.prefix : 'N/A'}}</span></td>
+                                                          <td><span class="head">First Name:</span><span class="value">{{contact.name.first_name}}</span></td>
+                                                      </tr>  
+                                                      <tr>
+                                                       
+                                                        <td><span class="head">Last Name:</span><span class="value">{{contact.name.last_name}}</span></td>
+                                                        <td><span class="head">Default Contact:</span><span class="value">Yes</span></td>
+                                                    </tr>   
+                                                    <!-- <tr>
+                                                        <td><span class="head">State:</span><span class="value">{{contact.location.state}}</span></td>
+                                                        <td><span class="head">City:</span><span class="value">{{contact.location.city}}</span></td>
+                                                    </tr>  -->
+                                                    <!-- <tr> -->
+                                                        <!-- <td><span class="head">Zipcode:</span><span class="value">{{contact.location.zipcode}}</span></td> -->
+                                                       
+                                                    <!-- </tr>                                                            -->
+                                                                
+                                                    </table>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>                           
+                          
+                              </div>
+                        </div>
+                        </div>
+                    
+                    
+                    
+                    </ng-template>
+                    </ngx-datatable-row-detail>
+
+
+
+                    <ngx-datatable-column
+                    [width]="50"
+                    [resizeable]="false"
+                    [sortable]="false"
+                    [draggable]="false"
+                    [canAutoResize]="false">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                        <a
+                        href="javascript:void(0)"
+                        [class.datatable-icon-right]="!expanded"
+                        [class.datatable-icon-down]="expanded"
+                        title="Default Legal Contact"
+                        (click)="toggleExpandRow(row)">
+                        </a>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="" [sortable]="false" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span class="avtar" *ngIf="row.profile_pic"><img title="Dealership Avatar" class="img-fluid"
+                        src="{{row.profile_pic}}"></span>
+                    <span class="avtar" *ngIf="!row.profile_pic"><img title="Default Dealership Avatar"
+                        class="img-fluid" src="/assets/images/org.png"></span>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Legal Corp." [sortable]="true" [resizeable]="false"
+                [draggable]="false" prop="legalcoroporationname">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.legalcoroporationname }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Dealership No." [sortable]="true" [resizeable]="false"
+                [draggable]="false" prop="dealershipnumber">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.dealershipnumber }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <!--<ngx-datatable-column name="Legal Contacts" prop="row.legal_contacts?.name.first_name" [sortable]="true"
+                  [width]="200">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                    <span *ngFor="let contact of row?.legal_contacts"><b *ngIf="contact.default_legal_contact">
+                        {{contact.name.first_name}}</b> </span>
+                    <span *ngIf="row?.legal_contacts?.length" class="legel_contact_count"> <button
+                        title="View Legal Contacts" (click)="show(rowIndex, 'viewLegalContacts')"
+                        class="left_bids  badge badge-danger">{{row?.legal_contacts?.length}}</button></span>
+                  </ng-template>
+                </ngx-datatable-column>-->
+                <ngx-datatable-column name="city" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.city }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="state" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.state }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="zip" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.zip }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="created At" prop="created_at" [sortable]="true" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.created_at | date:'MM-dd-yyyy'}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Action" [sortable]="false" [resizeable]="false"
+                [draggable]="false">
+                  <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+
+                    <span class="actions">
+                      <button title="Add Legal Contact" type="button"
+                        (click)="showCreateLegalContact(rowIndex,row._id)">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      </button>
+                      <button title="Edit Dealership" type="button" (click)="show(rowIndex, 'editDealership')">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </button>
+                      <button title="View Dealership Info" type="button" (click)="show(rowIndex, 'viewDealership')">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                      </button>
+
+                      <!-- <button title="Remove Dealership" type="button" (click)="delete(row)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button> -->
+                      <button title="Deactivate Dealership" *ngIf="row?.status=='active'" type="button"
+                        (click)="changeDealerShipStatus(row,'inactive')">
+                        <img src="/assets/images/car_active.png">
+                      </button>
+                      <button title="Activate Dealership" *ngIf="row?.status =='inactive'" type="button"
+                        (click)="changeDealerShipStatus(row,'active')">
+                        <img src="/assets/images/car_inactive.png">
+                      </button>
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-footer>
+                    <ng-template ngx-datatable-footer-template let-rowCount="rowCount"
+                        let-pageSize="pageSize" let-selectedCount="selectedCount" let-curPage="curPage"
+                        let-offset="offset" let-isVisible="isVisible">
+                       
+                       
+                        <div class="pagination_outer d-flex">
+
+                            <div *ngIf="dealerships.length>0" class="showing_records">
+                                Showing <div class="selected-box number_records">
+                                    <select class="selectpicker my_select" id="per-page"
+                                    (change)="onLimitChange($event.target.value)">
+                                    <option *ngFor="let option of pageLimitOptions" [value]="option.value"
+                                        [selected]="option.value == currentPageLimit">
+                                        {{ option.value }} 
+                                    </option>
+                                </select>
+                                </div> records on page
+                            </div>
+
+                        <div class="ml-auto">
+                          <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'"
+                          [pagerRightArrowIcon]="'datatable-icon-right'"
+                          [pagerPreviousIcon]="'datatable-icon-prev'"
+                          [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage"
+                          [size]="pageSize" [count]="rowCount"
+                          [hidden]="!((rowCount / pageSize) > 1)"
+                          (change)="listingTable.onFooterPage($event)">
+                          </datatable-pager>
+
+                        </div>
+
+
+                        </div>
+
+                    </ng-template>
+                </ngx-datatable-footer>
+              </ngx-datatable>
+            </div>    
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- dealership details  -->
+<app-dealership-view (onClose)="hide($event)" [isOpen]="isDealershipModalOpened" [dealershipObject]="dealershipObject"></app-dealership-view>
+
+<!-- legal-contacts-listing -->
+<app-contact-view (onClose)="hide($event)" [isOpen]="isModalOpened" [dealershipObject]="dealershipObject"></app-contact-view>
+
+<!-- Add new dealership  -->
+<app-create-dealership (onUpdateDealership)="updateDealershipListing($event)" [dealershipItemIndex]="dealershipItemIndex" [dealershipsItems]="dealershipsItems" [updateExistingDealership]="updateExistingDealership"
+  [isOpen]="isCreateDealershipModalOpened"></app-create-dealership>
+
+<!-- Add new-legal-contact -->
+<app-create-contact (onClose)="hide($event)" [dealershipId]="dealershipId" [legalContactItems]="legalContactItems"
+  [isOpen]="isCreateContactModalOpened"></app-create-contact>

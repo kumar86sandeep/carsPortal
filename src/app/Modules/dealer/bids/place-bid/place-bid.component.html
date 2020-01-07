@@ -1,0 +1,186 @@
+<div class="modal fade bd-example-modal-lg feedback-modal_rating" #bidModal id="bidModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog mw-55 border-none  mx-auto" role="document">
+
+    <div class="modal-content p-0">
+
+      <div class="modal-header feedback-header_bg">
+        <h5 class="modal-title text_cap" id="bidModal">Place Bid</h5>
+        <button type="button"(click)="close()" class="close opac-1" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <span *ngIf="car?.higest_bid" class="make_model text_under">Current highest bid:
+              {{ car?.higest_bid | currency:'USD':true:'1.2-2'}}</span>
+            <div class="modal_img">
+              <img src="{{car?.cover_image}}">
+            </div>
+            <!-- <span class="make_model text_cap">{{car?.year}} {{car?.make}} {{car?.model}}</span> -->
+          </div>
+
+          <div class="col-md-12 stage01_modal_div-gaps">
+            <div class="row stage_01_my-5">
+              <div class="col-md-2">
+                <div class="stage_01_modal-options">
+                  <p>Year</p>
+                  <span>{{car?.year}}</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="stage_01_modal-options">
+                  <p>Make</p>
+                  <span>{{car?.make}}</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="stage_01_modal-options">
+                  <p>Model</p>
+                  <span>{{car?.model}}</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="stage_01_modal-options break-all">
+                  <p>{{ car?.vin? 'VIN':  'License Plate'}}</p>
+                  <span>{{car?.vin? car?.vin  : car?.license_plate}}</span>
+
+                  
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="car?.vehicle_transmission_style">
+                <div class="stage_01_modal-options">
+                  <p>Transmission</p>
+                  <span>{{car?.vehicle_transmission_style}}</span>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="car?.vehicle_engine_cylinders">
+                <div class="stage_01_modal-options">
+                  <p>Engine</p>
+                  <span>{{car?.vehicle_engine_cylinders}} {{car?.vehicle_engine_model}}</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="stage_01_modal-options">
+                  <p>Mileage</p>
+                  <span>{{car?.miles}} Mi </span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="stage_01_modal-options">
+                  <p>Exterior Color</p>
+                  <span>{{ car?.exterior_color }}</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="stage_01_modal-options">
+                  <p>Interior Color</p>
+                  <span>{{car?.interior_color}}</span>
+                </div>
+              </div>
+
+
+              <div class="col-md-2">
+                <div class="stage_01_modal-options">
+                  <p>Car Condition </p>
+                  <span>{{car?.vehicle_condition?.vehicle_condition_value}}</span>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="car?.vehicle_to_be_picked_up">
+                <div class="stage_01_modal-options">
+                  <p>Miles Drive?</p>
+                  <span>{{car?.willing_to_drive_how_many_miles}} 
+                    
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <form [formGroup]="bidForm">
+          <div class="row ">
+
+            <div class="col-md-12">
+              <!-- <div class="search_result">
+                 Suggested Price ${{car?.vehicle_finance_details?.vehicle_offer_in_hands_price}}
+               </div> -->
+
+              <div class="selected-box auto-hight form-group w-100">
+                <label for="">Assign a DealerShip*</label>
+                <select
+                  [ngClass]="{ 'is-invalid': (bidForm.controls.dealership_id.touched || submitted) && bidForm.get('dealership_id').errors }"
+                  class="margin-top42 my_select w-100 d-block" id="selectStore"
+                  (change)="selectStore($event.target.value)" formControlName="dealership_id">
+                  <!-- <option selected value="">Select the dealership</option> -->
+                  <option *ngFor="let d of dealerShips;let i = index;" [selected]="i==0" value="{{d._id}}">{{d?.legalcoroporationname}}
+                  </option>
+                </select>
+                <p *ngIf="bidForm.controls.dealership_id.touched || submitted">
+                  <app-form-validation-errors errorPrefix="Dealership " [errors]="bidForm.get('dealership_id').errors">
+                  </app-form-validation-errors>
+                </p>
+              </div>
+
+              <div class="selected-box auto-hight form-group w-100">
+                <label for="">Assign Legal Contact*</label>
+                <select class="margin-top42 my_select w-100 d-block"  (change)="selectLegalContact($event.target.value)" formControlName="legal_contact" id="lega"
+                  [ngClass]="{ 'is-invalid': (bidForm.controls.legal_contact.touched || submitted) && bidForm.get('legal_contact').errors }">
+
+                  <!-- <option value=""  selected>Assign legal contact</option> -->
+                  <option *ngFor="let lc of legalContacts;let i= index;"[selected]="i==0" value="{{lc?.value}}">{{lc?.name}}
+                   </option>
+                </select>
+                <p *ngIf="bidForm.controls.legal_contact.touched || submitted">
+                  <app-form-validation-errors errorPrefix="Assigning contact  "
+                    [errors]="bidForm.get('legal_contact').errors"></app-form-validation-errors>
+                </p>
+              </div>
+
+              <div class="selected-box auto-hight form-group w-100">
+                <label for="">Bid Price*</label>
+                <input type="text" maxLength=17 currencyMask [options]="{ allowNegative: false, align: 'left'}"
+                  [ngClass]="{ 'is-invalid': (bidForm.controls.bid_price.touched || submitted) && bidForm.get('bid_price').errors }"
+                  class="form-control w-100 d-block my_select" formControlName="bid_price">
+                <p *ngIf="bidForm.controls.bid_price.touched || submitted">
+                  <app-form-validation-errors errorPrefix="Bid price  " [isPrice]=true minAmount='{{minPrice}}'
+                    [errors]="bidForm.get('bid_price').errors">
+                  </app-form-validation-errors>
+                </p>
+              </div>
+              <div class="selected-box auto-hight form-group w-100">
+                <label for="">Proxy Bid Price</label>
+                <input type="text" (keyup)="chnageProxyPrice()" placeholder="Enter Price" maxLength=17 currencyMask
+                  [options]="{ allowNegative: false, align: 'left'}"
+                  [ngClass]="{ 'is-invalid': (bidForm.controls.proxy_price.touched || submitted) && bidForm.get('proxy_price').errors }"
+                  class="form-control w-100 d-block my_select" formControlName="proxy_price">
+                <p *ngIf="bidForm.controls.proxy_price.touched || submitted">
+                  <app-form-validation-errors errorPrefix="Proxy bid price  " [isplaceBid]=true
+                    minAmount='{{bidForm.controls.bid_price.value}}' [errors]="bidForm.get('proxy_price').errors">
+                  </app-form-validation-errors>
+                </p>
+              </div>
+
+              <div class="form-group w-100">
+                <div class="submission_Btns text-center">
+                  <button class="button red"  type="button" (click)="onSubmit()">Bid</button>
+                  <button class="button left_margin red black_BTN" type="button " (click)="close()">Cancel</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

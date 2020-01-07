@@ -1,0 +1,95 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+
+ <!-- Add Payment form  -->
+ <section #contentSection class="register-form page-section-ptb">
+    <div class="container">   
+            
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-12">
+                <div class="gray-form">
+                    <form [formGroup]="addPaymentWizard">                       
+                                                 
+                        <div class="col-md-12" formGroupName="payment_details">
+                                
+                            <div class="row">  
+                                
+                                <div class="form-group col-md-12 bem-error-common-heading">
+                                    <label>Card Holder Name*</label>
+                                    <input  class="form-control" type="text" placeholder="Card Holder Name" formControlName="credit_card_name" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('credit_card_name').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('credit_card_name').errors }">   
+                                    
+                                    <p *ngIf="addPaymentWizard.controls.payment_details.get('credit_card_name').touched || isPaymentDetailsSubmitted">
+                                        <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Card holder name " [errors]="addPaymentWizard.controls.payment_details.get('credit_card_name').errors"></app-form-validation-errors>
+                                      </p>
+                                </div>
+                               
+                                <div class="form-group col-md-12 bem-error-common-heading">                                   
+                                    <label>Credit Card Number*</label>
+                                    <input class="form-control" type="tel"  placeholder="Credit Card Number" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('credit_card_number').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('credit_card_number').errors }" formControlName="credit_card_number" autocomplete="cc-number" id="cc-number" ccNumber/> 
+                                    <p class="error_label" *ngIf="addPaymentWizard.controls.payment_details.get('credit_card_number').touched || isPaymentDetailsSubmitted">                      
+                                        <app-form-validation-errors errorPrefix="Credit card number " [errors]="addPaymentWizard.controls.payment_details.get('credit_card_number').errors"></app-form-validation-errors>   
+                                    </p>
+                                </div>
+                                <div class="form-group col-md-12 add-pay-abs-padding">
+                                    <div class="row align-items-md-center">
+                                  
+                                    <div class="col-md-6">
+                                            <label class="exp-month-label">Expiration Date*</label>
+                                        <select class="select_dropdown selectpicker" #expiry_month formControlName="expiry_month" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('expiry_month').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('expiry_month').errors }">    
+                                                <option value="">Select Month</option>
+                                                <option *ngFor="let month of months;" value="{{month.value}}">{{month.name}}</option> 
+                                        </select>                               
+
+                                        <p class="error_msg" *ngIf="addPaymentWizard.controls.payment_details.get('expiry_month').touched || isPaymentDetailsSubmitted">                      
+                                            <app-form-validation-errors errorPrefix="Month " [errors]="addPaymentWizard.controls.payment_details.get('expiry_month').errors"></app-form-validation-errors>   
+                                        </p>
+                                    </div> 
+                                    
+                                    <div class="col-md-6">
+                                        <select class="select_dropdown selectpicker" #expiry_year formControlName="expiry_year" [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('expiry_year').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('expiry_year').errors }">         
+                                            <option value="">Select Year</option>
+                                            <option *ngFor="let year of yearRange;" value="{{year.value}}">{{year.value}}</option> 
+                                        </select>                               
+
+                                        <p class="error_msg" *ngIf="addPaymentWizard.controls.payment_details.get('expiry_year').touched || isPaymentDetailsSubmitted">                      
+                                            <app-form-validation-errors errorPrefix="Year " [errors]="addPaymentWizard.controls.payment_details.get('expiry_year').errors"></app-form-validation-errors>   
+                                        </p>
+                                    </div> 
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12 pt-3">
+
+                                    <label>CVC*</label>
+                                    <input class="form-control" id="cc-cvc" formControlName="cvc_number" type="tel" autocomplete="off" ccCvc [ngClass]="{ 'is-invalid': (addPaymentWizard.controls.payment_details.get('cvc_number').touched || isPaymentDetailsSubmitted) && addPaymentWizard.controls.payment_details.get('cvc_number').errors }" />
+
+                                    <p class="error_msg" *ngIf="addPaymentWizard.controls.payment_details.get('cvc_number').touched || isPaymentDetailsSubmitted">                      
+                                        <app-form-validation-errors errorPrefix="CVC " patternError="Must enter valid cvc." [isPrice]=true minLength=3 maxLength=4 [errors]="addPaymentWizard.controls.payment_details.get('cvc_number').errors"></app-form-validation-errors>   
+                                    </p>
+
+                                    
+                                        
+                                </div>
+
+                                <div class="form-group col-md-12 bem-padding-deafult-payment">
+                                    <input type="checkbox" formControlName="default_card"/>
+                                    <label>Save As Default</label>
+                                </div>    
+                            
+                                
+                            </div> 
+                        </div>                                               
+                        
+                        <div class="form-group text-right col-md-6 mt-3 mx-auto">
+                          <button class="button red d-inline-block width-auto" [disabled]="addPaymentWizard.invalid" (click)="validateAddPaymentMethodWizard()" type="button">Save Card</button>		
+                        </div>
+                      </form>
+                </div>
+            </div>
+        </div>      
+    </div> 
+  </section>   

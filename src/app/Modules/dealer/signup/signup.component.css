@@ -1,0 +1,164 @@
+select {padding:11px;}
+.form-group input , .form-group select {margin:0px;}
+.custom-css ul.steps-indicator li, .custom-css ul li {list-style: none !important;}
+.custom-css ul.steps-indicator li.current div a {color:#db2d2e;}
+.custom-css ul.steps-indicator li.done div a {color:green;}
+.custom-css aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li.current::after {background-color: #db2d2e;}
+.custom-css aw-wizard-navigation-bar.horizontal.small ul.steps-indicator {padding-bottom:40px;}
+.custom-css .form-group p {padding:0px; margin:0px;}
+.custom-css .form-group p app-form-validation-errors {color:red;}
+.custom-css button{cursor: pointer;}
+
+.custom-css .sub-heading {color:#db2d2e;font-size: 18px; font-weight: bold; border-bottom: 1px solid rgb(221, 221, 221); padding: 0px 0px 15px 0px; margin:10px 0px 0px 0px;}
+i.float-right {margin-top: 2px; font-size: 12px !important;}
+.custom-css label i {padding:0px 5px 0px 0px;}
+.custom-css .left-column-form {padding-right:20px;}    
+.custom-css .margin-top42 {margin-top:42px;}
+
+.custom-css .calendar_col select.custom-select {width: auto;
+    padding-right: 15px;
+    min-width: 63px;
+    margin-right: 10px;}
+
+
+.custom-css .Car_details {
+    margin-top: 30px;
+}
+
+.custom-css .Car_details ul li {
+    list-style: none;
+    line-height: 1;
+    padding: 13px 15px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #cecece;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -ms-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s;
+}
+
+.custom-css .Car_details ul li:hover {
+    padding-left: 20px;
+}
+
+/*Custom CSS 28-jan-2019*/
+.custom-css .address_box {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+
+
+
+.custom-css .added_address ul li {
+    list-style: none;
+}
+
+
+
+.custom-css .address_box address {
+    line-height: 18px;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+.custom-css .address_box .actions {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.custom-css .address_box .actions button {
+    border: 0;
+    padding: 0;
+    line-height: 0;
+    color: #db2d2e;
+    background: none;
+    font-size: 15px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+.custom-css .address_box .actions button:hover {
+    color: #fff;
+}
+
+.custom-css .added_address ul {
+    max-height: 440px; 
+    margin-top:0px;   
+}    
+
+.custom-css .my-scrollbar .ng-scrollbar-thumb  {
+    background: #db2d2e;
+}
+
+.custom-css .my-scrollbar .ng-scrollbar-visible {
+    padding: 0!important;
+}
+
+.custom-css .my-scrollbar .ng-scrollbar-visible {
+    width: 4px;
+}
+
+.custom-css .added_address {
+    margin: 40px 0px 10px 0;
+}
+
+
+.custom-css .width-auto{
+    width: auto!important;
+}
+.custom-css .ngb-tp-input-container {
+    width: 50%!important;
+}
+
+button.verify_BTN {
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+    color: #444;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.relative{
+    position: relative;
+}
+
+.country_code select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9899;
+    min-width: auto!important;
+    max-width: fit-content;
+    padding: 0;
+    margin: 10px 0 0 10px;
+    background: none;
+}
+
+.country_code input {
+    padding-left: 60px;
+}
+
+.italic_font{
+    font-style:italic
+}
+
+aw-wizard-navigation-bar.horizontal ul.steps-indicator li div a{
+    text-transform: capitalize!important;
+}
+
+.text_doc_none{
+    text-transform: none !important
+}

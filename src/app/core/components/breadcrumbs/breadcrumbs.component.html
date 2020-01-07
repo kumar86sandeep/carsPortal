@@ -1,0 +1,25 @@
+<!--=================================
+ inner-intro -->
+
+<section #contentSection class="inner-intro bg-1 bg-overlay-black-70">
+   <div class="container">
+      <div class="row text-center intro-title">
+         <div class="col-md-6 text-md-left d-inline-block">
+            <h1 class="text-white">{{pageTitle}} </h1>
+         </div>
+         <div class="col-md-6 text-md-right float-right">
+            <ul class="page-breadcrumb">
+               <li *ngFor="let breadcrumb of breadcrumbs; let first = first; let last = last">
+                  <a *ngIf="!last" routerLink="{{ breadcrumb.link }}"><i *ngIf="first" class="fa fa-home"></i>
+                     {{breadcrumb.page}}</a>
+                  <i *ngIf="!last" class="fa fa-angle-double-right"></i>
+                  <span *ngIf="last">{{breadcrumb.page}}</span>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</section>
+
+<!--=================================
+ inner-intro -->

@@ -1,0 +1,18 @@
+.membership_warning{
+    text-align: center;
+    /* margin: 0; */
+    padding: 0;
+    font-size: 16px;
+    line-height: 42px;
+    color: #333;
+}
+.membership_warning a{
+    color:#db2d2e;
+    cursor: pointer;;
+}
+.membership_warning a:hover{
+    text-decoration:underline !important;
+}
+.mx-bem-75{
+max-width: 750px !important;
+}

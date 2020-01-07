@@ -1,0 +1,201 @@
+<!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [pageTitle]="title" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+ <!--=================================
+  breadcrumbs and inner-intro -->
+ 
+ 
+ 
+ <!--=============================0====
+  register-form  -->
+ <section  class="register-form page-section-ptb">
+   <div class="container">
+     
+     <div class="row justify-content-center">
+       <div class="col-lg-8 col-md-12">
+         <form [formGroup]="signupForm" (ngSubmit)="saveSeller()">
+           <div class="gray-form">
+ 
+             <div formGroupName="name" class="row">
+               <!-- <div class="form-group col-md-4">
+                 <label>Prefix</label>
+                 <select formControlName="prefix">
+                    <option value="">Select Prefix</option>
+                   <option value="Mr.">Mr.</option>
+                   <option value="Mrs.">Mrs.</option>
+                   <option value="Ms.">Ms.</option>
+                 </select>
+               </div> -->
+ 
+               <div class="form-group col-md-4">
+                 <label>First Name*</label>
+                 <input  class="form-control" type="text" placeholder="First Name" formControlName="first_name" [ngClass]="{ 'is-invalid': (signupForm.controls.name.get('first_name').touched || submitted) && signupForm.controls.name.get('first_name').errors }">
+                 <p *ngIf="signupForm.controls.name.get('first_name').touched || submitted">
+                   <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="First name " [errors]="signupForm.controls.name.get('first_name').errors"></app-form-validation-errors>
+                 </p>
+               </div>
+ 
+               <div class="form-group col-md-4">
+                 <label>Last Name*</label>
+                 <input class="form-control" type="text" placeholder="Last Name" formControlName="last_name" [ngClass]="{ 'is-invalid': (signupForm.controls.name.get('last_name').touched || submitted) && signupForm.controls.name.get('last_name').errors }">
+                 <p *ngIf="signupForm.controls.name.get('last_name').touched || submitted">
+                   <app-form-validation-errors patternError="Must contain only characters." minLength=2 maxLength=50 errorPrefix="Last name " [errors]="signupForm.controls.name.get('last_name').errors"></app-form-validation-errors>
+                 </p>
+               </div>
+ 
+             </div>
+
+       
+ 
+             <div class="form-group">
+               <label>Email *</label>
+               <div formArrayName="emails">
+                 <div *ngFor="let emailObj of signupForm.get('emails')['controls']; let i = index;">
+                   <div [formGroupName]="i">
+                     <input class="form-control" type="text" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': (emailObj.controls.email.touched || submitted) && emailObj.get('email').errors }">
+                     <p *ngIf="emailObj.controls.email.touched || submitted">
+                       <app-form-validation-errors errorPrefix="Email " [errors]="emailObj.controls.email.errors"></app-form-validation-errors>
+                     </p>
+                   </div>
+                 </div>
+               </div>
+             </div>
+ 
+             <div class="form-group">
+               <label>Phone Number *</label>
+               <div formArrayName="phones">
+                 <div *ngFor="let phoneObj of signupForm.get('phones')['controls']; let i = index;">
+                 
+                  <div class="relative" [formGroupName]="i">
+                      <div class="select--box--stage_setting">
+                    <!-- <select formControlName="country_code">
+                      <option value="+1">+1</option>
+                      <option value="+91">+91</option>
+                    </select> -->
+                    <input  mask="000-000-0000" class="form-control" type="text" placeholder="Phone number"
+                       formControlName="phone" [ngClass]="{ 'is-invalid': (phoneObj.controls.phone.touched || submitted) && phoneObj.get('phone').errors }">
+                       <!--<button  *ngIf="showOtpForm" type="button" (click)="verificationPopup()" class="verify_BTN"> Verify</button>-->
+                       </div>
+                       <small class="italic_font text-muted">This number will be used for sending verification code. If this will be only used only for MFA, then should be asked and activated during the MFA activation.</small>
+                     <p *ngIf="phoneObj.controls.phone.touched || submitted">                      
+                       <app-form-validation-errors errorPrefix="Phone number " [errors]="phoneObj.controls.phone.errors"></app-form-validation-errors>
+                     </p>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div formGroupName="location" class="row">
+                <div class="form-group col-md-4">
+                  <label>Zip Code*</label>
+                  <input  mask="00000" class="form-control" type="text" placeholder="Enter Zip Code" formControlName="zipcode" [ngClass]="{ 'is-invalid': (signupForm.controls.location.get('zipcode').touched || submitted) && signupForm.controls.location.get('zipcode').errors }">
+                  <p class="error_msg" *ngIf="signupForm.controls.location.get('zipcode').touched || submitted">                      
+                      <app-form-validation-errors minLength=2 maxLength=5 errorPrefix="Zip Code " patternError="Must enter valid zip code." [errors]="signupForm.controls.location.get('zipcode').errors"></app-form-validation-errors>   
+                  </p>
+                </div>
+  
+                <div class="form-group col-md-4">
+                  <label>State</label>
+                  <input  readonly class="form-control" type="text" placeholder="State" formControlName="state">
+                  
+                </div>
+  
+                <div class="form-group col-md-4">
+                  <label>City</label>
+                  <input *ngIf="cities.length<=1" readonly class="form-control" type="text" placeholder="City" formControlName="city">
+                  
+                  <select *ngIf="cities.length >1" formControlName="city">
+                    
+                    <option *ngFor="let cityObject of cities" value="{{cityObject.city}}">{{cityObject.city}}</option>
+                  </select>
+                </div>
+  
+              </div>
+ 
+             <div class="form-group">
+               <label>Password* </label>
+               <input [ngClass]="{ 'is-invalid': (signupForm.controls.password.touched || submitted) && signupForm.get('password').errors }"
+               
+               class="form-control" type="password" placeholder="Password" formControlName="password">
+
+               <small class="italic_font text-muted">Minimum length is 10 – we take online security seriously. To protect your account and identity, your password must include a minimum length of ten characters.</small>
+
+               <p *ngIf="signupForm.controls.password.touched || submitted">
+                 <app-form-validation-errors minLength=10 maxLength=50 errorPrefix="Password" [errors]="signupForm.get('password').errors"></app-form-validation-errors>
+               </p>
+             </div>
+ 
+             <div class="form-group">
+               <label>Confirm Password*</label>
+               <input [ngClass]="{ 'is-invalid': (signupForm.controls.repassword.touched || submitted) && signupForm.get('repassword').errors }"
+                 class="form-control" type="password" placeholder="Confirm Password" formControlName="repassword">
+               <p *ngIf="signupForm.controls.repassword.touched || submitted">
+                 <app-form-validation-errors minLength=10 maxLength=50 errorPrefix="Confirm password" [errors]="signupForm.get('repassword').errors"></app-form-validation-errors>
+               </p>
+             </div>
+ 
+ 
+ 
+             <div class="form-group">
+               <div>
+                 <label class="text_transform_none" for="one">By creating an account, you agree to CarsGoat’s  <a routerLink="/web/user-agreement"> Terms of Service </a> and <a routerLink="/web/privacy-policy"> Privacy Policy</a></label>
+               </div>
+             </div>
+ 
+             <div class="row">
+               <div class="form-group col-md-6">
+                 <button [ngClass]="{ 'submit-btn-disable': signupForm.invalid }" type="submit" class="button red text_transform_none">Create Account and List My Car </button>
+               </div>
+               <div class="form-group col-md-6">
+                 <button type="button" class="button red black_BTN" (click)="goBack()">Back</button>
+               </div>
+             </div>
+ 
+           </div>
+         </form>
+     
+     <p class="link">Already have an account? <a routerLink="/seller/login"> Sign In</a> </p>
+       </div>
+     </div>
+   </div>
+ </section>
+ 
+ <!--=================================
+  signup-otp-form  -->
+ <!-- Modal -->
+ <div class="modal fade" #otpSection id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Verification code has been sent. </h5>
+           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>-->
+         </div>
+         <form [formGroup]="otpVerificationForm" (ngSubmit)="onSubmitOtp()">
+           <div class="modal-body">            
+               <div class="form-group">
+                 
+                 <div class="form-group">
+                     <label>Verification Code* </label>
+                     <input [ngClass]="{ 'is-invalid': (otpVerificationForm.controls.ConfirmationCode.touched || otpFormsubmitted) && otpVerificationForm.get('ConfirmationCode').errors }"
+                       class="form-control" mask="000000" type="text" placeholder="Please enter the code here" formControlName="ConfirmationCode">
+                       <button  type="button" (click)="resendOTP()" class="verify_BTN"> Resend</button>
+                     <p *ngIf="otpVerificationForm.controls.ConfirmationCode.touched || otpFormsubmitted">
+                       <app-form-validation-errors minLength=6 maxLength=6 errorPrefix="Verification Code " [errors]="otpVerificationForm.get('ConfirmationCode').errors"></app-form-validation-errors>
+                     </p>
+                 </div>                           
+               </div>              
+           </div>  
+           <div class="modal-footer">            
+             <button [ngClass]="{ 'submit-btn-disable': otpVerificationForm.invalid }" type="submit" class="button red">Verify </button>
+           </div>
+         </form>  
+       </div>
+     </div>
+   </div>
+ 
+ 
+  <!--=================================
+  confirm otp-form  -->

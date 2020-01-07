@@ -1,0 +1,37 @@
+.sidebar_content {
+    color: #363636;
+    background: none;
+}
+.product-listing ul.list-group .checkbox label{
+    padding-left: 0px; 
+}
+.btn_active{
+    color:#db2d2e;
+}
+
+.product-listing ul.list-group .checkbox label button {
+    text-align: left;
+}
+.auto-bem-hw {
+    height:80%;
+    width: 100%;
+}
+.see_all_bids{
+    text-align: center;
+    color:#db2d2e ;
+}
+.see_all_bids:hover{
+    color: red;
+   
+}
+.see_all_bids a:hover{
+    border-bottom: 1px solid red;
+}
+
+.icon_listing{
+    padding: 7px;
+}
+
+
+
+

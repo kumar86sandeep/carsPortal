@@ -1,0 +1,45 @@
+#sfd067a375acdcfea39f270195f88464a922dc2d681fc9375f #customForm *{
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+    word-break:break-word;
+    overflow-wrap: break-word;
+    }
+    /*** RESPONSIVE START */
+    @media only screen and (max-width: 200px){
+    #sfd067a375acdcfea39f270195f88464a922dc2d681fc9375f [name='SIGNUP_BODY']{
+    width:100% !important;
+    min-width:100% !important;
+    margin: 0px auto !important;
+    padding:0px !important	
+    }
+    }
+    /*Major Mobiles*/
+    @media screen and (min-width: 320px) and (max-width: 580px) and (orientation : portrait){
+    #sfd067a375acdcfea39f270195f88464a922dc2d681fc9375f [name='SIGNUP_BODY']{
+    max-width:300px !important;
+    margin: 0px auto !important;
+    padding:0px !important;
+    }
+    }
+    /* iPads*/
+    @media only screen and (min-device-width : 768px) and (max-device-width : 1024px){
+    #sfd067a375acdcfea39f270195f88464a922dc2d681fc9375f [name='SIGNUP_BODY']{
+    max-width:500px !important;
+    margin: 0px auto !important;
+    }
+    }
+    @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape){
+    #sfd067a375acdcfea39f270195f88464a922dc2d681fc9375f [name='SIGNUP_BODY']{
+    max-width:700px !important;
+    margin: 0px auto !important;
+    }
+    }
+    @media screen and (min-width: 475px) and (max-width: 980px) and (orientation : landscape){
+    #sfd067a375acdcfea39f270195f88464a922dc2d681fc9375f [name='SIGNUP_BODY']{
+    max-width:400px !important;
+    margin: 0px auto !important;
+    padding:0px !important;
+    }
+    }
+    /*** RESPONSIVE END */

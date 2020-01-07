@@ -1,0 +1,67 @@
+
+  <!--=================================
+ breadcrumbs and inner-intro -->
+
+ <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+ <!--=================================
+  breadcrumbs and inner-intro -->
+  
+  <section id="bs-pricing-five" class="bs-pricing-five p-top-100 bg-white">
+    <div class="container">
+        <div class="row">
+           <div class="col-md-12 mx-auto">
+            <div class="bs-five-area bs-radius row justify-content-center">
+
+                <div *ngFor="let getPlanDetail of getPlanDetails;" class="col-md-4 no-padding">
+                    <div class="bs-five tag_relative  {{(membershipType == getPlanDetail.plan_code)?'active':''}}">
+                        <h6 class="text-capitalize">{{getPlanDetail.name}}</h6>
+                        <h1 class="bs-caption"><sup>$</sup>{{getPlanDetail.recurring_price}}</h1>         
+                        <ul>                            
+                            <li *ngFor="let description of getPlanDetail.store_markup_description?.split('|')">{{description}}</li>
+                        </ul>
+                        <a *ngIf="membershipType != getPlanDetail.plan_code" routerLink="/dealer/purchase-dealership/{{getPlanDetail.plan_code}}/{{getDealerId}}" class="button red">Subscribe</a> 
+
+                        <!--a *ngIf="membershipType == getPlanDetail.plan_code && subscriptionStatus == 'non_renewing'" routerLink="/dealer/purchase-dealership/{{getPlanDetail.plan_code}}/{{getDealerId}}" class="button red">Subscribe</a --> 
+
+                        <a *ngIf="membershipType == getPlanDetail.plan_code && subscriptionStatus == 'live'" routerLink="/dealer/cancel-dealership" class="button red">Cancel Dealership</a>
+                    </div>
+                    <div *ngIf="membershipType == getPlanDetail.plan_code" class="current_plan_tag">  
+                        <img src="../../../../assets/images/current_plan.png"/>
+                    </div>
+                </div>    
+
+
+                
+ 
+        
+                <!--div class="col-md-6 no-padding">
+                    <div class="bs-five tag_relative {{(membershipType == 'pro')?'active':''}}">
+
+
+                        <h6 class="text-capitalize">Dealership 295</h6>
+                        <h1 class="bs-caption"><sup>$</sup>295</h1>
+                        <p>Lorem Ipsum is simply dummy text</p>
+
+                        <ul>
+                            <li><b>Lorem Ipsum is simply dummy text</b></li>
+                            <li>Lorem Ipsum is simply dummy text</li>
+                            <li>Lorem Ipsum is simply dummy text</li>
+                            <li>Lorem Ipsum is simply dummy text</li>
+                        </ul>
+                        <a *ngIf="membershipType == 'free'" routerLink="/dealer/purchase-dealership/{{getDealerId}}" class="button red">Upgrade Now</a>  
+                        
+                        <a *ngIf="subscriptionStatus == 'non_renewing'" routerLink="/dealer/purchase-dealership/{{getDealerId}}" class="button red">Restart this plan</a>  
+
+                        <a *ngIf="membershipType == 'pro' && subscriptionStatus == 'live'" routerLink="/dealer/cancel-dealership" class="button red">Cancel Dealership</a>
+                        
+                    </div>
+                    <div *ngIf="membershipType == 'pro' && subscriptionStatus == 'live'" class="current_plan_tag">  <img src="../../../../assets/images/current_plan.png"/></div>
+                </div-->
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
